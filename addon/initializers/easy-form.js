@@ -1,49 +1,35 @@
-import defaultFor from 'ember-easy-form-extensions/utils/default-for';
+// import defaultFor from 'ember-easy-form-extensions/utils/default-for';
 import Ember from 'ember';
 import insert from 'ember-easy-form-extensions/utils/computed/insert';
 
-// Ember.EasyForm = window.Ember.EasyForm;
-
-export function initialize(container, app) {
-
-  /**
-  Custom input template with wrapper
-  */
-
-  Ember.EasyForm.Config.registerTemplate('easyForm/input', Ember.Handlebars.compile(
-    '{{label-field propertyBinding="view.property" textBinding="view.label"}}' +
-    '<div class="input_wrapper">' +
-    '{{#if view.isDatepicker}}' +
-      '{{input id=view.datepickerInputId class="datepicker input"}}' +
-    '{{/if}}' +
-      '{{partial "easyForm/inputControls"}}' +
-    '</div>'
-  ));
+export function initialize(/* container, app */) {
+  var EasyForm = Ember.EasyForm;
 
   /**
   Default option overrides
   */
 
-  Ember.EasyForm.Config.registerWrapper('default', {
+  EasyForm.Config.registerWrapper('default', {
     errorClass: 'error',
     formClass: 'form',
-    fieldErrorClass: 'input_with_errors',
+    fieldErrorClass: 'control-error',
     hintClass: 'hint',
     inputClass: 'control',
+    inputTemplate: 'easy-form/input',
     labelClass: 'label',
   });
 
-  Ember.EasyForm.Checkbox.reopen({
+  EasyForm.Checkbox.reopen({
     classNames: ['input-checkbox'],
   });
 
-  Ember.EasyForm.TextField.reopen({
+  EasyForm.TextField.reopen({
     attributeBindings: ['dataTest:data-test'],
     classNames: ['input'],
     dataTest: Ember.computed.alias('parentView.dataTest'),
   });
 
-  Ember.EasyForm.TextArea.reopen({
+  EasyForm.TextArea.reopen({
     attributeBindings: ['dataTest:data-test'],
     classNames: ['input-textarea'],
     dataTest: Ember.computed.alias('parentView.dataTest'),
@@ -58,11 +44,11 @@ export function initialize(container, app) {
   If a label is specified on the input, this will be used in place of the property name.
   */
 
-  Ember.EasyForm.Error.reopen({
+  EasyForm.Error.reopen({
     errorText: function() {
       var propertyName = this.get('parentView.label') || this.get('property') || '';
 
-      return Ember.EasyForm.humanize(propertyName) + ' ' + this.get('errors.firstObject');
+      return EasyForm.humanize(propertyName) + ' ' + this.get('errors.firstObject');
     }.property('errors.[]', 'value'),
   });
 
@@ -70,10 +56,10 @@ export function initialize(container, app) {
   Temporarily binds a success class the the control when the input goes from invalid to valid.
   */
 
-  Ember.EasyForm.Input.reopen({
+  EasyForm.Input.reopen({
     classNameBindings: ['showValidity:input_with_validity'],
     datepickerInputId: insert('elementId', 'input-{{value}}'),
-    isDatepicker: Em.computed.equal('as', 'date'),
+    isDatepicker: Ember.computed.equal('as', 'date'),
     showValidity: false,
 
     setInvalidToValid: function() {
@@ -102,15 +88,18 @@ export function initialize(container, app) {
     */
 
     focusOut: function() {
-      // Double run loop so `cancelClick` is set properly
-      Ember.run.next(this, function() {
-        Ember.run.next(this, function() {
-          if (!this.get('parentView.cancelClicked') && !this.get('isDestroying')) {
-            this.set('hasFocusedOut', true);
-            this.showValidationError();
-          }
-        });
-      });
+
+      /* Hacky - delay check so focusOut runs after the cancel action */
+
+      Ember.run.later(this, function() {
+        var cancelClicked = this.get('parentView.cancelClicked');
+        var isDestroying = this.get('isDestroying');
+
+        if (!cancelClicked && !isDestroying) {
+          this.set('hasFocusedOut', true);
+          this.showValidationError();
+        }
+      }, 100);
     },
 
   });

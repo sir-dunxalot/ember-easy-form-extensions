@@ -1,0 +1,18 @@
+{{#if formSubmitted}}
+  {{loading-spinner}}
+{{else}}
+
+  {{#if cancel}}
+    <button class="button-secondary" {{action 'cancel' target='view.parentView'}} type="reset">
+      {{cancelText}}
+    </button>
+  {{/if}}
+
+  {{#if submit}}
+    <button class="button-primary" type="submit">
+      <i class="icon-check"></i>
+      <span class="text">{{submitText}}</span>
+    </button>
+  {{/if}}
+
+{{/if}}
