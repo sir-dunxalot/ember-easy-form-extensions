@@ -13,9 +13,14 @@ export default Ember.Mixin.create({
 
       if (this.cancelHandler) {
         Ember.warn('Remember to set the controller\'s formSubmitted property to false when using a custom cancelHandler() method');
+
         this.cancelHandler();
       } else {
-        Ember.assert('You need to specify a cancel method on this view\'s controller', controller.cancel);
+        Ember.assert(
+          'You need to specify a cancel method on this view\'s controller',
+          controller.cancel
+        );
+
         controller.cancel();
       }
     },
@@ -31,7 +36,11 @@ export default Ember.Mixin.create({
       if (this.destroyHandler) {
         this.destroyHandler();
       } else {
-        Ember.assert('You need to specify a destroy method on this view\'s controller', controller.destroy);
+        Ember.assert(
+          'You need to specify a destroy method on this view\'s controller',
+          controller.destroy
+        );
+
         controller.destroy();
       }
     },

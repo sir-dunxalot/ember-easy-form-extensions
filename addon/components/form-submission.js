@@ -8,10 +8,18 @@ export default Ember.Component.extend({
   submit: true,
   submitText: 'Save',
 
+  checkForParentViewMixin: function() {
+    Ember.warn(
+      'You need to add the submitting mixin to this route\'s view',
+      this.get('parentView').submit
+    );
+  }.on('init'),
+
   watchForEmptyComponent: function() {
-    if (!this.get('cancel') && !this.get('submit')) {
-      Ember.warn('Form submission component: you are not showing the submit or the cancel button');
-    }
+    Ember.warn(
+      'Form submission component: you are not showing the submit or the cancel button',
+      this.get('cancel') || this.get('submit')
+    );
   }.observes('cancel', 'submit'),
 
 });
