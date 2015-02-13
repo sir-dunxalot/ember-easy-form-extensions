@@ -79,14 +79,14 @@ export default Ember.Mixin.create({
     /* If handler is not a promise */
 
     if (handler && !handler.then) {
-      Ember.assert(methodName + '() must return a promise (e.g. return new Ember.RSVP.Promise).');
+      Ember.assert(methodName + '() must return a promise (e.g. return new Ember.RSVP.Promise()).');
 
     } else {
 
       /* If event is submit, controller method is renamed */
 
       type = type === 'submit' ? 'validateAndSave' : type;
-      var controllerMethod = controller[type];
+      controllerMethod = controller[type];
 
       Ember.assert(
         'You need to specify a cancel method on this view\'s controller',

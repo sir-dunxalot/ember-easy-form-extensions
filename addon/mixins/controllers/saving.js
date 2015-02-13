@@ -32,21 +32,42 @@ export default Ember.Mixin.create(
 
   validateAndSave: function() {
     var _this = this;
+    var runCustomValidations = _this.runCustomValidations;
+    var save = _this.save;
 
-    if (_this.runCustomValidations) {
-      Ember.warn('If your custom validations method has a reject method, remember to set the controller\'s isValid property to false when the form content is invalid');
+    var resolve = function() {
+      Ember.assert(
+        'You need to specify a save method on this controller',
+        save
+      );
 
-      _this.runCustomValidations();
+      save();
     }
 
-    if (!_this.get('isValid')) {
+    var reject = function() {
       _this.set('formSubmitted', false);
+    }
 
-      return false;
+    /* If there is a custom validations method, resolve it */
+
+    if (runCustomValidations && !runCustomValidations.then) {
+      Ember.assert('runCustomValidations() must return a promise (e.g. return new Ember.RSVP.Promise()).');
+    } else if (runCustomValidations) {
+      runCustomValidations().then(function() {
+        resolve();
+      }, function() {
+        reject();
+      });
     } else {
-      Ember.assert('You need to specify a save method on this controller', this.save);
 
-      this.save();
+      /* Else save with normal ember-validations checks */
+
+      if (!_this.get('isValid')) {
+        reject();
+      } else {
+        resolve();
+      }
+
     }
   },
 

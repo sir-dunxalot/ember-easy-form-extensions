@@ -10,7 +10,7 @@ Router.map(function() {
   this.resource('posts', function() {
     this.route('new');
 
-    this.resource('post', function() {
+    this.resource('post', { path: '/:id' }, function() {
       this.route('edit');
     });
 

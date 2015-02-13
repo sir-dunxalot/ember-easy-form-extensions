@@ -1,8 +1,15 @@
 import DS from 'ember-data';
+import Ember from 'ember';
 
 var attr = DS.attr;
 
-export default DS.Model.extend({
+var PostModel = DS.Model.extend({
   title: attr('string'),
   description: attr('string')
 });
+
+PostModel.reopen({
+  FIXTURES: Ember.A()
+});
+
+export default PostModel;
