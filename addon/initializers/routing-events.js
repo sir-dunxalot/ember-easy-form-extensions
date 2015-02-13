@@ -65,7 +65,7 @@ export function initialize(/* container, app */) {
         this.get('controller').trigger('routeWillTransition');
         this.trigger('willTransition');
 
-        return true;
+        return true; // So action bubbles
       }
     }
   });

@@ -1,3 +1,3 @@
-import Initializer from 'ember-easy-form-extensions/initializer/routing-events';
+import Initializer from 'ember-easy-form-extensions/initializers/routing-events';
 
 export default Initializer;
