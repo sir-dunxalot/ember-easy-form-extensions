@@ -65,7 +65,7 @@ export function initialize(/* container, app */) {
     errorText: function() {
       var propertyName = this.get('parentView.label') || this.get('property') || '';
 
-      return EasyForm.humanize(propertyName) + ' ' + this.get('errors.firstObject');
+      return Ember.EasyForm.humanize(propertyName) + ' ' + this.get('errors.firstObject');
     }.property('errors.[]', 'value'),
   });
 
