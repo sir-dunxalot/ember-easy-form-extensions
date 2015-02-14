@@ -2,9 +2,11 @@
 
 This addon extends Ember EasyForm into the view and controller layers of your Ember CLI app to provide easy event and action handling using mixins and components.
 
-The newly accessible developer-friendly layer includes form submission handlers, helpers, components, and integration with ember-validations **(`ember-easy-form` and `ember-validations` also come prepackaged)**.
+The newly accessible developer-friendly layer includes form submission handlers, helpers, components, and integration with ember-validations.
 
 ## Installation
+
+Uninstall any references to `ember-easy-form` and `ember-validations`. Then:
 
 ```
 ember install:addon ember-easy-form-extensions
