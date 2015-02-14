@@ -1,6 +1,6 @@
 {
   "name": "ember-easy-form-extensions",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Extends Ember EasyForm into the view and controller layers of your Ember CLI app to provide easy event and action handling using mixins and components",
   "directories": {
     "doc": "doc",
@@ -11,11 +11,14 @@
     "build": "ember build",
     "test": "ember test"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sir-dunxalot/ember-easy-form-extensions.git"
+  },
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": "Duncan Walker <walkerdu@bc.edu>",
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.0",
@@ -36,7 +39,16 @@
     "glob": "^4.0.5"
   },
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember",
+    "easy-form",
+    "forms",
+    "input",
+    "submission",
+    "save",
+    "saving",
+    "delete",
+    "deleting",
   ],
   "ember-addon": {
     "configPath": "tests/dummy/config"
