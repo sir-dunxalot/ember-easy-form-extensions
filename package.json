@@ -48,7 +48,7 @@
     "save",
     "saving",
     "delete",
-    "deleting",
+    "deleting"
   ],
   "ember-addon": {
     "configPath": "tests/dummy/config"
