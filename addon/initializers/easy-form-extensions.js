@@ -1,9 +1,20 @@
-// import defaultFor from 'ember-easy-form-extensions/utils/default-for';
 import Ember from 'ember';
 import insert from 'ember-easy-form-extensions/utils/computed/insert';
 
+/* Import helpers */
+
+import form from 'ember-easy-form-extensions/helpers/form';
+import formControls from 'ember-easy-form-extensions/helpers/form-controls';
+
 export function initialize(/* container, app */) {
   var EasyForm = Ember.EasyForm;
+  var Handlebars = Ember.Handlebars;
+  var run = Ember.run;
+
+  /* Register helpers */
+
+  Handlebars.registerHelper('form', form);
+  Handlebars.registerHelper('form-controls', formControls);
 
   /**
   Default option overrides
@@ -65,13 +76,13 @@ export function initialize(/* container, app */) {
     setInvalidToValid: function() {
       // If we go from error to no error
       if (!this.get('showError') && this.get('canShowValidationError')) {
-        Ember.run.debounce(this, function() {
+        run.debounce(this, function() {
           var hasAnError = this.get('formForModel.errors.' + this.get('property') + '.length');
 
           if (!hasAnError && !this.get('isDestroying')) {
             this.set('showValidity', true);
 
-            Ember.run.later(this, function() {
+            run.later(this, function() {
               if (!this.get('isDestroying')) {
                 this.set('showValidity', false);
               }
@@ -91,7 +102,7 @@ export function initialize(/* container, app */) {
 
       /* Hacky - delay check so focusOut runs after the cancel action */
 
-      Ember.run.later(this, function() {
+      run.later(this, function() {
         var cancelClicked = this.get('parentView.cancelClicked');
         var isDestroying = this.get('isDestroying');
 
@@ -107,6 +118,6 @@ export function initialize(/* container, app */) {
 }
 
 export default {
-  name: 'easy-form',
+  name: 'easy-form-extensions',
   initialize: initialize
 };

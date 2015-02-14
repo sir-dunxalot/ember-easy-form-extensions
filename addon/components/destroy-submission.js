@@ -1,27 +1,10 @@
 import Ember from 'ember';
 
-export default Ember.Component.extend(
-  Ember.ViewTargetActionSupport, {
+var readOnly = Ember.computed.readOnly;
 
-  attributeBindings: ['dataTest:data-test'],
-  classNameBindings: ['destroySubmitted:button:button-primary'],
+export default Ember.Component.extend({
+  classNames: ['buttons'],
   destroyText: 'Delete',
+  formSubmitted: readOnly('parentView.controller.formSubmitted'),
   iconClass: 'icon-delete',
-  tagName: 'button',
-  dataTest: 'destroy',
-
-  click: function() {
-    this.triggerAction({
-      action: 'destroy',
-      target: this.get('parentView'),
-    });
-  },
-
-  destroySubmitted: function() {
-    var page = this.get('parentView');
-    var controller = page.get('controller');
-    var formSubmitted = controller.get('formSubmitted');
-
-    return formSubmitted;
-  }.property('parentView.controller.formSubmitted'),
 });

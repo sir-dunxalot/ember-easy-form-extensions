@@ -1,6 +1,12 @@
-{{#if destroySubmitted}}
+{{#if formSubmitted}}
   {{loading-spinner}}
 {{else}}
-  <i {{bind-attr class='iconClass'}}></i>
-  <span class="text">{{destroyText}}</span>
+  <button
+    {{action 'destroy' target='view.parentView'}}
+    class="button-secondary"
+    data-test="button-destroy"
+  >
+    <span class="icon-delete"></span>
+    <span class="text">{{destroyText}}</span>
+  </button>
 {{/if}}

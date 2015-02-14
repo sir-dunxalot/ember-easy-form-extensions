@@ -2,7 +2,6 @@ import Ember from 'ember';
 
 export default Ember.Mixin.create({
   cancelClicked: false,
-  destroySubmitted: Ember.computed.alias('controller.destroySubmitted'),
   formSubmitted: Ember.computed.alias('controller.formSubmitted'),
 
   actions: {
@@ -17,15 +16,22 @@ export default Ember.Mixin.create({
     },
 
     destroy: function() {
-      this.setProperties({
-        formSubmitted: true,
-        destroySubmitted: true,
-      });
+      this.set('formSubmitted', true);
 
       this._eventHandler('destroy');
     },
 
   },
+
+  /* Autofocus on the first input */
+
+  autofocus: function() {
+    var input = this.$().find('input').first();
+
+    if (!Ember.$(input).hasClass('datepicker')) {
+      input.focus();
+    }
+  }.on('didInsertElement'),
 
   /* Show validation errors on submit click */
 
@@ -38,6 +44,9 @@ export default Ember.Mixin.create({
     this.get('childViews').forEach(function(view) {
       var viewConstructor = view.get('constructor').toString();
 
+      /* If the view is an Easy Form input, manually call focus
+      out to show the validation error */
+
       if (viewConstructor === 'Ember.EasyForm.Input') {
         view.focusOut();
       }
@@ -47,19 +56,8 @@ export default Ember.Mixin.create({
   },
 
   resetForm: function() {
-    this.setProperties({
-      formSubmitted: false,
-      destroySubmitted: false,
-    });
+    this.set('formSubmitted', false);
   }.on('willInsertElement'),
-
-  autofocus: function() {
-    var input = this.$().find('input').first();
-
-    if (!Ember.$(input).hasClass('datepicker')) {
-      input.focus();
-    }
-  }.on('didInsertElement'),
 
   /* Private methods */
 

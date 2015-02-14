@@ -5,7 +5,7 @@ export default function(options) {
   var legend = options.hash.legend;
 
   Ember.assert(
-    "You must pass a legend (description) to the form-controls helper like {{#form-controls legend='Create a new thing'}}",
+    'You must pass a legend (description) to the form-controls helper like {{#form-controls legend=\'Create a new thing\'}}',
     legend && Ember.typeOf(legend) === 'string'
   );
 

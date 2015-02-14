@@ -8,8 +8,14 @@ var PostModel = DS.Model.extend({
   description: attr('string')
 });
 
-PostModel.reopen({
-  FIXTURES: Ember.A()
+PostModel.reopenClass({
+  FIXTURES: [
+    {
+      id: 1,
+      title: 'How to Ember',
+      description: 'This is an introduction on how to Ember. Wow.'
+    }
+  ]
 });
 
 export default PostModel;

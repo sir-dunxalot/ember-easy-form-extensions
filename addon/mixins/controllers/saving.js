@@ -5,7 +5,6 @@ export default Ember.Mixin.create(
   EmberValidations.Mixin, {
 
   formSubmitted: false,
-  destroySubmitted: false,
   revalidateFor: [],
 
   forEachRevalidator: function(callback) {
