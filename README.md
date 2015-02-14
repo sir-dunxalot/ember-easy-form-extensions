@@ -14,8 +14,8 @@ ember install:addon ember-easy-form-extensions
 
 Given that `ember-easy-form-extensions` comes prepackaged with `ember-easy-form` and `ember-validations`, you can now build awesome forms and handle the subsequent submission events just as easily as easy form makes writing your templates:
 
-```
-// app-name/templates/posts/new.hbs
+```hbs
+{{!--app-name/templates/posts/new.hbs--}}
 
 {{#form}}
   {{#form-controls legend='Write a new post'}}
@@ -25,7 +25,7 @@ Given that `ember-easy-form-extensions` comes prepackaged with `ember-easy-form`
 {{/form}}
 ```
 
-```
+```js
 // app-name/views/posts/new.js
 
 import Ember from 'ember';
@@ -37,7 +37,7 @@ export default Ember.View.extend(
 });
 ```
 
-```
+```js
 // app-name/controllers/posts/new.js
 
 import Ember from 'ember';
@@ -328,7 +328,7 @@ export default CustomSpinner;
 
 Alternatively, just add your spinner to the template:
 
-```js
+```hbs
 {{!--app-name/templates/components/loading-spinner.hbs--}}
 <img src="some-non-css-spinner.gif">
 ```
@@ -342,7 +342,7 @@ Alternatively, just add your spinner to the template:
 The `{{#form}}` helper wraps your code in a `<form class="form">` tag and disables HTMl5 validations. It's pretty simple:
 
 ```hbs
-// app-name/templates/posts/new.hbs
+{{!--app-name/templates/posts/new.hbs--}}
 
 {{#form}}
   {{!--Your inputs here--}}
@@ -354,7 +354,7 @@ The `{{#form}}` helper wraps your code in a `<form class="form">` tag and disabl
 You can use custom classnames by passing a `class` attribute:
 
 ```hbs
-// app-name/templates/posts/new.hbs
+{{!--app-name/templates/posts/new.hbs--}}
 
 {{#form class='form-static orange'}}
   {{!--Your inputs here--}}
@@ -368,7 +368,7 @@ You can use custom classnames by passing a `class` attribute:
 The `{{#form-controls}}` helper adds more sementicism to your templates. Use it inside your `{{#form}}`:
 
 ```hbs
-// app-name/templates/posts/new.hbs
+{{!--app-name/templates/posts/new.hbs--}}
 
 {{#form}}
   {{#form-controls legend='Write a new post'}}
