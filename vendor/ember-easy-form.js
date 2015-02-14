@@ -1,3 +1,5 @@
+// Changed input helper (search for CHANGED) and removed precompiiled templates
+
 // ==========================================================================
 // Project:   Ember EasyForm
 // Copyright: Copyright 2013 DockYard, LLC. and contributors.
@@ -141,7 +143,8 @@ Ember.Handlebars.registerHelper('input-field', function(property, options) {
   var modelPropertyPath = function(property) {
     if(!property) { return null; }
 
-    var startsWithKeyword = !!options.data.keywords[property.split('.')[0]];
+    // CHANGED
+    var startsWithKeyword = options.data.keywords && !!options.data.keywords[property.split('.')[0]];
 
     if (startsWithKeyword) {
       return property;
@@ -529,36 +532,6 @@ Ember.EasyForm.Submit = Ember.EasyForm.BaseView.extend({
 })();
 
 
-
-(function() {
-Ember.EasyForm.Button = Ember.EasyForm.BaseView.extend({
-  tagName: 'button',
-  template: Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var hashTypes, hashContexts, escapeExpression=this.escapeExpression;
-
-
-  hashTypes = {};
-  hashContexts = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "text", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-
-}),
-  attributeBindings: ['type', 'disabled'],
-  type: 'submit',
-  disabled: function() {
-    return !this.get('formForModel.isValid');
-  }.property('formForModel.isValid'),
-  init: function() {
-    this._super();
-    this.set('formForModel.text', this.value);
-  }
-});
-
-})();
-
-
-
 (function() {
 Ember.EasyForm.TextArea = Ember.TextArea.extend();
 
@@ -576,136 +549,6 @@ Ember.EasyForm.TextField = Ember.TextField.extend();
 (function() {
 
 })();
-
-
-
-(function() {
-Ember.EasyForm.Config.registerTemplate('easyForm/error', Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var hashTypes, hashContexts, escapeExpression=this.escapeExpression;
-
-
-  hashTypes = {};
-  hashContexts = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "view.errorText", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-
-}));
-
-})();
-
-
-
-(function() {
-Ember.EasyForm.Config.registerTemplate('easyForm/hint', Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var hashTypes, hashContexts, escapeExpression=this.escapeExpression;
-
-
-  hashTypes = {};
-  hashContexts = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "view.hintText", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-
-}));
-
-})();
-
-
-
-(function() {
-Ember.EasyForm.Config.registerTemplate('easyForm/input', Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, hashContexts, hashTypes, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression;
-
-
-  hashContexts = {'propertyBinding': depth0,'textBinding': depth0};
-  hashTypes = {'propertyBinding': "STRING",'textBinding': "STRING"};
-  options = {hash:{
-    'propertyBinding': ("view.property"),
-    'textBinding': ("view.label")
-  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers['label-field'] || depth0['label-field']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "label-field", options))));
-  hashTypes = {};
-  hashContexts = {};
-  options = {hash:{},contexts:[depth0],types:["STRING"],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers.partial || depth0.partial),stack1 ? stack1.call(depth0, "easyForm/inputControls", options) : helperMissing.call(depth0, "partial", "easyForm/inputControls", options))));
-  return buffer;
-
-}));
-
-})();
-
-
-
-(function() {
-Ember.EasyForm.Config.registerTemplate('easyForm/inputControls', Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var buffer = '', stack1, stack2, hashContexts, hashTypes, options, helperMissing=helpers.helperMissing, escapeExpression=this.escapeExpression, self=this;
-
-function program1(depth0,data) {
-
-  var stack1, hashContexts, hashTypes, options;
-  hashContexts = {'propertyBinding': depth0};
-  hashTypes = {'propertyBinding': "STRING"};
-  options = {hash:{
-    'propertyBinding': ("view.property")
-  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers['error-field'] || depth0['error-field']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "error-field", options))));
-  }
-
-function program3(depth0,data) {
-
-  var stack1, hashContexts, hashTypes, options;
-  hashContexts = {'propertyBinding': depth0,'textBinding': depth0};
-  hashTypes = {'propertyBinding': "STRING",'textBinding': "STRING"};
-  options = {hash:{
-    'propertyBinding': ("view.property"),
-    'textBinding': ("view.hint")
-  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers['hint-field'] || depth0['hint-field']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "hint-field", options))));
-  }
-
-  hashContexts = {'propertyBinding': depth0,'inputOptionsBinding': depth0};
-  hashTypes = {'propertyBinding': "STRING",'inputOptionsBinding': "STRING"};
-  options = {hash:{
-    'propertyBinding': ("view.property"),
-    'inputOptionsBinding': ("view.inputOptionsValues")
-  },contexts:[],types:[],hashContexts:hashContexts,hashTypes:hashTypes,data:data};
-  data.buffer.push(escapeExpression(((stack1 = helpers['input-field'] || depth0['input-field']),stack1 ? stack1.call(depth0, options) : helperMissing.call(depth0, "input-field", options))));
-  hashTypes = {};
-  hashContexts = {};
-  stack2 = helpers['if'].call(depth0, "view.showError", {hash:{},inverse:self.noop,fn:self.program(1, program1, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
-  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  hashTypes = {};
-  hashContexts = {};
-  stack2 = helpers['if'].call(depth0, "view.hint", {hash:{},inverse:self.noop,fn:self.program(3, program3, data),contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data});
-  if(stack2 || stack2 === 0) { data.buffer.push(stack2); }
-  return buffer;
-
-}));
-
-})();
-
-
-
-(function() {
-Ember.EasyForm.Config.registerTemplate('easyForm/label', Ember.Handlebars.template(function anonymous(Handlebars,depth0,helpers,partials,data) {
-this.compilerInfo = [4,'>= 1.0.0'];
-helpers = this.merge(helpers, Ember.Handlebars.helpers); data = data || {};
-  var hashTypes, hashContexts, escapeExpression=this.escapeExpression;
-
-
-  hashTypes = {};
-  hashContexts = {};
-  data.buffer.push(escapeExpression(helpers._triageMustache.call(depth0, "view.labelText", {hash:{},contexts:[depth0],types:["ID"],hashContexts:hashContexts,hashTypes:hashTypes,data:data})));
-
-}));
-
-})();
-
 
 
 (function() {

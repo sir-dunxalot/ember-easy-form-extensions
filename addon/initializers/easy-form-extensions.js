@@ -7,7 +7,6 @@ import form from 'ember-easy-form-extensions/helpers/form';
 import formControls from 'ember-easy-form-extensions/helpers/form-controls';
 
 export function initialize(/* container, app */) {
-  var EasyForm = Ember.EasyForm;
   var Handlebars = Ember.Handlebars;
   var run = Ember.run;
 
@@ -20,27 +19,34 @@ export function initialize(/* container, app */) {
   Default option overrides
   */
 
-  EasyForm.Config.registerWrapper('default', {
+  Ember.EasyForm.Config.registerWrapper('default', {
     errorClass: 'error',
+    errorTemplate: 'easy-form/error',
+
     formClass: 'form',
     fieldErrorClass: 'control-error',
+
     hintClass: 'hint',
+    hintTemplate: 'easy-form/hint',
+
     inputClass: 'control',
     inputTemplate: 'easy-form/input',
+
     labelClass: 'label',
+    labelTemplate: 'easy-form/label'
   });
 
-  EasyForm.Checkbox.reopen({
+  Ember.EasyForm.Checkbox.reopen({
     classNames: ['input-checkbox'],
   });
 
-  EasyForm.TextField.reopen({
+  Ember.EasyForm.TextField.reopen({
     attributeBindings: ['dataTest:data-test'],
     classNames: ['input'],
     dataTest: Ember.computed.alias('parentView.dataTest'),
   });
 
-  EasyForm.TextArea.reopen({
+  Ember.EasyForm.TextArea.reopen({
     attributeBindings: ['dataTest:data-test'],
     classNames: ['input-textarea'],
     dataTest: Ember.computed.alias('parentView.dataTest'),
@@ -55,7 +61,7 @@ export function initialize(/* container, app */) {
   If a label is specified on the input, this will be used in place of the property name.
   */
 
-  EasyForm.Error.reopen({
+  Ember.EasyForm.Error.reopen({
     errorText: function() {
       var propertyName = this.get('parentView.label') || this.get('property') || '';
 
@@ -67,10 +73,8 @@ export function initialize(/* container, app */) {
   Temporarily binds a success class the the control when the input goes from invalid to valid.
   */
 
-  EasyForm.Input.reopen({
-    classNameBindings: ['showValidity:input_with_validity'],
-    datepickerInputId: insert('elementId', 'input-{{value}}'),
-    isDatepicker: Ember.computed.equal('as', 'date'),
+  Ember.EasyForm.Input.reopen({
+    classNameBindings: ['showValidity:control-valid'],
     showValidity: false,
 
     setInvalidToValid: function() {

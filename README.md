@@ -122,7 +122,13 @@ export default Ember.View.extend(
     return new Ember.RSVP.Promise(function(resolve, reject) {
       // Do something unusual here, then resolve.
 
-      resolve();
+      this.showCoolAnimation();
+
+      if (!this.get('someViewProperty')) {
+        reject(); // Resets the form submission state
+      } else {
+        resolve(); // Will call the controller method
+      }
     });
   }
 
@@ -167,6 +173,31 @@ export default Ember.ObjectController.extend(
 
 The saving mixin will handle all internals including the state of the form (submitted or not submitted) and running the validations - you just have to specify what you want to happen when validations have been run.
 
+You can also add a destroy method:
+
+```js
+// app-name/controllers/post/edit.js
+
+import Ember from 'ember';
+import Saving from 'ember-easy-form-extensions/mixins/controllers/saving';
+
+export default Ember.ObjectController.extend(
+  Saving, {
+
+  destroy: function() {
+    var _this = this;
+
+    // Runs when the user clicks on the destroy submission component after the view has handled the destroy action and checked to see if you've specified a destroyHandler in the view
+    _this.get('content').destroyRecord().then(function() {
+      _this.transitionToRoute('posts');
+    });
+  }
+
+});
+```
+
+Please note, this is best used when you're deleting a persisted model, not a new one - in the latter situation consider using [the delete record mixin](#delete-record).
+
 The `Saving` mixin also provides support for automatically revalidating your model when you're using a computed property with `ember-validations`. Just add the computed property names to the `revalidateFor` array:
 
 ```js
@@ -190,7 +221,7 @@ export default Ember.ObjectController.extend(
   }
 
   required: function() {
-    return somethingElse && !anotherThing;
+    return this.get('somethingElse') && !this.get('anotherThing');
   }.property('somethingElse', 'anotherThing'),
 
   cancel: function() {},
@@ -201,7 +232,7 @@ export default Ember.ObjectController.extend(
 
 If your routes follow a RESTful naming convention, you can take advantage of two new **boolean** properties on the controller:
 - `new` - True if the route is for a new model (e.g. `this.route('new')`;)
-- 'editing' - True if the route is for editing a model (e.g. `this.route('edit');`)
+- `editing` - True if the route is for editing a model (e.g. `this.route('edit');`)
 
 You can use these to set the button text, for example:
 
@@ -322,7 +353,7 @@ To customize the template, just override the path at `app-name/templates/compone
 
 The loading spinner component replaces the buttons in your submission components when the form has been submitted.
 
-If you already have a spinner component simply export it at the correct path:
+If you already have a spinner component simply export it at the correct path to immediately use your component:
 
 ```js
 // app-name/components/loading-spinner.js
@@ -339,6 +370,8 @@ Alternatively, just add your spinner to the template:
 
 <img src="some-non-css-spinner.gif">
 ```
+
+If you really don't want to use the `{{loading-spinner}}` component anywhere in your app, edit the submission component templates as described in [template customization](#template-customization).
 
 ## Helpers
 
