@@ -334,6 +334,7 @@ Alternatively, just add your spinner to the template:
 
 ```hbs
 {{!--app-name/templates/components/loading-spinner.hbs--}}
+
 <img src="some-non-css-spinner.gif">
 ```
 
