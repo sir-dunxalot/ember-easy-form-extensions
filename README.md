@@ -12,7 +12,9 @@ ember install:addon ember-easy-form-extensions
 
 ## Overview
 
-Given that `ember-easy-form-extensions` comes prepackaged with `ember-easy-form` and `ember-validations`, you can now build awesome forms and handle the subsequent submission events just as easily as easy form makes writing your templates:
+Given that `ember-easy-form-extensions` comes prepackaged with `ember-easy-form` and `ember-validations`, you can now build awesome forms and handle the subsequent submission events just as easily as easy form makes writing your templates.
+
+**The below code works out of the box but is also very customizable and extendible**
 
 ```hbs
 {{!--app-name/templates/posts/new.hbs--}}
@@ -22,6 +24,8 @@ Given that `ember-easy-form-extensions` comes prepackaged with `ember-easy-form`
     {{input title}}
     {{input description as='text'}}
   {{/form-controls}}
+
+  {{form-submission}}
 {{/form}}
 ```
 
@@ -299,7 +303,7 @@ An example would be the user is on the route to edit an item but is also given t
 You can customize the text of the button by passing in the `destroytext` option. The default value is shown below:
 
 ```hbs
-// app-name/templates/post/edit.hbs
+{{!--app-name/templates/post/edit.hbs--}}
 
 {{!--Slightly detached from your form UI...--}}
 {{destroy-submission destroyText='Delete'}}
@@ -339,7 +343,7 @@ Alternatively, just add your spinner to the template:
 
 ### Form
 
-The `{{#form}}` helper wraps your code in a `<form class="form">` tag and disables HTMl5 validations. It's pretty simple:
+The `{{#form}}` helper wraps your code in a `<form class="form">` tag without adding view scope. It also disables HTMl5 validations. It's pretty simple:
 
 ```hbs
 {{!--app-name/templates/posts/new.hbs--}}
@@ -365,7 +369,7 @@ You can use custom classnames by passing a `class` attribute:
 
 ### Form Controls
 
-The `{{#form-controls}}` helper adds more sementicism to your templates. Use it inside your `{{#form}}`:
+The `{{#form-controls}}` helper adds more sementicism to your templates without adding view scope. Use it inside your `{{#form}}`:
 
 ```hbs
 {{!--app-name/templates/posts/new.hbs--}}
