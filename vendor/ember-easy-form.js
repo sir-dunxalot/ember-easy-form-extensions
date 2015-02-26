@@ -175,7 +175,8 @@ Ember.Handlebars.registerHelper('input-field', function(property, options) {
     options.hash.inputOptions = EasyFormShims.getBinding(options, 'inputOptions');
   }
 
-  var modelPath = null;
+  var modelPath = null; // CHANGED
+
   options.hash.modelPath = modelPath;
 
   property = options.hash.property;
