@@ -41,11 +41,11 @@ export default Ember.Mixin.create(
       );
 
       save();
-    }
+    };
 
     var reject = function() {
       _this.set('formSubmitted', false);
-    }
+    };
 
     /* If there is a custom validations method, resolve it */
 

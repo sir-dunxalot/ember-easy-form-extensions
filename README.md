@@ -1,8 +1,8 @@
 # Ember Easy Form Extensions
 
-This addon extends Ember EasyForm into the view and controller layers of your Ember CLI app to provide easy event and action handling using mixins and components.
+This addon extends Ember EasyForm into the view and controller layers of your Ember CLI app to provide easy event and action handling using mixins and components. The newly accessible developer-friendly layer includes form submission handlers, components, and integration with ember-validations.
 
-The newly accessible developer-friendly layer includes form submission handlers, helpers, components, and integration with ember-validations.
+**This is also the easiest known way to use Easy Form with Ember 1.10 and HTMLBars.**
 
 ## Installation
 
@@ -12,23 +12,23 @@ Uninstall any references to `ember-easy-form` and `ember-validations`. Then:
 ember install:addon ember-easy-form-extensions
 ```
 
-## Overview
+## Overview and Example
 
-Given that `ember-easy-form-extensions` comes prepackaged with `ember-easy-form` and `ember-validations`, you can now build awesome forms and handle the subsequent submission events just as easily as easy form makes writing your templates.
+`ember-easy-form-extensions` comes prepackaged with `ember-easy-form` and `ember-validations` so you can now build awesome forms and handle the subsequent submission events just as easily as Easy Form makes writing your templates.
 
-**The below code works out of the box but is also very customizable and extendible**
+The below code works out of the box but is also very customizable and extendible.
 
 ```hbs
 {{!--app-name/templates/posts/new.hbs--}}
 
-{{#form}}
+{{#form-wrapper}}
   {{#form-controls legend='Write a new post'}}
     {{input title}}
     {{input description as='text'}}
   {{/form-controls}}
 
   {{form-submission}}
-{{/form}}
+{{/form-wrapper}}
 ```
 
 ```js
@@ -47,7 +47,7 @@ export default Ember.View.extend(
 // app-name/controllers/posts/new.js
 
 import Ember from 'ember';
-import Saving from 'ember-easy-form-extensions/mixins/views/submitting';
+import Saving from 'ember-easy-form-extensions/mixins/controllers/saving';
 
 export default Ember.ObjectController.extend(
   Saving, {
@@ -77,13 +77,10 @@ export default Ember.ObjectController.extend(
 
 - [Mixins](#mixins)
 - [Components](#components)
-- [Helpers](#helpers)
-- [Misc](#misc)
-
 
 ## Mixins
 
-The core functionality added by `ember-easy-form-extensions` lies in it's mixins. The mixins handle form submission events and work with the included components to make validating, saving, destroying, and cancelling, a breeze.
+The core functionality added by `ember-easy-form-extensions` lies in it's mixins. The mixins handle form submission events and work with the included components to make validating, saving, deleting, and cancelling, a breeze.
 
 In most situations you will add the `Saving` mixin to your controller, the `Submitting` mixin to your view, and either `Rollback` or `DeleteRecord` to your route.
 
@@ -155,7 +152,7 @@ export default Ember.ObjectController.extend(
     title: {
       presence: true
     }
-  }
+  },
 
   cancel: function() {
     this.transitionTo('posts');
@@ -209,7 +206,7 @@ import Saving from 'ember-easy-form-extensions/mixins/controllers/saving';
 export default Ember.ObjectController.extend(
   Saving, {
 
-  revalidateFor: ['required']
+  revalidateFor: ['required'],
 
   // Validations run out of the box
   validations: {
@@ -218,7 +215,7 @@ export default Ember.ObjectController.extend(
         if: 'required'
       }
     }
-  }
+  },
 
   required: function() {
     return this.get('somethingElse') && !this.get('anotherThing');
@@ -231,8 +228,8 @@ export default Ember.ObjectController.extend(
 ```
 
 If your routes follow a RESTful naming convention, you can take advantage of two new **boolean** properties on the controller:
-- `new` - True if the route is for a new model (e.g. `this.route('new')`;)
-- `editing` - True if the route is for editing a model (e.g. `this.route('edit');`)
+- `new` - True if the route is for a new model (e.g. `this.route('new')`)
+- `editing` - True if the route is for editing a model (e.g. `this.route('edit')`)
 
 You can use these to set the button text, for example:
 
@@ -251,7 +248,7 @@ export default Ember.ObjectController.extend(
 });
 ```
 
-The `saveButtontext` could then be used in your [`{{form-submission}}` component](#form-submission).
+The `saveButtonText` could then be used in your [`{{form-submission}}` component](#form-submission).
 
 ### Rollback (for routes)
 
@@ -267,15 +264,15 @@ export default Ember.Route.extend(
   Rollback, {
 
   model: function(params) {
-    return this.store.find('post', params.id);
+    return this.modelFor('post');
   }
 
 });
 ```
 
-### Destroy Record (for routes)
+### Delete Record (for routes)
 
-The destroy record is intended for use in routes where you are creating a **new** record. This mixin will check to see if the model is dirty and will automatically rollback it's changes if it is. The most common reason for this to happen is the user navigates to the new route of a resource and then clicks cancel.
+The delete record is intended for use in routes where you are creating a **new** record. This mixin will check to see if the model is dirty and will automatically rollback it's changes if it is. The most common reason for this to happen is the user navigates to the new route of a resource and then clicks cancel.
 
 ```js
 // app-name/routes/posts/new.js
@@ -295,9 +292,74 @@ export default Ember.Route.extend(
 
 ## Components
 
+To customize the template of any components just override the path in your app. For example, `app-name/templates/components/form-submission.hbs` - easy!
+
+To extend the class of any components just import them from this addon and then export them in your app. For example:
+
+```js
+// app-name/components/form-submissison.js
+
+import FormSubmissionComponent from 'ember-easy-form-extensions/components/form-submission';
+
+export default FormSubmissionComponent.extend({
+  // Your functionality here
+  className: ['buttons-group']
+  classNames: ['form_submission']
+});
+```
+
+### Form Wrapper
+
+The `{{#form-wrapper}}` component wraps your code in a `<form class="form">` tag to enable HTML5 form events. It also disables HTMl5 validations. It's pretty simple:
+
+```hbs
+{{!--app-name/templates/posts/new.hbs--}}
+
+{{#form-wrapper}}
+  {{!--Your inputs here--}}
+
+  {{form-submission}}
+{{/form-wrapper}}
+```
+
+You can use custom the base classname by passing a `className` attribute:
+
+```hbs
+{{!--app-name/templates/posts/new.hbs--}}
+
+{{#form-wrapper className='form-static'}}
+  {{!--Your inputs here--}}
+
+  {{form-submission}}
+{{/form-wrapper}}
+```
+
+Otherwise, this component work just like any other Ember component.
+
+### Form Controls
+
+The `{{#form-controls}}` component adds more sementicism to your templates. Use it **inside** your `{{#form-wrapper}}`:
+
+```hbs
+{{!--app-name/templates/posts/new.hbs--}}
+
+{{#form-wrapper}}
+  {{#form-controls legend='Write a new post'}}
+    {{!--Your inputs here--}}
+  {{/form-controls}}
+
+  {{form-submission}}
+{{/form-wrapper}}
+```
+
+Note two important things:
+- `{{form-submission}}` goes **outside** the `{{#form-controls}}`
+- `{{#form-controls}}` requires a `legend` attribute for accessibility
+
+
 ### Form Submission
 
-The most common component, `{{form-submission}}`, adds buttons for submit/save and cancel to your form.
+The `{{form-submission}}` component adds buttons for submit/save and cancel to your form.
 
 You can customize the text of the buttons and which buttons show by passing in options. The default values are shown below:
 
@@ -322,10 +384,6 @@ The argument can be bound easily:
 ```
 
 The buttons will automatically be replaced by a [loading spinner](#loading-spinner) when the form is submitted. The form will return to it's original state if there are validation errors, etc, so the user can resubmit the form.
-
-#### Template customization
-
-To customize the template, just override the path at `app-name/templates/components/form-submission.hbs` - easy!
 
 ### Destroy Submission
 
@@ -372,57 +430,3 @@ Alternatively, just add your spinner to the template:
 ```
 
 If you really don't want to use the `{{loading-spinner}}` component anywhere in your app, edit the submission component templates as described in [template customization](#template-customization).
-
-## Helpers
-
-`ember-easy-form-extensions` comes prepackaged with **scopeless** block template helpers. These helpers make it really easy to code semantic forms and keep your code maintainable.
-
-### Form
-
-The `{{#form}}` helper wraps your code in a `<form class="form">` tag without adding view scope. It also disables HTMl5 validations. It's pretty simple:
-
-```hbs
-{{!--app-name/templates/posts/new.hbs--}}
-
-{{#form}}
-  {{!--Your inputs here--}}
-
-  {{form-submission}}
-{{/form}}
-```
-
-You can use custom classnames by passing a `class` attribute:
-
-```hbs
-{{!--app-name/templates/posts/new.hbs--}}
-
-{{#form class='form-static orange'}}
-  {{!--Your inputs here--}}
-
-  {{form-submission}}
-{{/form}}
-```
-
-### Form Controls
-
-The `{{#form-controls}}` helper adds more sementicism to your templates without adding view scope. Use it inside your `{{#form}}`:
-
-```hbs
-{{!--app-name/templates/posts/new.hbs--}}
-
-{{#form}}
-  {{#form-controls legend='Write a new post'}}
-    {{!--Your inputs here--}}
-  {{/form-controls}}
-
-  {{form-submission}}
-{{/form}}
-```
-
-Note two important things:
-- `{{form-submission}}` goes **outside** the `{{#form-controls}}`
-- `{{#form-controls}}` requires a `legend` attribute for accessibility
-
-## Misc
-
-Check out `ember-easy-form-extensions/addon/utils` for more goodies!

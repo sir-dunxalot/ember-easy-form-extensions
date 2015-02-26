@@ -1,19 +1,7 @@
 import Ember from 'ember';
-import insert from 'ember-easy-form-extensions/utils/computed/insert';
-
-/* Import helpers */
-
-import form from 'ember-easy-form-extensions/helpers/form';
-import formControls from 'ember-easy-form-extensions/helpers/form-controls';
 
 export function initialize(/* container, app */) {
-  var Handlebars = Ember.Handlebars;
   var run = Ember.run;
-
-  /* Register helpers */
-
-  Handlebars.registerHelper('form', form);
-  Handlebars.registerHelper('form-controls', formControls);
 
   /**
   Default option overrides
