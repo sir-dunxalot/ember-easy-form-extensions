@@ -1,8 +1,8 @@
 # Ember Easy Form Extensions
 
-This addon extends Ember EasyForm into the view and controller layers of your Ember CLI app to provide easy event and action handling using mixins and components.
+This addon extends Ember EasyForm into the view and controller layers of your Ember CLI app to provide easy event and action handling using mixins and components. The newly accessible developer-friendly layer includes form submission handlers, components, and integration with ember-validations.
 
-The newly accessible developer-friendly layer includes form submission handlers, helpers, components, and integration with ember-validations.
+**This is also the easiest known way to use Easy Form with Ember 1.10 and HTMLBars.**
 
 ## Installation
 
@@ -12,23 +12,23 @@ Uninstall any references to `ember-easy-form` and `ember-validations`. Then:
 ember install:addon ember-easy-form-extensions
 ```
 
-## Overview
+## Overview and Example
 
-Given that `ember-easy-form-extensions` comes prepackaged with `ember-easy-form` and `ember-validations`, you can now build awesome forms and handle the subsequent submission events just as easily as easy form makes writing your templates.
+`ember-easy-form-extensions` comes prepackaged with `ember-easy-form` and `ember-validations` so you can now build awesome forms and handle the subsequent submission events just as easily as Easy Form makes writing your templates.
 
-**The below code works out of the box but is also very customizable and extendible**
+The below code works out of the box but is also very customizable and extendible.
 
 ```hbs
 {{!--app-name/templates/posts/new.hbs--}}
 
-{{#form}}
+{{#form-wrapper}}
   {{#form-controls legend='Write a new post'}}
     {{input title}}
     {{input description as='text'}}
   {{/form-controls}}
 
   {{form-submission}}
-{{/form}}
+{{/form-wrapper}}
 ```
 
 ```js
@@ -77,9 +77,6 @@ export default Ember.ObjectController.extend(
 
 - [Mixins](#mixins)
 - [Components](#components)
-- [Helpers](#helpers)
-- [Misc](#misc)
-
 
 ## Mixins
 
@@ -295,9 +292,74 @@ export default Ember.Route.extend(
 
 ## Components
 
+To customize the template of any components just override the path in your app. For example, `app-name/templates/components/form-submission.hbs` - easy!
+
+To extend the class of any components just import them from this addon and then export them in your app. For example:
+
+```js
+// app-name/components/form-submissison.js
+
+import FormSubmissionComponent from 'ember-easy-form-extensions/components/form-submission';
+
+export default FormSubmissionComponent.extend({
+  // Your functionality here
+  className: ['buttons-group']
+  classNames: ['form_submission']
+});
+```
+
+### Form Wrapper
+
+The `{{#form-wrapper}}` component wraps your code in a `<form class="form">` tag to enable HTML5 form events. It also disables HTMl5 validations. It's pretty simple:
+
+```hbs
+{{!--app-name/templates/posts/new.hbs--}}
+
+{{#form-wrapper}}
+  {{!--Your inputs here--}}
+
+  {{form-submission}}
+{{/form-wrapper}}
+```
+
+You can use custom the base classname by passing a `className` attribute:
+
+```hbs
+{{!--app-name/templates/posts/new.hbs--}}
+
+{{#form-wrapper className='form-static'}}
+  {{!--Your inputs here--}}
+
+  {{form-submission}}
+{{/form-wrapper}}
+```
+
+Otherwise, this component work just like any other Ember component.
+
+### Form Controls
+
+The `{{#form-controls}}` component adds more sementicism to your templates. Use it **inside** your `{{#form-wrapper}}`:
+
+```hbs
+{{!--app-name/templates/posts/new.hbs--}}
+
+{{#form-wrapper}}
+  {{#form-controls legend='Write a new post'}}
+    {{!--Your inputs here--}}
+  {{/form-controls}}
+
+  {{form-submission}}
+{{/form-wrapper}}
+```
+
+Note two important things:
+- `{{form-submission}}` goes **outside** the `{{#form-controls}}`
+- `{{#form-controls}}` requires a `legend` attribute for accessibility
+
+
 ### Form Submission
 
-The most common component, `{{form-submission}}`, adds buttons for submit/save and cancel to your form.
+The `{{form-submission}}` component adds buttons for submit/save and cancel to your form.
 
 You can customize the text of the buttons and which buttons show by passing in options. The default values are shown below:
 
@@ -322,10 +384,6 @@ The argument can be bound easily:
 ```
 
 The buttons will automatically be replaced by a [loading spinner](#loading-spinner) when the form is submitted. The form will return to it's original state if there are validation errors, etc, so the user can resubmit the form.
-
-#### Template customization
-
-To customize the template, just override the path at `app-name/templates/components/form-submission.hbs` - easy!
 
 ### Destroy Submission
 
@@ -372,57 +430,3 @@ Alternatively, just add your spinner to the template:
 ```
 
 If you really don't want to use the `{{loading-spinner}}` component anywhere in your app, edit the submission component templates as described in [template customization](#template-customization).
-
-## Helpers
-
-`ember-easy-form-extensions` comes prepackaged with **scopeless** block template helpers. These helpers make it really easy to code semantic forms and keep your code maintainable.
-
-### Form
-
-The `{{#form}}` helper wraps your code in a `<form class="form">` tag without adding view scope. It also disables HTMl5 validations. It's pretty simple:
-
-```hbs
-{{!--app-name/templates/posts/new.hbs--}}
-
-{{#form}}
-  {{!--Your inputs here--}}
-
-  {{form-submission}}
-{{/form}}
-```
-
-You can use custom classnames by passing a `class` attribute:
-
-```hbs
-{{!--app-name/templates/posts/new.hbs--}}
-
-{{#form class='form-static orange'}}
-  {{!--Your inputs here--}}
-
-  {{form-submission}}
-{{/form}}
-```
-
-### Form Controls
-
-The `{{#form-controls}}` helper adds more sementicism to your templates without adding view scope. Use it inside your `{{#form}}`:
-
-```hbs
-{{!--app-name/templates/posts/new.hbs--}}
-
-{{#form}}
-  {{#form-controls legend='Write a new post'}}
-    {{!--Your inputs here--}}
-  {{/form-controls}}
-
-  {{form-submission}}
-{{/form}}
-```
-
-Note two important things:
-- `{{form-submission}}` goes **outside** the `{{#form-controls}}`
-- `{{#form-controls}}` requires a `legend` attribute for accessibility
-
-## Misc
-
-Check out `ember-easy-form-extensions/addon/utils` for more goodies!
