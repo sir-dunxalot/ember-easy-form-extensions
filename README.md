@@ -47,7 +47,7 @@ export default Ember.View.extend(
 // app-name/controllers/posts/new.js
 
 import Ember from 'ember';
-import Saving from 'ember-easy-form-extensions/mixins/views/submitting';
+import Saving from 'ember-easy-form-extensions/mixins/controllers/saving';
 
 export default Ember.ObjectController.extend(
   Saving, {
@@ -80,7 +80,7 @@ export default Ember.ObjectController.extend(
 
 ## Mixins
 
-The core functionality added by `ember-easy-form-extensions` lies in it's mixins. The mixins handle form submission events and work with the included components to make validating, saving, destroying, and cancelling, a breeze.
+The core functionality added by `ember-easy-form-extensions` lies in it's mixins. The mixins handle form submission events and work with the included components to make validating, saving, deleting, and cancelling, a breeze.
 
 In most situations you will add the `Saving` mixin to your controller, the `Submitting` mixin to your view, and either `Rollback` or `DeleteRecord` to your route.
 
@@ -228,8 +228,8 @@ export default Ember.ObjectController.extend(
 ```
 
 If your routes follow a RESTful naming convention, you can take advantage of two new **boolean** properties on the controller:
-- `new` - True if the route is for a new model (e.g. `this.route('new')`;)
-- `editing` - True if the route is for editing a model (e.g. `this.route('edit');`)
+- `new` - True if the route is for a new model (e.g. `this.route('new')`)
+- `editing` - True if the route is for editing a model (e.g. `this.route('edit')`)
 
 You can use these to set the button text, for example:
 
@@ -248,7 +248,7 @@ export default Ember.ObjectController.extend(
 });
 ```
 
-The `saveButtontext` could then be used in your [`{{form-submission}}` component](#form-submission).
+The `saveButtonText` could then be used in your [`{{form-submission}}` component](#form-submission).
 
 ### Rollback (for routes)
 
@@ -270,9 +270,9 @@ export default Ember.Route.extend(
 });
 ```
 
-### Destroy Record (for routes)
+### Delete Record (for routes)
 
-The destroy record is intended for use in routes where you are creating a **new** record. This mixin will check to see if the model is dirty and will automatically rollback it's changes if it is. The most common reason for this to happen is the user navigates to the new route of a resource and then clicks cancel.
+The delete record is intended for use in routes where you are creating a **new** record. This mixin will check to see if the model is dirty and will automatically rollback it's changes if it is. The most common reason for this to happen is the user navigates to the new route of a resource and then clicks cancel.
 
 ```js
 // app-name/routes/posts/new.js
