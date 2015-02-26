@@ -33,7 +33,7 @@ var EasyFormShims;
 
 })();
 
- // Version: 1.0.0.beta.1
+
 (function() {
 
 Ember.EasyForm = Ember.Namespace.create({
@@ -140,19 +140,6 @@ Ember.Handlebars.registerHelper('input', function(property, options) {
 
   options = Ember.EasyForm.processOptions(property, options);
   options.hash.isBlock = !!(options.fn);
-
-  // hash = options.hash;
-
-  // options.hash.content = options.hash.items;
-  // delete options.hash.items;
-
-  // for (var prop in options.hash) {
-  //   if (/-/.test(prop)) {
-  //     var camelized = Ember.String.camelize(prop);
-  //     options.hash[camelized] = options.hash[prop];
-  //     delete options.hash[prop];
-  //   }
-  // }
 
   return EasyFormShims.viewHelper(this, Ember.EasyForm.Input, options);
 });

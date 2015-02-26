@@ -1,7 +1,6 @@
 import Ember from 'ember';
 
 export function initialize(/* container, app */) {
-  var Handlebars = Ember.Handlebars;
   var run = Ember.run;
 
   /**
