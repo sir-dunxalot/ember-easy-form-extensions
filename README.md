@@ -152,7 +152,7 @@ export default Ember.ObjectController.extend(
     title: {
       presence: true
     }
-  }
+  },
 
   cancel: function() {
     this.transitionTo('posts');
@@ -206,7 +206,7 @@ import Saving from 'ember-easy-form-extensions/mixins/controllers/saving';
 export default Ember.ObjectController.extend(
   Saving, {
 
-  revalidateFor: ['required']
+  revalidateFor: ['required'],
 
   // Validations run out of the box
   validations: {
@@ -215,7 +215,7 @@ export default Ember.ObjectController.extend(
         if: 'required'
       }
     }
-  }
+  },
 
   required: function() {
     return this.get('somethingElse') && !this.get('anotherThing');
@@ -264,7 +264,7 @@ export default Ember.Route.extend(
   Rollback, {
 
   model: function(params) {
-    return this.store.find('post', params.id);
+    return this.modelFor('post');
   }
 
 });
