@@ -4,7 +4,7 @@ export default Ember.Component.extend({
   cancel: true,
   cancelText: 'Cancel',
   classNames: ['buttons', 'submission'],
-  formSubmitted: Em.computed.readOnly('parentView.controller.formSubmitted'),
+  formSubmitted: Ember.computed.readOnly('parentView.controller.formSubmitted'),
   submit: true,
   submitText: 'Save',
 

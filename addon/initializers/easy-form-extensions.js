@@ -1,5 +1,4 @@
 import Ember from 'ember';
-import insert from 'ember-easy-form-extensions/utils/computed/insert';
 
 /* Import helpers */
 
