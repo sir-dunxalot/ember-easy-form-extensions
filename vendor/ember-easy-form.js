@@ -1,4 +1,4 @@
-// Changed input helper (search for CHANGED) and removed precompiiled templates
+/* WARNING: This file has been edited - it is different the original Easy Form source. Some functionality has been removed to work better with ember-easy-form-extensions and changes have been made for HTMLBars compatibility. */
 
 // ==========================================================================
 // Project:   Ember EasyForm
@@ -11,6 +11,14 @@ var EasyFormShims;
 (function() {
 
   EasyFormShims = {
+
+    callHelper: function(helperName, context, params, options, env) {
+      env = env ? env : options;
+
+      return Ember.Handlebars.helpers[helperName].helperFunction.call(
+        context, params, options.hash, options, options
+      );
+    },
 
     getBinding: function(options, propertyName) {
       propertyName += 'Binding';
@@ -25,9 +33,15 @@ var EasyFormShims;
     },
 
     viewHelper: function(context, View, options) {
-      return Ember.Handlebars.helpers.view.helperFunction.call(
-        context, [View], options.hash, options, options
-      );
+      return this.callHelper('view', context, [View], options);
+    },
+
+    emberInputHelper: function(context, options) {
+      var env = options;
+
+      env.helpers = Ember.Handlebars.helpers;
+
+      return this.callHelper('ember-input', context, [], options, env);
     },
   }
 
@@ -135,7 +149,9 @@ Ember.Handlebars.helpers['ember-input'] = Ember.Handlebars.helpers['input'];
 
 Ember.Handlebars.registerHelper('input', function(property, options) {
   if (arguments.length === 1) {
-    return Ember.Handlebars.helpers['ember-input'].call(this, arguments[0]);
+    options = property;
+
+    return EasyFormShims.emberInputHelper(this, options);
   }
 
   options = Ember.EasyForm.processOptions(property, options);
