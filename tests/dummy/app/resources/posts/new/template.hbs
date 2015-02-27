@@ -3,8 +3,16 @@
   {{#form-controls legend='Write a new post'}}
     {{input title}}
     {{input description}}
+    {{input valueBinding=title}}
   {{/form-controls}}
 
   {{form-submission}}
 
 {{/form-wrapper}}
+
+<dl>
+  <dt>Title</dt>
+  <dd>{{title}}</dd>
+  <dt>Description</dt>
+  <dd>{{description}}</dd>
+</dl>
