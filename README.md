@@ -77,6 +77,7 @@ export default Ember.ObjectController.extend(
 
 - [Mixins](#mixins)
 - [Components](#components)
+- [Templating](#templating)
 
 ## Mixins
 
@@ -292,8 +293,6 @@ export default Ember.Route.extend(
 
 ## Components
 
-To customize the template of any components just override the path in your app. For example, `app-name/templates/components/form-submission.hbs` - easy!
-
 To extend the class of any components just import them from this addon and then export them in your app. For example:
 
 ```js
@@ -430,3 +429,16 @@ Alternatively, just add your spinner to the template:
 ```
 
 If you really don't want to use the `{{loading-spinner}}` component anywhere in your app, edit the submission component templates as described in [template customization](#template-customization).
+
+
+## Templating
+
+To customize the template of any components just override the path in your app. For example, `app-name/templates/components/form-submission.hbs` - easy!
+
+To override the template of any Easy Form view, just override the easyform path:
+
+- Error: `app-name/templates/easy-form/error.hbs`
+- Hint: `app-name/templates/easy-form/hint.hbs`
+- Control: `app-name/templates/easy-form/input-controls.hbs`
+- Input: `app-name/templates/easy-form/input.hbs`
+- Label: `app-name/templates/easy-form/label.hbs`
