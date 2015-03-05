@@ -62,7 +62,6 @@ export default Ember.Mixin.create({
   /* Private methods */
 
   _eventHandler: function(type) {
-    var _this = this;
     var controller = this.get('controller');
     var methodName = type + 'Handler';
     var handler = this[methodName];

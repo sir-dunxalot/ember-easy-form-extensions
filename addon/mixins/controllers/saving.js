@@ -32,7 +32,6 @@ export default Ember.Mixin.create(
   validateAndSave: function() {
     var _this = this;
     var runCustomValidations = _this.runCustomValidations;
-    // var save = _this.save;
 
     var resolve = function() {
       Ember.assert(
