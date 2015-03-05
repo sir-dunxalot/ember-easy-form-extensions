@@ -32,15 +32,15 @@ export default Ember.Mixin.create(
   validateAndSave: function() {
     var _this = this;
     var runCustomValidations = _this.runCustomValidations;
-    var save = _this.save;
+    // var save = _this.save;
 
     var resolve = function() {
       Ember.assert(
         'You need to specify a save method on this controller',
-        save
+        typeof _this.save === 'function'
       );
 
-      save();
+      _this.save();
     };
 
     var reject = function() {
@@ -52,11 +52,7 @@ export default Ember.Mixin.create(
     if (runCustomValidations && !runCustomValidations.then) {
       Ember.assert('runCustomValidations() must return a promise (e.g. return new Ember.RSVP.Promise()).');
     } else if (runCustomValidations) {
-      runCustomValidations().then(function() {
-        resolve();
-      }, function() {
-        reject();
-      });
+      runCustomValidations().then(resolve, reject);
     } else {
 
       /* Else save with normal ember-validations checks */

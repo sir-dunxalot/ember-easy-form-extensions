@@ -10,6 +10,10 @@ export default Ember.ObjectController.extend(
     }
   },
 
+  save: function() {
+    console.log(this);
+  },
+
   cancel: function() {
     this.transitionToRoute('index');
   }
