@@ -87,7 +87,7 @@ export default Ember.Mixin.create({
       controllerMethod = controller[type];
 
       Ember.assert(
-        'You need to specify a cancel method on this view\'s controller',
+        'You need to specify a ' + type + ' method on this view\'s controller',
         controllerMethod && Ember.typeOf(controllerMethod) === 'function'
       );
 
