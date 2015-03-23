@@ -8,14 +8,31 @@ export default Ember.Component.extend({
   submit: true,
   submitText: 'Save',
 
-  _checkForParentViewMixin: function() {
-    var parentView = this.get('parentView');
+  actions: {
+    cancel: function() {
+      this.get('formView').send('cancel');
+    }
+  },
 
-    Ember.warn(
-      'No submitting mixin has been added to this route\'s view. Your form may not submit correctly.',
-      parentView.submit && parentView.resetForm
-    );
-  }.on('init'),
+  formView: function() {
+    var walkViews = function(view) {
+      var parentView;
+
+      if (view.submit) {
+        return view;
+      } else {
+        parentView = view.get('parentView');
+
+        if (parentView) {
+          return walkViews(parentView);
+        } else {
+          Ember.warn('No view found with the Submitting mixin.')
+        }
+      }
+    }
+
+    return walkViews(this.get('parentView'));
+  }.property(),
 
   _watchForEmptyComponent: function() {
     Ember.warn(
