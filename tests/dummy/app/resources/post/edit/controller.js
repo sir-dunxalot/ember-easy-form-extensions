@@ -16,6 +16,10 @@ export default Ember.ObjectController.extend(
 
   cancel: function() {
     this.transitionToRoute('index');
+  },
+
+  destroy: function() {
+    console.log('Destroying');
   }
 
 });
