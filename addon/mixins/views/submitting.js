@@ -67,46 +67,39 @@ export default Ember.Mixin.create({
     var handler = this[methodName];
     var controllerMethod;
 
+    /* If event is submit, controller method is renamed */
+
+    type = type === 'submit' ? 'validateAndSave' : type;
+    controllerMethod = controller[type];
+
+    Ember.assert(
+      'You need to specify a ' + type + ' method on this view\'s controller',
+      controllerMethod && Ember.typeOf(controllerMethod) === 'function'
+    );
+
+    /* Don't use controller[type] variable so we keep scope */
+
+    /* Else, if handler exists, resolve the promise then call
+    the method on the controller */
+
     if (handler) {
       Ember.assert(
         methodName + '() must be a function',
         Ember.typeOf(handler) === 'function'
       );
-    }
 
-    /* If handler is not a promise */
+      /* TODO - need a way to assert whether handler is a promise */
 
-    if (handler && !handler.then) {
-      Ember.assert(methodName + '() must return a promise (e.g. return new Ember.RSVP.Promise()).');
+      handler().then(function() {
+        controller[type]();
+      });
+
+    /* Else, just call the method on the controller */
 
     } else {
-
-      /* If event is submit, controller method is renamed */
-
-      type = type === 'submit' ? 'validateAndSave' : type;
-      controllerMethod = controller[type];
-
-      Ember.assert(
-        'You need to specify a ' + type + ' method on this view\'s controller',
-        controllerMethod && Ember.typeOf(controllerMethod) === 'function'
-      );
-
-      /* Don't use controller[type] variable so we keep scope */
-
-      /* Else, if handler exists, resolve the promise then call
-      the method on the controller */
-
-      if (handler && handler.then) {
-        handler().then(function() {
-          controller[type]();
-        });
-
-      /* Else, just call the method on the controller */
-
-      } else {
-        controller[type]();
-      }
+      controller[type]();
     }
+
   },
 
 });

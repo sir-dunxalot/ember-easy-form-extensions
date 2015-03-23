@@ -1,10 +1,17 @@
 import Ember from 'ember';
+import WalkViews from 'ember-easy-form-extensions/mixins/views/walk-views';
 
-var readOnly = Ember.computed.readOnly;
+export default Ember.Component.extend(
+  WalkViews, {
 
-export default Ember.Component.extend({
   classNames: ['buttons'],
   destroyText: 'Delete',
-  formSubmitted: readOnly('parentView.controller.formSubmitted'),
+  formSubmitted: Ember.computed.readOnly('formView.formSubmitted'),
   iconClass: 'icon-delete',
+
+  actions: {
+    destroy: function() {
+      this.get('formView').send('destroy');
+    }
+  },
 });

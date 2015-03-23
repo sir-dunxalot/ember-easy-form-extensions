@@ -1,10 +1,13 @@
 import Ember from 'ember';
+import WalkViews from 'ember-easy-form-extensions/mixins/views/walk-views';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(
+  WalkViews, {
+
   cancel: true,
   cancelText: 'Cancel',
   classNames: ['buttons', 'submission'],
-  formSubmitted: Ember.computed.readOnly('parentView.controller.formSubmitted'),
+  formSubmitted: Ember.computed.readOnly('formView.formSubmitted'),
   submit: true,
   submitText: 'Save',
 
@@ -13,26 +16,6 @@ export default Ember.Component.extend({
       this.get('formView').send('cancel');
     }
   },
-
-  formView: function() {
-    var walkViews = function(view) {
-      var parentView;
-
-      if (view.submit) {
-        return view;
-      } else {
-        parentView = view.get('parentView');
-
-        if (parentView) {
-          return walkViews(parentView);
-        } else {
-          Ember.warn('No view found with the Submitting mixin.')
-        }
-      }
-    }
-
-    return walkViews(this.get('parentView'));
-  }.property(),
 
   _watchForEmptyComponent: function() {
     Ember.warn(
