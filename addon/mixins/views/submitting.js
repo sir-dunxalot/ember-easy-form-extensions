@@ -90,10 +90,11 @@ export default Ember.Mixin.create({
 
       handlerPromise = handler();
 
-      Ember.assert(
-        'handler() must return a promise (e.g. return new Ember.RSVP.Promise(...))',
-        handlerPromise.then
-      );
+      if (!handlerPromise.then) {
+        Ember.assert(
+          'handler() must return a promise (e.g. return new Ember.RSVP.Promise(...))'
+        );
+      }
 
       handlerPromise.then(function() {
         controller[type]();

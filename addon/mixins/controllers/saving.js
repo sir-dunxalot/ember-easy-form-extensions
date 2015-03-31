@@ -51,10 +51,11 @@ export default Ember.Mixin.create(
     if (this.runCustomValidations) {
       customValidationsPromise = this.runCustomValidations();
 
-      Ember.assert(
-        'runCustomValidations() must return a promise (e.g. return new Ember.RSVP.Promise(...)).',
-        customValidationsPromise.then
-      );
+      if (!customValidationsPromise.then) {
+        Ember.assert(
+          'runCustomValidations() must return a promise (e.g. return new Ember.RSVP.Promise(...)).'
+        );
+      }
 
       customValidationsPromise.then(resolve, reject);
     } else {
