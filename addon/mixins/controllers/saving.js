@@ -31,7 +31,6 @@ export default Ember.Mixin.create(
 
   validateAndSave: function() {
     var _this = this;
-    var runCustomValidations = _this.runCustomValidations;
     var customValidationsPromise;
 
     var resolve = function() {
@@ -49,8 +48,8 @@ export default Ember.Mixin.create(
 
     /* If there is a custom validations method, resolve it */
 
-    if (runCustomValidations) {
-      customValidationsPromise = runCustomValidations();
+    if (this.runCustomValidations) {
+      customValidationsPromise = this.runCustomValidations();
 
       Ember.assert(
         'runCustomValidations() must return a promise (e.g. return new Ember.RSVP.Promise(...)).',
