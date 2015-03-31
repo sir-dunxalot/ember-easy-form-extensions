@@ -65,7 +65,7 @@ export default Ember.Mixin.create({
     var controller = this.get('controller');
     var methodName = type + 'Handler';
     var handler = this[methodName];
-    var controllerMethod;
+    var controllerMethod, handlerPromise;
 
     /* If event is submit, controller method is renamed */
 
@@ -88,9 +88,14 @@ export default Ember.Mixin.create({
         Ember.typeOf(handler) === 'function'
       );
 
-      /* TODO - need a way to assert whether handler is a promise */
+      handlerPromise = handler();
 
-      handler().then(function() {
+      Ember.assert(
+        'handler() must return a promise (e.g. return new Ember.RSVP.Promise(...))',
+        handlerPromise.then
+      );
+
+      handlerPromise.then(function() {
         controller[type]();
       });
 
