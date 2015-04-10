@@ -17,11 +17,11 @@ export default Ember.Mixin.create(
     }
   },
 
-  editing: function() {
+  editingModel: function() {
     return this.toString().indexOf('/edit:') > -1;
   }.property().readOnly(),
 
-  new: function() {
+  newModel: function() {
     return this.toString().indexOf('/new:') > -1;
   }.property().readOnly(),
 

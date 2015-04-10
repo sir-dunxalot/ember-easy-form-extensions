@@ -229,8 +229,8 @@ export default Ember.ObjectController.extend(
 ```
 
 If your routes follow a RESTful naming convention, you can take advantage of two new **boolean** properties on the controller:
-- `new` - True if the route is for a new model (e.g. `this.route('new')`)
-- `editing` - True if the route is for editing a model (e.g. `this.route('edit')`)
+- `newModel` - True if the route is for a new model (e.g. `this.route('new')`)
+- `editingModel` - True if the route is for editing a model (e.g. `this.route('edit')`)
 
 You can use these to set the button text, for example:
 
@@ -244,7 +244,7 @@ export default Ember.ObjectController.extend(
   Saving, {
 
   saveButtonText: function() {
-    return this.get('editing') ? 'Save' : 'Add post';
+    return this.get('editingModel') ? 'Save' : 'Add post';
   }.property('editing'),
 });
 ```
