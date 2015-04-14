@@ -25,7 +25,9 @@ export function initialize(/* container, app */) {
   });
 
   Ember.EasyForm.Checkbox.reopen({
+    attributeBindings: ['dataTest:data-test'],
     classNames: ['input-checkbox'],
+    dataTest: Ember.computed.alias('parentView.dataTest'),
   });
 
   Ember.EasyForm.TextField.reopen({
