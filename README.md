@@ -9,7 +9,7 @@ This addon extends Ember EasyForm into the view and controller layers of your Em
 Uninstall any references to `ember-easy-form` and `ember-validations`. Then:
 
 ```
-ember install:addon ember-easy-form-extensions
+ember install ember-easy-form-extensions
 ```
 
 ## Overview and Example
