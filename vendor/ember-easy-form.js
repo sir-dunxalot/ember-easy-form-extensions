@@ -323,7 +323,7 @@ Ember.Handlebars.registerHelper('submit', function(value, options) {
 
 (function() {
 Ember.EasyForm.BaseView = Ember.View.extend({
-  classNameBindings: ['property'],
+  // classNameBindings: ['property'],
   wrapper: function() {
     var wrapperView = this.nearestWithProperty('wrapper');
     if (wrapperView) {
