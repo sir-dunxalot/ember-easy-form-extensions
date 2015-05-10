@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export function initialize(/* container, app */) {
+export function initialize(container, app) {
   var run = Ember.run;
 
   /**
@@ -108,6 +108,8 @@ export function initialize(/* container, app */) {
     },
 
   });
+
+  app.inject('component', 'easyForm', 'service:easy-form');
 
 }
 
