@@ -2,12 +2,19 @@ import Ember from 'ember';
 import layout from '../templates/components/form-control';
 
 var typeOf = Ember.typeOf;
+var run = Ember.run;
 
 export default Ember.Component.extend({
   as: null,
   layout: layout,
   property: null,
   showError: false,
+  showValidity: false,
+
+  classNameBindings: [
+    'easyForm.inputWrapperClass',
+    'showValidity:control-valid'
+  ],
 
   /* Input attributes */
 
@@ -63,4 +70,44 @@ export default Ember.Component.extend({
 
     return type;
   }),
+
+  setInvalidToValid: Ember.observer('showError', function() {
+    // If we go from error to no error
+    if (!this.get('showError') && this.get('canShowValidationError')) {
+      run.debounce(this, function() {
+        var hasAnError = this.get('formForModel.errors.' + this.get('property') + '.length');
+
+        if (!hasAnError && !this.get('isDestroying')) {
+          this.set('showValidity', true);
+
+          run.later(this, function() {
+            if (!this.get('isDestroying')) {
+              this.set('showValidity', false);
+            }
+          }, 2000);
+        }
+      }, 50);
+    }
+  }),
+
+  /**
+  An override of easyForm's default `focusOut` method to ensure validations are not shown when the user clicks cancel.
+
+  @method focusOut
+  */
+
+  focusOut: function() {
+
+    /* Hacky - delay check so focusOut runs after the cancel action */
+
+    run.later(this, function() {
+      var cancelClicked = this.get('parentView.cancelClicked');
+      var isDestroying = this.get('isDestroying');
+
+      if (!cancelClicked && !isDestroying) {
+        this.set('hasFocusedOut', true);
+        this.showValidationError();
+      }
+    }, 100);
+  },
 });

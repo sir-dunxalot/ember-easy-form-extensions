@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import softAssert from '../utils/observers/soft-assert';
 
 export default Ember.Component.extend({
   attributeBindings: ['legend'],
@@ -7,10 +8,5 @@ export default Ember.Component.extend({
   legend: null,
   tagName: 'fieldset',
 
-  checkForLegend: function() {
-    Ember.assert(
-      'You must pass a legend (description) to the form-controls component like {{#form-controls legend=\'Write a new blog post\'}}',
-      this.get('legend')
-    );
-  }.on('didInsertElement')
+  checkForLegend: softAssert('legend')
 });

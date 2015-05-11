@@ -17,11 +17,13 @@ export default Ember.Component.extend(
     }
   },
 
-  _watchForEmptyComponent: function() {
-    Ember.warn(
-      'The {{form-submission}} component is not showing the submit or the cancel button.',
-      this.get('cancel') || this.get('submit')
-    );
-  }.observes('cancel', 'submit'),
+  _watchForEmptyComponent: Ember.observer('cancel', 'submit',
+    function() {
+      Ember.warn(
+        'The {{form-submission}} component is not showing the submit or the cancel button.',
+        this.get('cancel') || this.get('submit')
+      );
+    }
+  ),
 
 });

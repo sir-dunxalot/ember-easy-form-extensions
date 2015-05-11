@@ -25,13 +25,13 @@ export default Ember.Mixin.create({
 
   /* Autofocus on the first input */
 
-  autofocus: function() {
+  autofocus: Ember.on('didInsertElement', function() {
     var input = this.$().find('input').first();
 
     if (!Ember.$(input).hasClass('datepicker')) {
       input.focus();
     }
-  }.on('didInsertElement'),
+  }),
 
   /* Show validation errors on submit click */
 
@@ -55,9 +55,9 @@ export default Ember.Mixin.create({
     this._eventHandler('submit');
   },
 
-  resetForm: function() {
+  resetForm: Ember.on('willInsertElement', function() {
     this.set('formSubmitted', false);
-  }.on('willInsertElement'),
+  }),
 
   /* Private methods */
 

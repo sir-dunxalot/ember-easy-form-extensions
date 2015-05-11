@@ -5,7 +5,7 @@ export default Ember.Service.extend({
   errorClass: 'error',
   hintClass: 'hint',
   inputClass: 'input',
-  inputWrapperClass: 'input-wrapper',
+  controlClass: 'input-wrapper',
   formClass: 'form',
   formControlsClass: 'controls'
 });
