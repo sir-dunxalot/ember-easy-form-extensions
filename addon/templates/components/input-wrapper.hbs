@@ -1,10 +1,15 @@
 {{#if label}}
-  {{label-field}}
+  {{label-field label=label}}
 {{/if}}
 
-{{yield}}
-{{log this}}
+{{#if template}}
+  {{!-- If block form... --}}
+  {{yield}}
+{{else}}
+  {{!-- ...else show input --}}
+  {{input}}
+{{/if}}
 
 {{#if error}}
-  {{error-field}}
+  {{error-field property=property}}
 {{/if}}

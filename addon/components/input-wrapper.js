@@ -1,5 +1,7 @@
+import defaultFor from '../utils/default-for';
 import Ember from 'ember';
 import layout from '../templates/components/input-wrapper';
+import toWords from '../utils/to-words';
 
 var typeOf = Ember.typeOf;
 var run = Ember.run;
@@ -7,9 +9,9 @@ var run = Ember.run;
 export default Ember.Component.extend({
   as: null,
   layout: layout,
-  property: null,
   showError: false,
   showValidity: false,
+  value: null,
 
   classNameBindings: [
     'easyForm.inputWrapperClass',
@@ -26,8 +28,13 @@ export default Ember.Component.extend({
   multiple: null,
   name: Ember.computed.oneWay('property'),
   placeholder: null,
+  property:  Ember.computed.oneWay('valueBinding._label'),
   prompt: null,
   disabled: null,
+
+  label: Ember.computed('property', function() {
+    return toWords(defaultFor(this.get('property'), ''));
+  }),
 
   type: Ember.computed('as', function() {
     var as = this.get('as');
@@ -110,4 +117,6 @@ export default Ember.Component.extend({
       }
     }, 100);
   },
+
+  showValidationError: Ember.K
 });
