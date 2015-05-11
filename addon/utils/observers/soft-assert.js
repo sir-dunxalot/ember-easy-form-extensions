@@ -24,41 +24,40 @@ Ember.Component.extend({
 
 import defaultFor from '../default-for';
 import Ember from 'ember';
-import ENV from 'ember-easy-form-extensions/config/environment';
+// import ENV from '../../config/environment';
 
 var macro;
 
-if (ENV.environment === 'development') {
+// TODO
+// if (ENV.environment === 'development') {
 
-  macro = Ember.on(eventName, Ember.observer(dependentKey,
-    function(dependentKey, options) {
-      var eventName;
+  macro = function(dependentKey, options) {
+    var eventName;
 
-      options = defaultFor(options, {});
-      eventName = defaultFor(options.eventName, 'init');
+    options = defaultFor(options, {});
+    eventName = defaultFor(options.eventName, 'init');
 
-      return function() {
-        var value = defaultFor(this.get(dependentKey), '');
-        var constructor;
+    return Ember.on(eventName, Ember.observer(dependentKey, function() {
+      var value = defaultFor(this.get(dependentKey), '');
+      var constructor;
 
-        if (!value) {
-          constructor = this.get('constructor').toString();
+      if (!value) {
+        constructor = this.get('constructor').toString();
 
-          Ember.warn(
-            'You failed to pass a ' + dependentKey +' property to ' + constructor
-          );
+        Ember.warn(
+          'You failed to pass a ' + dependentKey +' property to ' + constructor
+        );
 
-          if (options.onTrue) {
-            callbacks.onTrue().bind(this);
-          }
-        } else if (options.onFalse) {
-          callbacks.onFalse().bind(this);
+        if (options.onTrue) {
+          callbacks.onTrue().bind(this);
         }
+      } else if (options.onFalse) {
+        callbacks.onFalse().bind(this);
       }
-    }
-  ));
-} else {
-  macro = Ember.K
-}
+    }));
+  };
+// } else {
+//   macro = Ember.K
+// }
 
 export default macro;

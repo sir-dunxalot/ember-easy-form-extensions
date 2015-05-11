@@ -1,0 +1,10 @@
+{{#if label}}
+  {{label-field}}
+{{/if}}
+
+{{yield}}
+{{log this}}
+
+{{#if error}}
+  {{error-field}}
+{{/if}}

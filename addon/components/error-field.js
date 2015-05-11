@@ -10,7 +10,7 @@ export default Ember.Component.extend({
   property: null,
   tagName: 'span',
 
-  errorText: Ember.computed('errors.[]', 'value', function() {
+  text: Ember.computed('errors.[]', 'value', function() {
     var propertyName = defaultFor(
       this.get('property'),
       this.get('parentView.property')

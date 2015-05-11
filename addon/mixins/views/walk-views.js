@@ -2,9 +2,9 @@ import Ember from 'ember';
 
 export default Ember.Mixin.create({
 
-  formView: function() {
+  formView: Ember.computed(function() {
     return this.walkViews(this.get('parentView'));
-  }.property(),
+  }),
 
   walkViews: function(view) {
     var parentView;

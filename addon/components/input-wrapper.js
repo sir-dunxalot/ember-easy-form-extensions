@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import layout from '../templates/components/form-control';
+import layout from '../templates/components/input-wrapper';
 
 var typeOf = Ember.typeOf;
 var run = Ember.run;

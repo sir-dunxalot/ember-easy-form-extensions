@@ -10,7 +10,7 @@ export default Ember.Mixin.create(
   forEachRevalidator: function(callback) {
     var revalidateFor = this.get('revalidateFor');
 
-    if (revalidateFor.get('length')) {
+    if (revalidateFor.length) {
       revalidateFor.forEach(function(property) {
         callback(property);
       });
