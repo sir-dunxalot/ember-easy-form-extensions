@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import layout from '../templates/components/form-controls';
 import softAssert from '../utils/observers/soft-assert';
 import WalkViews from '../mixins/views/walk-views';
 
@@ -7,6 +8,7 @@ export default Ember.Component.extend(
 
   attributeBindings: ['legend'],
   classNameBindings: ['easyForm.formControlsClass'],
+  layout: layout,
   legend: null,
   model: null,
   modelPath: Ember.computed.oneWay('modelBinding._label'),

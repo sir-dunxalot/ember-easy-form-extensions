@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import layout from '../templates/components/form-submission';
 import WalkViews from 'ember-easy-form-extensions/mixins/views/walk-views';
 
 export default Ember.Component.extend(
@@ -8,6 +9,7 @@ export default Ember.Component.extend(
   cancelText: 'Cancel',
   classNames: ['buttons', 'submission'],
   formSubmitted: Ember.computed.readOnly('formView.formSubmitted'),
+  layout: layout,
   submit: true,
   submitText: 'Save',
 
