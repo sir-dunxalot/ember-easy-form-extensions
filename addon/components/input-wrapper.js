@@ -44,6 +44,10 @@ export default Ember.Component.extend({
     }
   ),
 
+  inputId: Ember.computed(function() {
+    return this.get('elementId') + '-input';
+  }),
+
   label: Ember.computed('property', function() {
     var property = defaultFor(this.get('property'), '');
 

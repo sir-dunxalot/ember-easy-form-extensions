@@ -1,5 +1,8 @@
 {{#if label}}
-  {{label-field label=label}}
+  {{label-field
+    for=inputId
+    label=label
+  }}
 {{/if}}
 
 {{#if template}}
@@ -8,6 +11,7 @@
 {{else}}
   {{!-- ...else show input --}}
   {{input
+    id=inputId
     placeholder=placeholder
     name=name
     type=type
