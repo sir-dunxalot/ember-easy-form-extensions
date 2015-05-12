@@ -7,9 +7,16 @@
   {{yield}}
 {{else}}
   {{!-- ...else show input --}}
-  {{input}}
+  {{input
+    placeholder=placeholder
+    name=name
+    type=type
+    value=value
+  }}
 {{/if}}
 
-{{#if error}}
-  {{error-field property=property}}
+{{error-field property=property label=label}}
+
+{{#if hint}}
+  {{hint-field hint=hint}}
 {{/if}}

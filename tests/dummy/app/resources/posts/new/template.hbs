@@ -1,9 +1,9 @@
 {{#form-wrapper}}
 
   {{#form-controls legend='Write a new post'}}
-    {{input-wrapper value=title}}
+    {{input-wrapper value=model.title}}
     {{!-- {{input-wrapper property=description}}
-    {{#input-wrapper property=title}}
+    {{#input-wrapper property='title'}}
       hey
     {{/input-wrapper}} --}}
   {{/form-controls}}
@@ -14,10 +14,12 @@
 
 <dl>
   <dt>Title</dt>
-  <dd>{{title}}</dd>
+  <dd>{{model.title}}</dd>
   <dt>Description</dt>
-  <dd>{{description}}</dd>
+  <dd>{{model.description}}</dd>
 </dl>
+
+{{errors.model.title.firstObject}}
 
 {{#if editing}}
   {{destroy-submission}}

@@ -9,6 +9,7 @@ var run = Ember.run;
 export default Ember.Component.extend({
   as: null,
   layout: layout,
+  property:  Ember.computed.oneWay('valueBinding._label'),
   showError: false,
   showValidity: false,
   value: null,
@@ -28,12 +29,25 @@ export default Ember.Component.extend({
   multiple: null,
   name: Ember.computed.oneWay('property'),
   placeholder: null,
-  property:  Ember.computed.oneWay('valueBinding._label'),
   prompt: null,
   disabled: null,
 
+  fullPropertyPath: Ember.computed('parentView.modelPath', 'property',
+    function() {
+      var modelPath = defaultFor(
+        this.get('parentView.modelPath'),
+        'model'
+      );
+
+      // return modelPath + '.' + this.get('property');
+      return this.get('property');
+    }
+  ),
+
   label: Ember.computed('property', function() {
-    return toWords(defaultFor(this.get('property'), ''));
+    var property = defaultFor(this.get('property'), '');
+
+    return toWords(property.replace('model.', ''));
   }),
 
   type: Ember.computed('as', function() {

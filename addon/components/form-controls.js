@@ -9,19 +9,20 @@ export default Ember.Component.extend(
   classNameBindings: ['easyForm.formControlsClass'],
   legend: null,
   model: null,
+  modelPath: Ember.computed.oneWay('modelBinding._label'),
   tagName: 'fieldset',
   checkForLegend: softAssert('legend'),
 
-  findDefaultModel: Ember.on('willInsertElement', function() {
-    var isFulfilled, modelIsAPromise;
-
-    if (!this.get('model')) {
-      isFulfilled = this.get('model.isFulfilled');
-      modelIsAPromise = Ember.typeOf(isFulfilled === 'boolean');
-
-      if (!modelIsAPromise) {
-        this.set('model', this.get('formView.controller.model'));
-      }
-    }
-  }),
+  // findDefaultModel: Ember.on('init', function() {
+  //   var isFulfilled, modelIsAPromise;
+  //
+  //   if (!this.get('model')) {
+  //     isFulfilled = this.get('model.isFulfilled');
+  //     modelIsAPromise = Ember.typeOf(isFulfilled === 'boolean');
+  //
+  //     if (!modelIsAPromise) {
+  //       this.set('model', this.get('formView.controller.model'));
+  //     }
+  //   }
+  // }),
 });

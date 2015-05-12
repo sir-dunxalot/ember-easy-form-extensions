@@ -1,5 +1,6 @@
-var String = Ember.String;
-
 export default function(string) {
-  return String.capitalize(String.underscore(string).split('_').join(' '));
+  var underscored = Ember.String.underscore(string);
+  var spaced = underscored.split('_').join(' ');
+
+  return spaced.replace('.', ' ');
 }
