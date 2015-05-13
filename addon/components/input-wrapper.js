@@ -2,17 +2,19 @@ import defaultFor from '../utils/default-for';
 import Ember from 'ember';
 import layout from '../templates/components/input-wrapper';
 import toWords from '../utils/to-words';
+import WalkViews from '../mixins/views/walk-views';
 
 var typeOf = Ember.typeOf;
 var run = Ember.run;
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(
+  WalkViews, {
+
   inputPartial: 'form-inputs/default',
   layout: layout,
   modelPath: Ember.computed.oneWay('parentView.modelPath'),
   property:  Ember.computed.oneWay('valueBinding._label'),
-  showError: false,
-  showValidity: false,
+  shouldShowError: false,
   value: null,
 
   classNameBindings: [
@@ -86,45 +88,16 @@ export default Ember.Component.extend({
     return type;
   }),
 
-  setInvalidToValid: Ember.observer('showError', function() {
-    // If we go from error to no error
-    if (!this.get('showError') && this.get('canShowValidationError')) {
-      run.debounce(this, function() {
-        var hasAnError = this.get('formForModel.errors.' + this.get('property') + '.length');
-
-        if (!hasAnError && !this.get('isDestroying')) {
-          this.set('showValidity', true);
-
-          run.later(this, function() {
-            if (!this.get('isDestroying')) {
-              this.set('showValidity', false);
-            }
-          }, 2000);
-        }
-      }, 50);
-    }
-  }),
-
-  /**
-  An override of easyForm's default `focusOut` method to ensure validations are not shown when the user clicks cancel.
-
-  @method focusOut
-  */
-
-  focusOut: function() {
-
-    /* Hacky - delay check so focusOut runs after the cancel action */
-
-    run.later(this, function() {
-      var cancelClicked = this.get('parentView.cancelClicked');
-      var isDestroying = this.get('isDestroying');
-
-      if (!cancelClicked && !isDestroying) {
-        this.set('hasFocusedOut', true);
-        this.showValidationError();
-      }
-    }, 100);
+  actions: {
+    showError: function() {
+      this.set('shouldShowError', true);
+    },
   },
 
-  showValidationError: Ember.K
+  listenForSubmit: Ember.on('init', function() {
+    this.get('formView').on('submission', function() {
+      this.send('showError');
+    }.bind(this));
+  }),
+
 });

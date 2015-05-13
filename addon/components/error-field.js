@@ -7,13 +7,20 @@ import WalkViews from '../mixins/views/walk-views';
 export default Ember.Component.extend(
   WalkViews, {
 
-  classNameBindings: ['easyForm.errorClass'],
+  shouldShowError: true,
+  classNameBindings: ['easyForm.errorClass', 'errorIsVisible:visible'],
   error: null,
   label: Ember.computed.oneWay('property'),
   layout: layout,
   property: null,
   tagName: 'span',
 
+  errorIsVisible: Ember.computed('shouldShowError', 'error',
+    function() {
+      return this.get('shouldShowError') && !!this.get('error');
+    }
+  ),
+  
   text: Ember.computed('errors.[]', 'value', function() {
     var propertyName = defaultFor(
       this.get('property'),
@@ -24,13 +31,12 @@ export default Ember.Component.extend(
   }),
 
   addErrorObserver: Ember.on('init', function() {
-    var fullPropertyPath = this.get('parentView.fullPropertyPath');
+    var property = this.get('property');
     var controller, errorPath, setError;
 
-    if (fullPropertyPath) {
+    if (property) {
       controller = this.get('formView.controller');
-
-      errorPath = 'errors.' + fullPropertyPath + '.firstObject';
+      errorPath = 'errors.' + property + '.firstObject';
 
       setError = function() {
         this.set('error', controller.get(errorPath));
