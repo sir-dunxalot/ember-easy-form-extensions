@@ -9,6 +9,7 @@ var run = Ember.run;
 export default Ember.Component.extend({
   as: null,
   layout: layout,
+  modelPath: Ember.computed.oneWay('parentView.modelPath'),
   property:  Ember.computed.oneWay('valueBinding._label'),
   showError: false,
   showValidity: false,
@@ -32,15 +33,9 @@ export default Ember.Component.extend({
   prompt: null,
   disabled: null,
 
-  fullPropertyPath: Ember.computed('parentView.modelPath', 'property',
+  cleanProperty: Ember.computed('property', 'modelPath',
     function() {
-      var modelPath = defaultFor(
-        this.get('parentView.modelPath'),
-        'model'
-      );
-
-      // return modelPath + '.' + this.get('property');
-      return this.get('property');
+      return this.get('property').replace(this.get('modelPath'));
     }
   ),
 
@@ -51,12 +46,12 @@ export default Ember.Component.extend({
   label: Ember.computed('property', function() {
     var property = defaultFor(this.get('property'), '');
 
-    return toWords(property.replace('model.', ''));
+    return toWords(property.replace(this.get('modelPath'), ''));
   }),
 
   type: Ember.computed('as', function() {
     var as = this.get('as');
-    var property = this.get('property');
+    var property = this.get('cleanProperty');
     var type, value;
 
     if (!as) {
