@@ -12,7 +12,6 @@ export default Ember.Component.extend(
   layout: layout,
   legend: null,
   model: null,
-  modelPath: Ember.computed.oneWay('modelBinding._label'),
   tagName: 'fieldset',
   checkForLegend: softAssert('legend'),
 
@@ -21,17 +20,4 @@ export default Ember.Component.extend(
 
     return defaultFor(modelPath, 'model') + '.';
   }),
-
-  // findDefaultModel: Ember.on('init', function() {
-  //   var isFulfilled, modelIsAPromise;
-  //
-  //   if (!this.get('model')) {
-  //     isFulfilled = this.get('model.isFulfilled');
-  //     modelIsAPromise = Ember.typeOf(isFulfilled === 'boolean');
-  //
-  //     if (!modelIsAPromise) {
-  //       this.set('model', this.get('formView.controller.model'));
-  //     }
-  //   }
-  // }),
 });

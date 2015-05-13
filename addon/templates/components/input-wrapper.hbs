@@ -10,13 +10,7 @@
   {{yield}}
 {{else}}
   {{!-- ...else show input --}}
-  {{input
-    id=inputId
-    placeholder=placeholder
-    name=name
-    type=type
-    value=value
-  }}
+  {{partial inputPartial}}
 {{/if}}
 
 {{error-field property=property label=label}}

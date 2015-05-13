@@ -7,7 +7,7 @@ var typeOf = Ember.typeOf;
 var run = Ember.run;
 
 export default Ember.Component.extend({
-  as: null,
+  inputPartial: 'form-inputs/default',
   layout: layout,
   modelPath: Ember.computed.oneWay('parentView.modelPath'),
   property:  Ember.computed.oneWay('valueBinding._label'),
@@ -35,57 +35,52 @@ export default Ember.Component.extend({
 
   cleanProperty: Ember.computed('property', 'modelPath',
     function() {
-      return this.get('property').replace(this.get('modelPath'));
+      return this.get('property').replace(this.get('modelPath'), '');
     }
   ),
+
+  formInputPartial: Ember.computed('type', function() {
+    var directory = this.get('easyForm.formInputsDirectory');
+
+    return directory + '/' + this.get('type');
+  }),
 
   inputId: Ember.computed(function() {
     return this.get('elementId') + '-input';
   }),
 
   label: Ember.computed('property', function() {
-    var property = defaultFor(this.get('property'), '');
+    var property = defaultFor(this.get('cleanProperty'), '');
 
-    return toWords(property.replace(this.get('modelPath'), ''));
+    return toWords(property);
   }),
 
-  type: Ember.computed('as', function() {
-    var as = this.get('as');
+  type: Ember.computed(function() {
     var property = this.get('cleanProperty');
     var type, value;
 
-    if (!as) {
-      if (property.match(/password/)) {
-        type = 'password';
-      } else if (property.match(/email/)) {
-        type = 'email';
-      } else if (property.match(/url/)) {
-        type = 'url';
-      } else if (property.match(/color/)) {
-        type = 'color';
-      } else if (property.match(/^tel/) || property.match(/^phone/)) {
-        type = 'tel';
-      } else if (property.match(/search/)) {
-        type = 'search';
-      } else {
-        value = this.get('value');
-
-        if (typeOf(value) === 'number') {
-          type = 'number';
-        } else if (typeOf(value) === 'date') {
-          type = 'date';
-        } else if (typeOf(value) === 'boolean') {
-          type = 'checkbox';
-        }
-      }
+    if (property.match(/password/)) {
+      type = 'password';
+    } else if (property.match(/email/)) {
+      type = 'email';
+    } else if (property.match(/url/)) {
+      type = 'url';
+    } else if (property.match(/color/)) {
+      type = 'color';
+    } else if (property.match(/^tel/) || property.match(/^phone/)) {
+      type = 'tel';
+    } else if (property.match(/search/)) {
+      type = 'search';
     } else {
-      var inputType = this.get('easyForm.inputTypes.' + property);
+      value = this.get('value');
 
-      if (inputType) {
-        type = inputType;
+      if (typeOf(value) === 'number') {
+        type = 'number';
+      } else if (typeOf(value) === 'date') {
+        type = 'date';
+      } else if (typeOf(value) === 'boolean') {
+        type = 'checkbox';
       }
-
-      type = as;
     }
 
     return type;
