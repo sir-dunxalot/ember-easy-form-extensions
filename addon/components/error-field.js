@@ -20,7 +20,7 @@ export default Ember.Component.extend(
       return this.get('shouldShowError') && !!this.get('error');
     }
   ),
-  
+
   text: Ember.computed('errors.[]', 'value', function() {
     var propertyName = defaultFor(
       this.get('property'),
@@ -39,6 +39,11 @@ export default Ember.Component.extend(
       errorPath = 'errors.' + property + '.firstObject';
 
       setError = function() {
+        var error = controller.get(errorPath);
+        var parentView = this.get('parentView');
+        var isValid = !error && parentView.get('isInputWrapper');
+
+        parentView.set('isValid', isValid);
         this.set('error', controller.get(errorPath));
       };
 

@@ -11,15 +11,17 @@ export default Ember.Component.extend(
   WalkViews, {
 
   inputPartial: 'form-inputs/default',
+  isInputWrapper: true, // Static
+  isNewlyValid: false,
+  isValid: true,
   layout: layout,
   modelPath: Ember.computed.oneWay('parentView.modelPath'),
   property:  Ember.computed.oneWay('valueBinding._label'),
   shouldShowError: false,
-  value: null,
 
   classNameBindings: [
     'easyForm.inputWrapperClass',
-    'showValidity:control-valid'
+    'validityClass'
   ],
 
   /* Input attributes */
@@ -88,11 +90,38 @@ export default Ember.Component.extend(
     return type;
   }),
 
+  validityClass: Ember.computed('easyForm.inputWrapperClass', 'isNewlyValid', 'isValid',
+    function() {
+      var baseClass = this.get('easyForm.inputWrapperClass');
+      var modifier;
+
+      if (this.get('isNewlyValid')) {
+        modifier = 'newly-valid';
+      } else if(this.get('isValid')) {
+        modifier = 'valid';
+      } else {
+        modifier = 'error';
+      }
+
+      return baseClass + '-' + modifier;
+    }
+  ),
+
   actions: {
     showError: function() {
       this.set('shouldShowError', true);
     },
   },
+
+  listenForNewlyValid: Ember.observer('isValid', function() {
+    if (this.get('isValid')) {
+      this.set('isNewlyValid', true);
+    }
+
+    Ember.run.later(this, function() {
+      this.set('isNewlyValid', false);
+    }, 3000);
+  }),
 
   listenForSubmit: Ember.on('init', function() {
     this.get('formView').on('submission', function() {
