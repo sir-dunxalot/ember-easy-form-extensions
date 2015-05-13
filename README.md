@@ -6,7 +6,7 @@ This addon extends Ember EasyForm into the view and controller layers of your Em
 
 ## Ember 1.11 Users
 
-Whilst this addon's master branch currently supports Ember 1.10, there are even more known issues with Ember Easy Forms and Ember 1.11. As such, work has begun on a completely Ember CLIified branch here: 8a4b8047e290c401b9d74417debd70e3546f4b43.
+Whilst this addon's master branch currently supports Ember 1.10, there are even more known issues with Ember Easy Forms and Ember 1.11. As such, work has begun on a completely Ember CLIified branch [here](https://github.com/sir-dunxalot/ember-easy-form-extensions/tree/ember-1.11)
 
 The `ember-1.11` branch is an evolved easy form API. It is very early stage and undocumented but no longer requires vendor files either. A release will come soon but feel free to dig into the addon tree's source in the meantime.
 
