@@ -3,11 +3,11 @@ import Ember from 'ember';
 export function initialize(/* container, app */) {
 
   /**
-  @class Ember.ControllerMixin
+  @class Ember.Controller
   @submodule controllers
   */
 
-  Ember.ControllerMixin.reopen(
+  Ember.Controller.reopen(
     Ember.Evented, {
 
   });
