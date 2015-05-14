@@ -7,6 +7,8 @@ var PostModel = DS.Model.extend({
   title: attr('string'),
   description: attr('string'),
   category: attr('string'),
+  views: attr('number'),
+  published: attr('boolean')
 });
 
 PostModel.reopenClass({

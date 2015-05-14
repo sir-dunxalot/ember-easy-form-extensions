@@ -9,7 +9,8 @@ export default Ember.Service.extend({
   formControlsClass: 'controls',
 
   inputTypePartials: {
+    checkbox: 'form-inputs/checkbox',
     select: 'form-inputs/select',
-    textarea: 'form-inputs/textarea'
+    textarea: 'form-inputs/textarea',
   }
 });
