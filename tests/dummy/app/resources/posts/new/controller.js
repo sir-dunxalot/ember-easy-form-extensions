@@ -10,6 +10,9 @@ export default Ember.Controller.extend(
     'model.title': {
       presence: true
     },
+    'model.description': {
+      presence: true
+    },
     'model.category': {
       presence: true
     }

@@ -9,6 +9,7 @@ export default Ember.Service.extend({
   formControlsClass: 'controls',
 
   inputTypePartials: {
-    select: 'form-inputs/select'
+    select: 'form-inputs/select',
+    textarea: 'form-inputs/textarea'
   }
 });

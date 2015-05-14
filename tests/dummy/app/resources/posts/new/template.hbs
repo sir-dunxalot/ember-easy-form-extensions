@@ -2,7 +2,7 @@
 
   {{#form-controls legend='Write a new post'}}
     {{input-wrapper value=model.title placeholder='Title'}}
-    {{input-wrapper value=model.description}}
+    {{input-wrapper value=model.description type='textarea'}}
     {{input-wrapper
       value=model.category
       content=categories
