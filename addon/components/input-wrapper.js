@@ -10,7 +10,6 @@ var run = Ember.run;
 export default Ember.Component.extend(
   WalkViews, {
 
-  inputPartial: 'form-inputs/default',
   isInputWrapper: true, // Static
   isNewlyValid: false,
   isValid: true,
@@ -43,14 +42,15 @@ export default Ember.Component.extend(
     }
   ),
 
-  formInputPartial: Ember.computed('type', function() {
-    var directory = this.get('easyForm.formInputsDirectory');
-
-    return directory + '/' + this.get('type');
-  }),
-
   inputId: Ember.computed(function() {
     return this.get('elementId') + '-input';
+  }),
+
+  inputPartial: Ember.computed('type', function() {
+    var type = this.get('type');
+    var partialName = this.get('easyForm.inputTypePartials.' + type);
+
+    return defaultFor(partialName, 'form-inputs/default');
   }),
 
   label: Ember.computed('property', function() {

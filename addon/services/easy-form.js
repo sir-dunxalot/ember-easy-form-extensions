@@ -6,5 +6,9 @@ export default Ember.Service.extend({
   inputClass: 'input',
   inputWrapperClass: 'input-wrapper',
   formWrapperClass: 'form',
-  formControlsClass: 'controls'
+  formControlsClass: 'controls',
+
+  inputTypePartials: {
+    select: 'form-inputs/select'
+  }
 });

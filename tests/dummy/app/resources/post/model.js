@@ -5,7 +5,8 @@ var attr = DS.attr;
 
 var PostModel = DS.Model.extend({
   title: attr('string'),
-  description: attr('string')
+  description: attr('string'),
+  category: attr('string'),
 });
 
 PostModel.reopenClass({
@@ -13,7 +14,8 @@ PostModel.reopenClass({
     {
       id: 1,
       title: 'How to Ember',
-      description: 'This is an introduction on how to Ember. Wow.'
+      description: 'This is an introduction on how to Ember. Wow.',
+      category: 'ember'
     }
   ]
 });
