@@ -1,21 +1,36 @@
 {{#form-wrapper}}
 
   {{#form-controls legend='Write a new post'}}
-    {{input-wrapper value=model.title placeholder='Title'}}
-    {{input-wrapper value=model.description type='textarea'}}
+    
+    {{input-wrapper
+      value=model.title
+    }}
+
+    {{input-wrapper
+      value=model.description
+      type='textarea'
+    }}
+
     {{input-wrapper
       value=model.category
       content=categories
-      type='select'
     }}
+
     {{input-wrapper
-      type='number'
       value=model.views
+      type='number'
     }}
+
     {{input-wrapper
-      type='checkbox'
       value=model.published
+      type='checkbox'
     }}
+
+    {{input-wrapper
+      value=model.writtenOn
+      type='date'
+    }}
+
   {{/form-controls}}
 
   {{form-submission}}
@@ -24,12 +39,18 @@
 
 <dl>
   <dt>Title</dt>
-  <dd>{{model.title}}</dd>
+  <dd data-test="title">{{model.title}}</dd>
   <dt>Description</dt>
-  <dd>{{model.description}}</dd>
+  <dd data-test="description">{{model.description}}</dd>
+  <dt>Category</dt>
+  <dd data-test="category">{{model.category}}</dd>
+  <dt>Views</dt>
+  <dd data-test="views">{{model.views}}</dd>
+  <dt>Published</dt>
+  <dd data-test="published">{{model.published}}</dd>
+  <dt>Written On</dt>
+  <dd data-test="written-on">{{model.writtenOn}}</dd>
 </dl>
-
-{{errors.model.title.firstObject}}
 
 {{#if editing}}
   {{destroy-submission}}

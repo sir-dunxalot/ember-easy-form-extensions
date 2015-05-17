@@ -26,6 +26,7 @@ export default Ember.Component.extend(
   /* Input attributes */
 
   collection: null,
+  content: null,
   optionValuePath: null,
   optionLabelPath: null,
   selection: null,
@@ -75,6 +76,8 @@ export default Ember.Component.extend(
       type = 'tel';
     } else if (property.match(/search/)) {
       type = 'search';
+    } else if (this.get('content')) {
+      type = 'select';
     } else {
       value = this.get('value');
 

@@ -2,5 +2,5 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-easy-form-extensions',
+  name: 'ember-easy-form-extensions'
 };

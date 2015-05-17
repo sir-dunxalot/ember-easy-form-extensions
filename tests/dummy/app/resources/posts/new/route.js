@@ -1,8 +1,8 @@
 import Ember from 'ember';
-import DeleteRecord from 'ember-easy-form-extensions/mixins/routes/delete-record';
+import DirtyRecordHandler from 'ember-easy-form-extensions/mixins/routes/dirty-record-handler';
 
 export default Ember.Route.extend(
-  DeleteRecord, {
+  DirtyRecordHandler, {
 
   model: function() {
     return this.store.createRecord('post');
