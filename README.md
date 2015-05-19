@@ -29,8 +29,8 @@ The below code works out of the box but is also very customizable and extendible
 
 {{#form-wrapper}}
   {{#form-controls legend='Write a new post'}}
-    {{input value=model.title}}
-    {{input value=model.description type='textarea'}}
+    {{input-group value=model.title}}
+    {{input-group value=model.description type='textarea'}}
   {{/form-controls}}
 
   {{form-submission}}
