@@ -536,11 +536,3 @@ If you really don't want to use the `{{loading-spinner}}` component anywhere in 
 ## Templating
 
 To customize the template of any components just override the path in your app. For example, `app-name/templates/components/form-submission.hbs` - easy!
-
-To override the template of any Easy Form view, just override the easyform path:
-
-- Error: `app-name/templates/easy-form/error.hbs`
-- Hint: `app-name/templates/easy-form/hint.hbs`
-- Control: `app-name/templates/easy-form/input-controls.hbs`
-- Input: `app-name/templates/easy-form/input.hbs`
-- Label: `app-name/templates/easy-form/label.hbs`
