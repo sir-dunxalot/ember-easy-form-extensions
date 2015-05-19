@@ -41,7 +41,7 @@ export default Ember.Component.extend(
       setError = function() {
         var error = controller.get(errorPath);
         var parentView = this.get('parentView');
-        var isValid = !error && parentView.get('isInputWrapper');
+        var isValid = !error && parentView.get('isInputGroup');
 
         parentView.set('isValid', isValid);
         this.set('error', controller.get(errorPath));

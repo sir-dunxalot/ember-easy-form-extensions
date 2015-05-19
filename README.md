@@ -438,7 +438,7 @@ export default EasyFormService.extend({
 });
 ```
 
-You can extend the `{{input-wrapper}}` component to add any options you need. The input partial will have the context of the input wrapper component.
+You can extend the `{{input-group}}` component to add any options you need. The input partial will have the context of the input wrapper component.
 
 You can also use inputs in block form instead:
 
@@ -452,7 +452,7 @@ This will render labels, errors, and hints correctly.
 
 #### Input styling
 
-The `{{input-wrapper}}` component has several dynamic classes, depending on the state of the input (e.g. invalid):
+The `{{input-group}}` component has several dynamic classes, depending on the state of the input (e.g. invalid):
 
 - When `isValid` is true, the class will be affixed with `-valid`.
 - When `isInvalid` is true, the class will be affixed with `-error`.
