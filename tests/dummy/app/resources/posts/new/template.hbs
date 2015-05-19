@@ -2,31 +2,31 @@
 
   {{#form-controls legend='Write a new post'}}
     
-    {{input-wrapper
+    {{input-group
       value=model.title
     }}
 
-    {{input-wrapper
+    {{input-group
       value=model.description
       type='textarea'
     }}
 
-    {{input-wrapper
+    {{input-group
       value=model.category
       content=categories
     }}
 
-    {{input-wrapper
+    {{input-group
       value=model.views
       type='number'
     }}
 
-    {{input-wrapper
+    {{input-group
       value=model.published
       type='checkbox'
     }}
 
-    {{input-wrapper
+    {{input-group
       value=model.writtenOn
       type='date'
     }}

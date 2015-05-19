@@ -10,7 +10,9 @@ var run = Ember.run;
 export default Ember.Component.extend(
   WalkViews, {
 
+  hint: null,
   isInputWrapper: true, // Static
+  isInvalid: Ember.computed.not('isValid'),
   isNewlyValid: false,
   isValid: true,
   layout: layout,
@@ -18,8 +20,12 @@ export default Ember.Component.extend(
   property:  Ember.computed.oneWay('valueBinding._label'),
   shouldShowError: false,
 
+  attributeBindings: [
+    'dataTest:data-test'
+  ],
+
   classNameBindings: [
-    'easyForm.inputWrapperClass',
+    'easyForm.inputGroupClass',
     'validityClass'
   ],
 
@@ -42,6 +48,12 @@ export default Ember.Component.extend(
       return this.get('property').replace(this.get('modelPath'), '');
     }
   ),
+
+  dataTest: Ember.computed('cleanProperty', function() {
+    var cleanProperty = Ember.String.dasherize(this.get('cleanProperty'));
+
+    return 'input-wrapper-for-' + cleanProperty;
+  }),
 
   inputId: Ember.computed(function() {
     return this.get('elementId') + '-input';

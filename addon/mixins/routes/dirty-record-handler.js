@@ -19,6 +19,8 @@ export default Ember.Mixin.create({
   in the store. If there is no clean version in the store,
   delete the record.
 
+  TODO - add ability to stop transition and ask for transition confirm
+
   @method rollbackifDirty
   */
 

@@ -4,6 +4,12 @@ This addon extends Ember EasyForm into the view and controller layers of your Em
 
 **This is also the easiest known way to use Easy Form with Ember 1.10 and HTMLBars.**
 
+## Ember 1.11 Users
+
+Usage with Ember 1.11 and above is compatible with the 1.0.0.beta prerelease - see [here](https://github.com/sir-dunxalot/ember-easy-form-extensions/tree/ember-1.11).
+
+The `ember-1.11` branch is an evolved easy form API. It is very early stage and the API has detached form the original easy form syntax. You will need to update your templates accordingly.
+
 ## Installation
 
 Uninstall any references to `ember-easy-form` and `ember-validations`. Then:
@@ -23,8 +29,8 @@ The below code works out of the box but is also very customizable and extendible
 
 {{#form-wrapper}}
   {{#form-controls legend='Write a new post'}}
-    {{input title}}
-    {{input description as='text'}}
+    {{input value=model.title}}
+    {{input value=model.description type='textarea'}}
   {{/form-controls}}
 
   {{form-submission}}
@@ -54,7 +60,7 @@ export default Ember.ObjectController.extend(
 
   // Validations run out of the box
   validations: {
-    title: {
+    'model.title': {
       presence: true
     }
   }
@@ -251,18 +257,23 @@ export default Ember.ObjectController.extend(
 
 The `saveButtonText` could then be used in your [`{{form-submission}}` component](#form-submission).
 
-### Rollback (for routes)
+### Dirty Record Handler (for routes)
 
-The rollback mixin is intended for use in routes where you are **editing** a model. This mixin will check to see if the model is dirty and will automatically rollback it's changes if it is. The most common reason for this to happen is the user navigates to the edit route of a resource and then clicks cancel.
+The diry record handler mixin is intended for use in routes. This mixin will check to see if the model is dirty and will do one of two things:
+
+- If there is a clean version of the model in the store it will rollback to it (i.e. if the user if editing a resource)
+- If there is no clean version in the store it will delete the record (i.e. if the user is creating a new resource)
+
+The most common reason for this to happen is the user navigates to the edit or new route of a resource and then clicks cancel.
 
 ```js
 // app-name/routes/post/edit.js
 
 import Ember from 'ember';
-import Rollback from 'ember-easy-form-extensions/mixins/routes/rollback';
+import DirtyRecordHandler from 'ember-easy-form-extensions/mixins/routes/dirty-record-handler';
 
 export default Ember.Route.extend(
-  Rollback, {
+  DirtyRecordHandler, {
 
   model: function(params) {
     return this.modelFor('post');
@@ -271,29 +282,9 @@ export default Ember.Route.extend(
 });
 ```
 
-### Delete Record (for routes)
-
-The delete record is intended for use in routes where you are creating a **new** record. This mixin will check to see if the model is dirty and will automatically rollback it's changes if it is. The most common reason for this to happen is the user navigates to the new route of a resource and then clicks cancel.
-
-```js
-// app-name/routes/posts/new.js
-
-import Ember from 'ember';
-import DeleteRecord from 'ember-easy-form-extensions/mixins/routes/delete-record';
-
-export default Ember.Route.extend(
-  DeleteRecord, {
-
-  model: function() {
-    return this.store.createRecord('post');
-  }
-
-});
-```
-
 ## Components
 
-To extend the class of any components just import them from this addon and then export them in your app. For example:
+To extend the class of any components to overwrite or add functionality, just import them from this addon and then export them in your app. For example:
 
 ```js
 // app-name/components/form-submissison.js
@@ -302,8 +293,23 @@ import FormSubmissionComponent from 'ember-easy-form-extensions/components/form-
 
 export default FormSubmissionComponent.extend({
   // Your functionality here
-  className: ['buttons-group']
-  classNames: ['form_submission']
+});
+```
+
+To overwrite the default class names of any components, overwrite the options in the easy-form service:
+
+```js
+// app/sevices/easy-form.js
+
+import EasyFormService from 'ember-easy-form-extensions/services/easy-form';
+
+export default EasyFormService.extend({
+  errorClass: 'error',
+  hintClass: 'hint',
+  inputClass: 'input',
+  inputGroupClass: 'input-wrapper',
+  formWrapperClass: 'form',
+  formControlsClass: 'controls',
 });
 ```
 
@@ -321,23 +327,23 @@ The `{{#form-wrapper}}` component wraps your code in a `<form class="form">` tag
 {{/form-wrapper}}
 ```
 
-You can use custom the base classname by passing a `className` attribute:
+You can use HTML5 validations by setting the `novalidate` attribute to false:
 
 ```hbs
 {{!--app-name/templates/posts/new.hbs--}}
 
-{{#form-wrapper className='form-static'}}
+{{#form-wrapper novalidate=false}}
   {{!--Your inputs here--}}
 
   {{form-submission}}
-{{/form-wrapper}}
+{{/form-wrappexr}}
 ```
-
-Otherwise, this component work just like any other Ember component.
 
 ### Form Controls
 
 The `{{#form-controls}}` component adds more sementicism to your templates. Use it **inside** your `{{#form-wrapper}}`:
+
+This will render a `<fieldset>` element, which groups related inputs together.
 
 ```hbs
 {{!--app-name/templates/posts/new.hbs--}}
@@ -351,10 +357,96 @@ The `{{#form-controls}}` component adds more sementicism to your templates. Use 
 {{/form-wrapper}}
 ```
 
-Note two important things:
-- `{{form-submission}}` goes **outside** the `{{#form-controls}}`
-- `{{#form-controls}}` requires a `legend` attribute for accessibility
+`{{#form-controls}}` expects a `legend` attribute for accessibility.
 
+You can also pass a `model` attribute to the controls. By default, this `{{form-controls}}` component will assume the model is at the path `model`. However, if this fieldset is for a nested model you might prefer passing that. It will resolve your input labels correctly:
+
+```hbs
+{{!--app-name/templates/posts/new.hbs--}}
+
+{{#form-wrapper}}
+  {{#form-controls legend='Write a new post' model=model.post}}
+    {{!--Your inputs here--}}
+  {{/form-controls}}
+
+  {{form-submission}}
+{{/form-wrapper}}
+```
+
+### Input Group
+
+The heart of your form functionality is provided by the `{{input-group}}` component. This replaces Easy Form's overriding of Ember's `{{input}}` helper.
+
+Simply pass a value and optional type to render a label, input, and error (when present):
+
+```hbs
+{{input-group value=model.title}}
+{{!--Renders as...--}}
+<span class="label" for="ember234-input">Title</span>
+<input id="ember234-input">
+```
+
+#### Textareas
+
+```hbs
+{{input-group
+  value=model.description
+  type='textarea'
+}}
+```
+
+#### Selects
+
+When you pass a `content` attribute the input will automatically use a `<select>`.
+
+You can bind the `value` or `selection` for string and objects, respectively.
+
+```hbs
+{{input-group
+  content=categoryOptions
+  value=model.category {{!--Or selection--}}
+}}
+```
+
+#### Checkboxes
+
+```hbs
+{{input-group
+  value=model.published {{!--Boolean value--}}
+  type='checkbox'
+}}
+```
+
+#### Custom inputs
+
+It's very easy to add custom input types.
+
+1. Add a partial matching the format of [the default input](https://github.com/sir-dunxalot/ember-easy-form-extensions/blob/ember-1.11/app/templates/form-inputs/default.hbs) and overwrite the type-to-partial option object of the Easy Form service:
+
+```js
+// app/sevices/easy-form.js
+
+import EasyFormService from 'ember-easy-form-extensions/services/easy-form';
+
+export default EasyFormService.extend({
+  inputTypePartials: {
+    checkbox: 'form-inputs/checkbox',
+    select: 'form-inputs/select',
+    textarea: 'form-inputs/textarea',
+    date: 'form-inputs/pikaday' // Added template name
+  }
+});
+```
+
+You can extend the `{{input-wrapper}}` component to add any options you need. The input partial will have the context of the input wrapper component.
+
+#### Input styling
+
+The `{{input-wrapper}}` component has several dynamic classes, depending on the state of the input (e.g. invalid):
+
+- When `isValid` is true, the class will be affixed with `-valid`.
+- When `isInvalid` is true, the class will be affixed with `-error`.
+- When `isInvalid` *was* true and `isValid` turned true within 3000ms, the class will be affixed with `-newly-valid`. This allows you to show after-valid styling before returning to the inputs normal state.
 
 ### Form Submission
 
