@@ -440,6 +440,16 @@ export default EasyFormService.extend({
 
 You can extend the `{{input-wrapper}}` component to add any options you need. The input partial will have the context of the input wrapper component.
 
+You can also use inputs in block form instead:
+
+```hbs
+{{#input-group value=model.dateCreated}}
+  {{input value=model.dateCreated type='date'}}
+{{/input-group}}
+```
+
+This will render labels, errors, and hints correctly.
+
 #### Input styling
 
 The `{{input-wrapper}}` component has several dynamic classes, depending on the state of the input (e.g. invalid):
