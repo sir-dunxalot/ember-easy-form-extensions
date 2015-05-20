@@ -41,7 +41,7 @@ export default Ember.Component.extend(
       setError = function() {
         var error = controller.get(errorPath);
         var parentView = this.get('parentView');
-        var isValid = !error && parentView.get('isInputWrapper');
+        var isValid = !error && parentView.get('isInputGroup');
 
         parentView.set('isValid', isValid);
         this.set('error', controller.get(errorPath));
@@ -50,5 +50,10 @@ export default Ember.Component.extend(
       // TODO - Remove observer?
       controller.addObserver(errorPath, this, setError);
     }
+  }),
+  removeErrorObserver: Ember.on('willClearRender', function() {
+    var controller = this.get('formView.controller');
+    var errorPath = 'errors.' + this.get('property') + '.firstObject';
+    controller.removeObserver(errorPath, this);
   })
 });

@@ -1,6 +1,6 @@
 import defaultFor from '../utils/default-for';
 import Ember from 'ember';
-import layout from '../templates/components/input-wrapper';
+import layout from '../templates/components/input-group';
 import toWords from '../utils/to-words';
 import WalkViews from '../mixins/views/walk-views';
 
@@ -11,7 +11,7 @@ export default Ember.Component.extend(
   WalkViews, {
 
   hint: null,
-  isInputWrapper: true, // Static
+  isInputGroup: true, // Static
   isInvalid: Ember.computed.not('isValid'),
   isNewlyValid: false,
   isValid: true,
@@ -52,7 +52,7 @@ export default Ember.Component.extend(
   dataTest: Ember.computed('cleanProperty', function() {
     var cleanProperty = Ember.String.dasherize(this.get('cleanProperty'));
 
-    return 'input-wrapper-for-' + cleanProperty;
+    return 'input-group-for-' + cleanProperty;
   }),
 
   inputId: Ember.computed(function() {
@@ -105,9 +105,9 @@ export default Ember.Component.extend(
     return type;
   }),
 
-  validityClass: Ember.computed('easyForm.inputWrapperClass', 'isNewlyValid', 'isValid',
+  validityClass: Ember.computed('easyForm.inputGroupClass', 'isNewlyValid', 'isValid',
     function() {
-      var baseClass = this.get('easyForm.inputWrapperClass');
+      var baseClass = this.get('easyForm.inputGroupClass');
       var modifier;
 
       if (this.get('isNewlyValid')) {
@@ -134,7 +134,9 @@ export default Ember.Component.extend(
     }
 
     Ember.run.later(this, function() {
-      this.set('isNewlyValid', false);
+      if ( !this.get('isDestroying') && !this.get('isDestroyed') ) {
+        this.set('isNewlyValid', false);
+      }
     }, 3000);
   }),
 
