@@ -50,5 +50,10 @@ export default Ember.Component.extend(
       // TODO - Remove observer?
       controller.addObserver(errorPath, this, setError);
     }
+  }),
+  removeErrorObserver: Ember.on('willClearRender', function() {
+    var controller = this.get('formView.controller');
+    var errorPath = 'errors.' + this.get('property') + '.firstObject';
+    controller.removeObserver(errorPath, this);
   })
 });
