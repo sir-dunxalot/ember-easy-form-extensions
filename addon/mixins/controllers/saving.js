@@ -17,11 +17,11 @@ export default Ember.Mixin.create(
     }
   },
 
-  editing: function() {
+  editingModel: function() {
     return this.toString().indexOf('/edit:') > -1;
   }.property().readOnly(),
 
-  new: function() {
+  newModel: function() {
     return this.toString().indexOf('/new:') > -1;
   }.property().readOnly(),
 
@@ -31,7 +31,7 @@ export default Ember.Mixin.create(
 
   validateAndSave: function() {
     var _this = this;
-    var runCustomValidations = _this.runCustomValidations;
+    var customValidationsPromise;
 
     var resolve = function() {
       Ember.assert(
@@ -48,10 +48,16 @@ export default Ember.Mixin.create(
 
     /* If there is a custom validations method, resolve it */
 
-    if (runCustomValidations && !runCustomValidations.then) {
-      Ember.assert('runCustomValidations() must return a promise (e.g. return new Ember.RSVP.Promise()).');
-    } else if (runCustomValidations) {
-      runCustomValidations().then(resolve, reject);
+    if (this.runCustomValidations) {
+      customValidationsPromise = this.runCustomValidations();
+
+      if (!customValidationsPromise.then) {
+        Ember.assert(
+          'runCustomValidations() must return a promise (e.g. return new Ember.RSVP.Promise(...)).'
+        );
+      }
+
+      customValidationsPromise.then(resolve, reject);
     } else {
 
       /* Else save with normal ember-validations checks */

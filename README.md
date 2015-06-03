@@ -4,12 +4,18 @@ This addon extends Ember EasyForm into the view and controller layers of your Em
 
 **This is also the easiest known way to use Easy Form with Ember 1.10 and HTMLBars.**
 
+## Ember 1.11 Users
+
+Whilst this addon's master branch currently supports Ember 1.10, there are even more known issues with Ember Easy Forms and Ember 1.11. As such, work has begun on a completely Ember CLIified branch [here](https://github.com/sir-dunxalot/ember-easy-form-extensions/tree/ember-1.11)
+
+The `ember-1.11` branch is an evolved easy form API. It is very early stage and undocumented but no longer requires vendor files either. A release will come soon but feel free to dig into the addon tree's source in the meantime.
+
 ## Installation
 
 Uninstall any references to `ember-easy-form` and `ember-validations`. Then:
 
 ```
-ember install:addon ember-easy-form-extensions
+ember install ember-easy-form-extensions
 ```
 
 ## Overview and Example
@@ -229,8 +235,8 @@ export default Ember.ObjectController.extend(
 ```
 
 If your routes follow a RESTful naming convention, you can take advantage of two new **boolean** properties on the controller:
-- `new` - True if the route is for a new model (e.g. `this.route('new')`)
-- `editing` - True if the route is for editing a model (e.g. `this.route('edit')`)
+- `newModel` - True if the route is for a new model (e.g. `this.route('new')`)
+- `editingModel` - True if the route is for editing a model (e.g. `this.route('edit')`)
 
 You can use these to set the button text, for example:
 
@@ -244,7 +250,7 @@ export default Ember.ObjectController.extend(
   Saving, {
 
   saveButtonText: function() {
-    return this.get('editing') ? 'Save' : 'Add post';
+    return this.get('editingModel') ? 'Save' : 'Add post';
   }.property('editing'),
 });
 ```
