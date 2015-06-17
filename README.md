@@ -11,7 +11,6 @@ Whilst this addon's master branch currently supports Ember 1.10, there are even 
 The `ember-1.11` branch is an evolved easy form API. It is very early stage and undocumented but no longer requires vendor files either. A release will come soon but feel free to dig into the addon tree's source in the meantime.
 
 ```json
-// Your package.json
 devDepencencies: {
   "ember-easy-form-extensions": "sir-dunxalot/ember-easy-form-extensions#ember-1.11",
 }
