@@ -12,7 +12,7 @@ export default Ember.Component.extend({
   layout: layout,
 
   formController: computed(function() {
-    const controller = this.nearestWithProperty('isFormController');
+    return this.nearestWithProperty('isFormController');
   }),
 
   actions: {

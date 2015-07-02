@@ -8,4 +8,18 @@ export default Ember.Component.extend({
   layout: layout,
   novalidate: true,
   tagName: 'form',
+
+  actions: {
+    cancel() {
+      this.sendAction();
+    },
+
+    destroy() {
+      this.sendAction();
+    },
+
+    submit() {
+      this.sendAction();
+    },
+  },
 });

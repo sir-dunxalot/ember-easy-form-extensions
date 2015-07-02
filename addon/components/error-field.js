@@ -19,7 +19,7 @@ export default Ember.Component.extend({
     const { error, property } = this.getProperties(
       [ 'error', 'property' ]
     );
-    const cleanProperty = toWords(propertyName);
+    const cleanProperty = toWords(property);
 
     return `${cleanProperty} ${error}`;
   }),

@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const { on } = Ember;
+
 export default Ember.Mixin.create({
   revalidateFor: [],
 

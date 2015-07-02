@@ -124,8 +124,6 @@ export default Ember.Mixin.create(
       return Ember.typeOf(key) === 'function';
     }
 
-    var handlerPromise;
-
     /* If event is submit, method is renamed */
 
     type = type === 'submit' ? 'validateAndSave' : type;
@@ -153,7 +151,7 @@ export default Ember.Mixin.create(
     /* ...Else, just call the method */
 
     } else {
-      controller[type]();
+      this[type]();
     }
 
   },

@@ -14,15 +14,15 @@ export default Ember.Component.extend({
   submitText: 'Save',
 
   formController: computed(function() {
-    const controller = this.nearestWithProperty('isFormController');
+    return this.nearestWithProperty('isFormController');
   }),
 
   actions: {
-    cancel: function() {
+    cancel() {
       this.sendAction();
     },
 
-    submit: function() {
+    submit() {
       this.sendAction();
     },
   },

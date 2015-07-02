@@ -7,7 +7,7 @@ const { computed, observer, run, typeOf } = Ember;
 
 export default Ember.Component.extend({
   className: 'input-wrapper',
-  classNameBindings: ['className'],
+  classNameBindings: ['className', 'validityClass'],
   hint: null,
   isInputWrapper: true, // Static
   isInvalid: computed.not('isValid'),
@@ -17,7 +17,6 @@ export default Ember.Component.extend({
   modelPath: computed.oneWay('parentView.modelPath'),
   property:  computed.oneWay('valueBinding._label'), // TODO
   shouldShowError: false,
-  classNameBindings: ['validityClass'],
 
   /* Input attributes */
 
@@ -53,7 +52,7 @@ export default Ember.Component.extend({
     const type = this.get('type');
     const partialName = defaultFor(type, 'default');
 
-    return 'form-inputs/${partialName}';
+    return `form-inputs/${partialName}`;
   }),
 
   label: computed('property', function() {
