@@ -11,4 +11,8 @@ export default Ember.Component.extend({
   modelPath: 'model',
   tagName: 'fieldset',
   checkForLegend: softAssert('legend'),
+
+  isFormControls: computed.readOnly(function() {
+    return true;
+  }),
 });

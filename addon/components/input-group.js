@@ -14,8 +14,8 @@ export default Ember.Component.extend({
   isNewlyValid: false,
   isValid: true,
   layout: layout,
-  modelPath: computed.oneWay('parentView.modelPath'),
-  property:  computed.oneWay('valueBinding._label'), // TODO
+  modelPath: computed.oneWay('formControls.modelPath'),
+  property: null,
   shouldShowError: false,
 
   /* Input attributes */
@@ -25,7 +25,6 @@ export default Ember.Component.extend({
   optionValuePath: null,
   optionLabelPath: null,
   selection: null,
-  value: null,
   multiple: null,
   name: computed.oneWay('property'),
   placeholder: null,
@@ -53,6 +52,10 @@ export default Ember.Component.extend({
     const partialName = defaultFor(type, 'default');
 
     return `form-inputs/${partialName}`;
+  }),
+
+  formControls: computed.readOnly(function() {
+    return this.nearestWithProperty('isFormControls');
   }),
 
   label: computed('property', function() {
@@ -113,11 +116,19 @@ export default Ember.Component.extend({
     }
   ),
 
+  value: computed('property', function() {
+    return computed.alias(this.get('property'));
+  }),
+
+  /* Actions */
+
   actions: {
     showError() {
       this.set('shouldShowError', true);
     },
   },
+
+  /* Methods */
 
   listenForNewlyValid: observer('isValid', function() {
     if (this.get('isValid')) {
