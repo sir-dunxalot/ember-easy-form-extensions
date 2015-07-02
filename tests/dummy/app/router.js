@@ -7,10 +7,13 @@ var Router = Ember.Router.extend({
 
 Router.map(function() {
 
-  this.resource('posts', function() {
+  this.route('posts', function() {
     this.route('new');
 
-    this.resource('post', { path: '/:post_id' }, function() {
+    this.route('post', {
+      path: '/:post_id',
+      resetNamespace: true,
+    }, function() {
       this.route('edit');
     });
 
