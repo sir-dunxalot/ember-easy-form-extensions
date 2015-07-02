@@ -10,20 +10,20 @@ export default Ember.Mixin.create(
   forEachRevalidator: function(callback) {
     var revalidateFor = this.get('revalidateFor');
 
-    if (revalidateFor.get('length')) {
+    if (revalidateFor.length) {
       revalidateFor.forEach(function(property) {
         callback(property);
       });
     }
   },
 
-  editingModel: function() {
+  editingModel: Ember.computed(function() {
     return this.toString().indexOf('/edit:') > -1;
-  }.property().readOnly(),
+  }),
 
-  newModel: function() {
+  newModel: Ember.computed(function() {
     return this.toString().indexOf('/new:') > -1;
-  }.property().readOnly(),
+  }),
 
   showServerError: function(/* xhr */) {
     this.set('formSubmitted', false);
@@ -71,20 +71,25 @@ export default Ember.Mixin.create(
     }
   },
 
-  _revalidate: function() {
-    var _this = this;
+  // TODO - add observes revalidateFor.[]
+  _revalidate: Ember.on('routeDidTransition',
+    function() {
+      var _this = this;
 
-    _this.forEachRevalidator(function(property) {
-      _this.addObserver(property, _this.validate);
-    });
-  }.observes('revalidateFor.[]').on('routeDidTransition'),
+      _this.forEachRevalidator(function(property) {
+        _this.addObserver(property, _this.validate);
+      });
+    }
+  ),
 
-  _removeRevalidationObservers: function() {
-    var _this = this;
+  _removeRevalidationObservers: Ember.on('routeWillTransition',
+    function() {
+      var _this = this;
 
-    _this.forEachRevalidator(function(property) {
-      _this.removeObserver(property, _this.validate);
-    });
-  }.on('routeWillTransition'),
+      _this.forEachRevalidator(function(property) {
+        _this.removeObserver(property, _this.validate);
+      });
+    }
+  ),
 
 });

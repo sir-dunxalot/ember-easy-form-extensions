@@ -1,16 +1,23 @@
+import defaultFor from '../utils/default-for';
 import Ember from 'ember';
+import layout from '../templates/components/form-controls';
+import softAssert from '../utils/observers/soft-assert';
+import WalkViews from '../mixins/views/walk-views';
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(
+  WalkViews, {
+
   attributeBindings: ['legend'],
-  classNameBindings: ['className'],
-  className: 'controls',
+  classNameBindings: ['easyForm.formControlsClass'],
+  layout: layout,
   legend: null,
+  model: null,
   tagName: 'fieldset',
+  checkForLegend: softAssert('legend'),
 
-  checkForLegend: function() {
-    Ember.assert(
-      'You must pass a legend (description) to the form-controls component like {{#form-controls legend=\'Write a new blog post\'}}',
-      this.get('legend')
-    );
-  }.on('didInsertElement')
+  modelPath: Ember.computed('modelBinding._label', function() {
+    var modelPath = this.get('modelBinding._label');
+
+    return defaultFor(modelPath, 'model') + '.';
+  }),
 });

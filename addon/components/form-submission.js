@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import layout from '../templates/components/form-submission';
 import WalkViews from 'ember-easy-form-extensions/mixins/views/walk-views';
 
 export default Ember.Component.extend(
@@ -8,6 +9,7 @@ export default Ember.Component.extend(
   cancelText: 'Cancel',
   classNames: ['buttons', 'submission'],
   formSubmitted: Ember.computed.readOnly('formView.formSubmitted'),
+  layout: layout,
   submit: true,
   submitText: 'Save',
 
@@ -17,11 +19,13 @@ export default Ember.Component.extend(
     }
   },
 
-  _watchForEmptyComponent: function() {
-    Ember.warn(
-      'The {{form-submission}} component is not showing the submit or the cancel button.',
-      this.get('cancel') || this.get('submit')
-    );
-  }.observes('cancel', 'submit'),
+  _watchForEmptyComponent: Ember.observer('cancel', 'submit',
+    function() {
+      Ember.warn(
+        'The {{form-submission}} component is not showing the submit or the cancel button.',
+        this.get('cancel') || this.get('submit')
+      );
+    }
+  ),
 
 });

@@ -1,0 +1,24 @@
+{{#if label}}
+  {{label-field
+    for=inputId
+    label=label
+  }}
+{{/if}}
+
+{{#if template}}
+  {{!-- If block form... --}}
+  {{yield}}
+{{else}}
+  {{!-- ...else show input --}}
+  {{partial inputPartial}}
+{{/if}}
+
+{{error-field
+  shouldShowError=shouldShowError
+  label=label
+  property=property
+}}
+
+{{#if hint}}
+  {{hint-field hint=hint}}
+{{/if}}

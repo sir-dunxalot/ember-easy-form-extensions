@@ -1,11 +1,19 @@
 import Ember from 'ember';
 import Saving from 'ember-easy-form-extensions/mixins/controllers/saving';
 
-export default Ember.ObjectController.extend(
+export default Ember.Controller.extend(
   Saving, {
 
+  categories: Ember.A(['ember', 'rails', 'css']),
+
   validations: {
-    title: {
+    'model.title': {
+      presence: true
+    },
+    'model.description': {
+      presence: true
+    },
+    'model.category': {
       presence: true
     }
   },
@@ -19,4 +27,3 @@ export default Ember.ObjectController.extend(
   }
 
 });
-

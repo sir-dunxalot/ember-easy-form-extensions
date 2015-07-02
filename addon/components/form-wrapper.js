@@ -1,9 +1,10 @@
 import Ember from 'ember';
+import layout from '../templates/components/form-wrapper';
 
 export default Ember.Component.extend({
   attributeBindings: ['novalidate'],
-  classNameBindings: ['className'],
-  className: 'form',
+  classNameBindings: ['easyForm.formWrapperClass'],
+  layout: layout,
   novalidate: true,
   tagName: 'form',
 });
