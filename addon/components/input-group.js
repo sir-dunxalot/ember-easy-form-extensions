@@ -4,20 +4,19 @@ import layout from '../templates/components/input-wrapper';
 import toWords from '../utils/to-words';
 import WalkViews from '../mixins/views/walk-views';
 
-var typeOf = Ember.typeOf;
-var run = Ember.run;
+const { computed, run, typeOf } = Ember;
 
 export default Ember.Component.extend(
   WalkViews, {
 
   hint: null,
   isInputWrapper: true, // Static
-  isInvalid: Ember.computed.not('isValid'),
+  isInvalid: computed.not('isValid'),
   isNewlyValid: false,
   isValid: true,
   layout: layout,
-  modelPath: Ember.computed.oneWay('parentView.modelPath'),
-  property:  Ember.computed.oneWay('valueBinding._label'),
+  modelPath: computed.oneWay('parentView.modelPath'),
+  property:  computed.oneWay('valueBinding._label'),
   shouldShowError: false,
 
   attributeBindings: [
@@ -38,43 +37,44 @@ export default Ember.Component.extend(
   selection: null,
   value: null,
   multiple: null,
-  name: Ember.computed.oneWay('property'),
+  name: computed.oneWay('property'),
   placeholder: null,
   prompt: null,
   disabled: null,
 
-  cleanProperty: Ember.computed('property', 'modelPath',
+  cleanProperty: computed('property', 'modelPath',
     function() {
       return this.get('property').replace(this.get('modelPath'), '');
     }
   ),
 
-  dataTest: Ember.computed('cleanProperty', function() {
-    var cleanProperty = Ember.String.dasherize(this.get('cleanProperty'));
+  dataTest: computed('cleanProperty', function() {
+    const cleanProperty = Ember.String.dasherize(this.get('cleanProperty'));
 
-    return 'input-wrapper-for-' + cleanProperty;
+    return `input-wrapper-for-${cleanProperty}`;
   }),
 
-  inputId: Ember.computed(function() {
+  inputId: computed(function() {
     return this.get('elementId') + '-input';
   }),
 
-  inputPartial: Ember.computed('type', function() {
-    var type = this.get('type');
-    var partialName = this.get('easyForm.inputTypePartials.' + type);
+  inputPartial: computed('type', function() {
+    const type = this.get('type');
+    const partialName = this.get(`easyForm.inputTypePartials.${type}`);
 
     return defaultFor(partialName, 'form-inputs/default');
   }),
 
-  label: Ember.computed('property', function() {
-    var property = defaultFor(this.get('cleanProperty'), '');
+  label: computed('property', function() {
+    const property = defaultFor(this.get('cleanProperty'), '');
 
     return toWords(property);
   }),
 
-  type: Ember.computed(function() {
-    var property = this.get('cleanProperty');
-    var type, value;
+  type: computed(function() {
+    const property = this.get('cleanProperty');
+
+    let type;
 
     if (property.match(/password/)) {
       type = 'password';
@@ -91,7 +91,7 @@ export default Ember.Component.extend(
     } else if (this.get('content')) {
       type = 'select';
     } else {
-      value = this.get('value');
+      const value = this.get('value');
 
       if (typeOf(value) === 'number') {
         type = 'number';
@@ -105,10 +105,11 @@ export default Ember.Component.extend(
     return type;
   }),
 
-  validityClass: Ember.computed('easyForm.inputWrapperClass', 'isNewlyValid', 'isValid',
+  validityClass: computed('easyForm.inputWrapperClass', 'isNewlyValid', 'isValid',
     function() {
-      var baseClass = this.get('easyForm.inputWrapperClass');
-      var modifier;
+      const baseClass = this.get('easyForm.inputWrapperClass');
+
+      let modifier;
 
       if (this.get('isNewlyValid')) {
         modifier = 'newly-valid';
@@ -118,22 +119,22 @@ export default Ember.Component.extend(
         modifier = 'error';
       }
 
-      return baseClass + '-' + modifier;
+      return `${baseClass}-${modifier}`;
     }
   ),
 
   actions: {
-    showError: function() {
+    showError() {
       this.set('shouldShowError', true);
     },
   },
 
-  listenForNewlyValid: Ember.observer('isValid', function() {
+  listenForNewlyValid: observer('isValid', function() {
     if (this.get('isValid')) {
       this.set('isNewlyValid', true);
     }
 
-    Ember.run.later(this, function() {
+    run.later(this, function() {
       this.set('isNewlyValid', false);
     }, 3000);
   }),

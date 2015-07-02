@@ -1,3 +1,1 @@
-import Component from 'ember-easy-form-extensions/components/destroy-submission';
-
-export default Component;
+export { default } from 'ember-easy-form-extensions/components/destroy-submission';

@@ -1,4 +1,4 @@
-import Em from 'ember';
+import Ember from 'ember';
 
 /**
 Example usage:
@@ -20,9 +20,10 @@ App.SomeController = Em.Controller.extend({
 
 export default function(dependentKey, string) {
   return function() {
-    var inCorrectFormat = string.indexOf('{{value}}') > -1;
+    const inCorrectFormat = string.indexOf('{{value}}') > -1;
 
-    Em.assert('You must pass a string in the format "Some stuff {{value}}" as the second argument of Utils.computed.insert', inCorrectFormat);
+    Ember.assert('You must pass a string in the format "Some stuff {{value}}" as the second argument of Utils.computed.insert', inCorrectFormat);
+
     return string.replace('{{value}}', this.get(dependentKey));
   }.property(dependentKey);
 }

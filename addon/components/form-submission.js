@@ -2,13 +2,15 @@ import Ember from 'ember';
 import layout from '../templates/components/form-submission';
 import WalkViews from 'ember-easy-form-extensions/mixins/views/walk-views';
 
+const { computed, observer } = Ember;
+
 export default Ember.Component.extend(
   WalkViews, {
 
   cancel: true,
   cancelText: 'Cancel',
   classNames: ['buttons', 'submission'],
-  formSubmitted: Ember.computed.readOnly('formView.formSubmitted'),
+  formSubmitted: computed.readOnly('formView.formSubmitted'),
   layout: layout,
   submit: true,
   submitText: 'Save',
@@ -19,7 +21,7 @@ export default Ember.Component.extend(
     }
   },
 
-  _watchForEmptyComponent: Ember.observer('cancel', 'submit',
+  _watchForEmptyComponent: observer('cancel', 'submit',
     function() {
       Ember.warn(
         'The {{form-submission}} component is not showing the submit or the cancel button.',

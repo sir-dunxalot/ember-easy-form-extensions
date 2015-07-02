@@ -1,18 +1,19 @@
 import Ember from 'ember';
 
+const { computed } = Ember;
+
 export default Ember.Mixin.create({
 
-  formView: Ember.computed(function() {
+  formView: computed(function() {
     return this.walkViews(this.get('parentView'));
   }),
 
-  walkViews: function(view) {
-    var parentView;
+  walkViews(view) {
 
     if (view.submit) {
       return view;
     } else {
-      parentView = view.get('parentView');
+      const parentView = view.get('parentView');
 
       if (parentView) {
         return this.walkViews(parentView);

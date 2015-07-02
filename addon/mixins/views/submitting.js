@@ -1,14 +1,16 @@
 import Ember from 'ember';
 
+const { computed, on } = Ember;
+
 export default Ember.Mixin.create(
   Ember.Evented, {
 
   cancelClicked: false,
-  formSubmitted: Ember.computed.alias('controller.formSubmitted'),
+  formSubmitted: computed.alias('controller.formSubmitted'),
 
   actions: {
 
-    cancel: function() {
+    cancel() {
       this.setProperties({
         cancelClicked: true,
         formSubmitted: true
@@ -17,7 +19,7 @@ export default Ember.Mixin.create(
       this._eventHandler('cancel');
     },
 
-    destroy: function() {
+    destroy() {
       this.set('formSubmitted', true);
 
       this._eventHandler('destroy');
@@ -27,7 +29,7 @@ export default Ember.Mixin.create(
 
   /* Autofocus on the first input */
 
-  autofocus: Ember.on('didInsertElement', function() {
+  autofocus: on('didInsertElement', function() {
     var input = this.$().find('input').first();
 
     if (!Ember.$(input).hasClass('datepicker')) {
@@ -37,7 +39,7 @@ export default Ember.Mixin.create(
 
   /* Show validation errors on submit click */
 
-  submit: function(event) {
+  submit(event) {
     event.preventDefault();
     event.stopPropagation();
 
@@ -47,13 +49,13 @@ export default Ember.Mixin.create(
     this._eventHandler('submit');
   },
 
-  resetForm: Ember.on('willInsertElement', function() {
+  resetForm: on('willInsertElement', function() {
     this.set('formSubmitted', false);
   }),
 
   /* Private methods */
 
-  _eventHandler: function(type) {
+  _eventHandler(type) {
     var controller = this.get('controller');
     var methodName = type + 'Handler';
     var handler = this[methodName];

@@ -1,8 +1,10 @@
-import defaultFor from '../utils/default-for';
 import Ember from 'ember';
+import WalkViews from '../mixins/views/walk-views';
+import defaultFor from '../utils/default-for';
 import layout from '../templates/components/error-field';
 import toWords from '../utils/to-words';
-import WalkViews from '../mixins/views/walk-views';
+
+const { computed } = Ember;
 
 export default Ember.Component.extend(
   WalkViews, {
@@ -10,19 +12,17 @@ export default Ember.Component.extend(
   shouldShowError: true,
   classNameBindings: ['easyForm.errorClass', 'errorIsVisible:visible'],
   error: null,
-  label: Ember.computed.oneWay('property'),
+  label: computed.oneWay('property'),
   layout: layout,
   property: null,
   tagName: 'span',
 
-  errorIsVisible: Ember.computed('shouldShowError', 'error',
-    function() {
-      return this.get('shouldShowError') && !!this.get('error');
-    }
-  ),
+  errorIsVisible: computed('shouldShowError', 'error', function() {
+    return this.get('shouldShowError') && !!this.get('error');
+  }),
 
-  text: Ember.computed('errors.[]', 'value', function() {
-    var propertyName = defaultFor(
+  text: computed('errors.[]', 'value', function() {
+    const propertyName = defaultFor(
       this.get('property'),
       this.get('parentView.property')
     );
@@ -31,19 +31,19 @@ export default Ember.Component.extend(
   }),
 
   addErrorObserver: Ember.on('init', function() {
-    var property = this.get('property');
-    var controller, errorPath, setError;
+    const property = this.get('property');
 
     if (property) {
-      controller = this.get('formView.controller');
-      errorPath = 'errors.' + property + '.firstObject';
+      const controller = this.get('formView.controller');
+      const errorPath = `errors.${property}.firstObject`;
 
-      setError = function() {
+      function setError() {
         var error = controller.get(errorPath);
         var parentView = this.get('parentView');
         var isValid = !error && parentView.get('isInputWrapper');
 
         parentView.set('isValid', isValid);
+
         this.set('error', controller.get(errorPath));
       };
 

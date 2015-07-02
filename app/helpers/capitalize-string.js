@@ -1,3 +1,1 @@
-import capitalizeString from 'ember-easy-form-extensions/helpers/capitalize-string';
-
-export default capitalizeString;
+export { default } from 'ember-easy-form-extensions/helpers/capitalize-string';

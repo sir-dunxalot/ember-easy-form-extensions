@@ -16,7 +16,7 @@ export default Ember.Component.extend(
   checkForLegend: softAssert('legend'),
 
   modelPath: Ember.computed('modelBinding._label', function() {
-    var modelPath = this.get('modelBinding._label');
+    const modelPath = this.get('modelBinding._label');
 
     return defaultFor(modelPath, 'model') + '.';
   }),

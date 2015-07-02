@@ -1,13 +1,15 @@
 import Ember from 'ember';
 import EmberValidations from 'ember-validations';
 
+const { computed, on } = Ember;
+
 export default Ember.Mixin.create(
   EmberValidations.Mixin, {
 
   formSubmitted: false,
   revalidateFor: [],
 
-  forEachRevalidator: function(callback) {
+  forEachRevalidator(callback) {
     var revalidateFor = this.get('revalidateFor');
 
     if (revalidateFor.length) {
@@ -17,23 +19,22 @@ export default Ember.Mixin.create(
     }
   },
 
-  editingModel: Ember.computed(function() {
+  editingModel: computed(function() {
     return this.toString().indexOf('/edit:') > -1;
   }),
 
-  newModel: Ember.computed(function() {
+  newModel: computed(function() {
     return this.toString().indexOf('/new:') > -1;
   }),
 
-  showServerError: function(/* xhr */) {
+  showServerError(/* xhr */) {
     this.set('formSubmitted', false);
   },
 
-  validateAndSave: function() {
-    var _this = this;
-    var customValidationsPromise;
+  validateAndSave() {
+    const _this = this;
 
-    var resolve = function() {
+    function resolve() {
       Ember.assert(
         'You need to specify a save method on this controller',
         typeof _this.save === 'function'
@@ -42,14 +43,14 @@ export default Ember.Mixin.create(
       _this.save();
     };
 
-    var reject = function() {
+    function reject() {
       _this.set('formSubmitted', false);
     };
 
     /* If there is a custom validations method, resolve it */
 
     if (this.runCustomValidations) {
-      customValidationsPromise = this.runCustomValidations();
+      const customValidationsPromise = this.runCustomValidations();
 
       if (!customValidationsPromise.then) {
         Ember.assert(
@@ -72,23 +73,19 @@ export default Ember.Mixin.create(
   },
 
   // TODO - add observes revalidateFor.[]
-  _revalidate: Ember.on('routeDidTransition',
+  _revalidate: on('routeDidTransition',
     function() {
-      var _this = this;
-
-      _this.forEachRevalidator(function(property) {
-        _this.addObserver(property, _this.validate);
-      });
+      this.forEachRevalidator(function(property) {
+        this.addObserver(property, this.validate);
+      }.bind(this));
     }
   ),
 
-  _removeRevalidationObservers: Ember.on('routeWillTransition',
+  _removeRevalidationObservers: on('routeWillTransition',
     function() {
-      var _this = this;
-
-      _this.forEachRevalidator(function(property) {
-        _this.removeObserver(property, _this.validate);
-      });
+      this.forEachRevalidator(function(property) {
+        this.removeObserver(property, this.validate);
+      }.bind(this));
     }
   ),
 

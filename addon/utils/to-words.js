@@ -1,6 +1,6 @@
 export default function(string) {
-  var underscored = Ember.String.underscore(string);
-  var spaced = underscored.split('_').join(' ');
+  const underscored = Ember.String.underscore(string);
+  const spaced = underscored.split('_').join(' ');
 
   return spaced.replace('.', ' ');
 }

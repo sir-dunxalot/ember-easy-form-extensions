@@ -11,6 +11,8 @@ changes to the model are undone.
 import Ember from 'ember';
 import defaultFor from 'ember-easy-form-extensions/utils/default-for';
 
+const { on } = Ember;
+
 export default Ember.Mixin.create({
 
   /**
@@ -24,7 +26,7 @@ export default Ember.Mixin.create({
   @method rollbackifDirty
   */
 
-  rollbackIfDirty: Ember.on('willTransition', function(model) {
+  rollbackIfDirty: on('willTransition', function(model) {
     model = defaultFor(model, this.get('controller.model'));
 
     if (model.get('isDirty')) {
