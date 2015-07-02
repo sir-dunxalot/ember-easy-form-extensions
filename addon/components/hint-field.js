@@ -2,7 +2,8 @@ import Ember from 'ember';
 import layout from '../templates/components/hint-field';
 
 export default Ember.Component.extend({
-  classNameBindings: ['easyForm.hintClass'],
+  className: ['hint'],
+  classNameBindings: ['className'],
   layout: layout,
   tagName: 'span',
   text: null,

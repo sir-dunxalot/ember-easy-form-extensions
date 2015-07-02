@@ -1,4 +1,4 @@
-{{#if formSubmitted}}
+{{#if formIsSubmitted}}
   {{loading-spinner}}
 {{else}}
 
@@ -13,7 +13,11 @@
   {{/if}}
 
   {{#if submit}}
-    <button class="button-primary" type="submit">
+    <button
+      {{action 'submit'}}
+      class="button-primary"
+      type="submit"
+    >
       <span class="icon-check"></span>
       <span class="text">{{submitText}}</span>
     </button>

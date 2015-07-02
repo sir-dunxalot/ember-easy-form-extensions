@@ -1,21 +1,23 @@
 import Ember from 'ember';
-import WalkViews from 'ember-easy-form-extensions/mixins/views/walk-views';
 import layout from '../templates/components/destroy-submission';
 
 const { computed } = Ember;
 
-export default Ember.Component.extend(
-  WalkViews, {
-
-  classNames: ['buttons'],
+export default Ember.Component.extend({
+  className: 'destroy-submission',
+  classNameBindings: ['className'],
   destroyText: 'Delete',
-  formSubmitted: computed.readOnly('formView.formSubmitted'),
+  formIsSubmitted: computed.oneWay('formController.formIsSubmitted'),
   iconClass: 'icon-delete',
   layout: layout,
 
+  formController: computed(function() {
+    const controller = this.nearestWithProperty('isFormController');
+  }),
+
   actions: {
     destroy() {
-      this.get('formView').send('destroy');
+      this.sendAction();
     }
   },
 });

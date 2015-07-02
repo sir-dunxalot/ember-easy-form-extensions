@@ -49,10 +49,10 @@ var macro;
         );
 
         if (options.onTrue) {
-          callbacks.onTrue().bind(this);
+          options.callbacks.onTrue().bind(this);
         }
       } else if (options.onFalse) {
-        callbacks.onFalse().bind(this);
+        options.callbacks.onFalse().bind(this);
       }
     }));
   };

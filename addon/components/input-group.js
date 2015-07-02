@@ -2,13 +2,12 @@ import defaultFor from '../utils/default-for';
 import Ember from 'ember';
 import layout from '../templates/components/input-wrapper';
 import toWords from '../utils/to-words';
-import WalkViews from '../mixins/views/walk-views';
 
-const { computed, run, typeOf } = Ember;
+const { computed, observer, run, typeOf } = Ember;
 
-export default Ember.Component.extend(
-  WalkViews, {
-
+export default Ember.Component.extend({
+  className: 'input-wrapper',
+  classNameBindings: ['className'],
   hint: null,
   isInputWrapper: true, // Static
   isInvalid: computed.not('isValid'),
@@ -16,17 +15,9 @@ export default Ember.Component.extend(
   isValid: true,
   layout: layout,
   modelPath: computed.oneWay('parentView.modelPath'),
-  property:  computed.oneWay('valueBinding._label'),
+  property:  computed.oneWay('valueBinding._label'), // TODO
   shouldShowError: false,
-
-  attributeBindings: [
-    'dataTest:data-test'
-  ],
-
-  classNameBindings: [
-    'easyForm.inputGroupClass',
-    'validityClass'
-  ],
+  classNameBindings: ['validityClass'],
 
   /* Input attributes */
 
@@ -60,9 +51,9 @@ export default Ember.Component.extend(
 
   inputPartial: computed('type', function() {
     const type = this.get('type');
-    const partialName = this.get(`easyForm.inputTypePartials.${type}`);
+    const partialName = defaultFor(type, 'default');
 
-    return defaultFor(partialName, 'form-inputs/default');
+    return 'form-inputs/${partialName}';
   }),
 
   label: computed('property', function() {
@@ -105,9 +96,9 @@ export default Ember.Component.extend(
     return type;
   }),
 
-  validityClass: computed('easyForm.inputWrapperClass', 'isNewlyValid', 'isValid',
+  validityClass: computed('className', 'isNewlyValid', 'isValid',
     function() {
-      const baseClass = this.get('easyForm.inputWrapperClass');
+      const className = this.get('className');
 
       let modifier;
 
@@ -119,7 +110,7 @@ export default Ember.Component.extend(
         modifier = 'error';
       }
 
-      return `${baseClass}-${modifier}`;
+      return `${className}-${modifier}`;
     }
   ),
 
@@ -140,7 +131,7 @@ export default Ember.Component.extend(
   }),
 
   listenForSubmit: Ember.on('init', function() {
-    this.get('formView').on('submission', function() {
+    this.nearestWithProperty('isFormController').on('submission', function() {
       this.send('showError');
     }.bind(this));
   }),

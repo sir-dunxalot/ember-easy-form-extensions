@@ -33,7 +33,7 @@ export function initialize(container, app) {
     ],
   });
 
-  app.inject('component', 'easyForm', 'service:easy-form');
+  app.inject('component', 'easyFormExtensions', 'service:easy-form-extensions');
 }
 
 export default {
