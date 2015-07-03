@@ -27,6 +27,22 @@ export default Ember.Mixin.create(
 
   actions: {
 
+    /* Actions for child input groups */
+
+    registerInputGroup(inputGroupComponent) {
+      this.on('submission', function() {
+        inputGroupComponent.send('showError');
+      });
+    },
+
+    unregisterInputGroup(ipnutGroupComponent) {
+      this.off('submission', function() {
+        inputGroupComponent.send('showError');
+      });
+    },
+
+    /* Form submisison actions */
+
     cancel() {
       this.setProperties({
         cancelClicked: true,

@@ -10,6 +10,7 @@ export default Ember.Component.extend({
   tagName: 'form',
 
   actions: {
+
     cancel() {
       this.sendAction();
     },
@@ -21,5 +22,6 @@ export default Ember.Component.extend({
     submit() {
       this.sendAction();
     },
+
   },
 });

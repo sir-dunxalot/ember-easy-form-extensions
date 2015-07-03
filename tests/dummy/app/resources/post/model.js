@@ -1,9 +1,9 @@
 import DS from 'ember-data';
 import Ember from 'ember';
 
-var attr = DS.attr;
+const { attr } = DS;
 
-var PostModel = DS.Model.extend({
+const PostModel = DS.Model.extend({
   category: attr('string'),
   description: attr('string'),
   published: attr('boolean'),
@@ -21,7 +21,7 @@ PostModel.reopenClass({
       published: true,
       title: 'How to Ember',
       views: 100,
-      writtenOn: moment().subtract(2, 'days')
+      writtenOn: window.moment().subtract(2, 'days')
     }, {
       id: 2,
       category: 'rails',
@@ -29,7 +29,7 @@ PostModel.reopenClass({
       published: false,
       title: 'How to Rails',
       views: 0,
-      writtenOn: moment().subtract(7, 'days')
+      writtenOn: window.moment().subtract(7, 'days')
     }
   ]
 });

@@ -1,33 +1,33 @@
 {{#form-wrapper}}
 
   {{#form-controls legend='Write a new post'}}
-    
+
     {{input-group
-      value=model.title
+      property='model.title'
     }}
 
     {{input-group
-      value=model.description
+      property='model.description'
       type='textarea'
     }}
 
     {{input-group
-      value=model.category
+      property='model.category'
       content=categories
     }}
 
     {{input-group
-      value=model.views
+      property='model.views'
       type='number'
     }}
 
     {{input-group
-      value=model.published
+      property='model.published'
       type='checkbox'
     }}
 
     {{input-group
-      value=model.writtenOn
+      property='model.writtenOn'
       type='date'
     }}
 
