@@ -15,9 +15,9 @@ export default Ember.Mixin.create(
     return this.toString().indexOf('/edit:') > -1;
   }),
 
-  isFormController: computed.readOnly(function() {
+  isFormController: computed(function() {
     return true;
-  }),
+  }).readOnly(),
 
   new: computed(function() {
     return this.toString().indexOf('/new:') > -1;
@@ -35,7 +35,7 @@ export default Ember.Mixin.create(
       });
     },
 
-    unregisterInputGroup(ipnutGroupComponent) {
+    unregisterInputGroup(inputGroupComponent) {
       this.off('submission', function() {
         inputGroupComponent.send('showError');
       });

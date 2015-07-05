@@ -14,7 +14,9 @@ export default Ember.Component.extend({
   submitText: 'Save',
 
   formController: computed(function() {
-    return this.nearestWithProperty('isFormController');
+    const hasFormController = this.nearestWithProperty('formController');
+
+    return hasFormController.get('formController');
   }),
 
   actions: {

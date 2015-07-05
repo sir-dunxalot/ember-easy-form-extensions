@@ -24,23 +24,23 @@ export default Ember.Component.extend({
     return `${cleanProperty} ${error}`;
   }),
 
-  addErrorObserver: on('init', function() {
-    const property = this.get('property');
+  // addErrorObserver: on('init', function() {
+  //   const property = this.get('property');
 
-    function setError() {
-      const error = controller.get(errorPath);
+  //   function setError() {
+  //     const error = controller.get(errorPath);
 
-      parentView.set('isValid', !error);
+  //     parentView.set('isValid', !error);
 
-      this.set('error', controller.get(errorPath));
-    }
+  //     this.set('error', controller.get(errorPath));
+  //   }
 
-    if (property) {
-      const controller = this.nearestWithProperty('isFormController');
-      const errorPath = `errors.${property}.firstObject`;
+  //   if (property) {
+  //     const controller = this.nearest WithProperty('isFormController');
+  //     const errorPath = `errors.${property}.firstObject`;
 
-      // TODO - Remove observer?
-      controller.addObserver(errorPath, this, setError);
-    }
-  })
+  //     // TODO - Remove observer?
+  //     controller.addObserver(errorPath, this, setError);
+  //   }
+  // })
 });

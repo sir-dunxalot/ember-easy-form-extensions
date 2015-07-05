@@ -33,7 +33,7 @@
 
   {{/form-controls}}
 
-  {{form-submission}}
+  {{form-submission formIsSubmitted=formIsSubmitted}}
 
 {{/form-wrapper}}
 
@@ -53,5 +53,5 @@
 </dl>
 
 {{#if editing}}
-  {{destroy-submission}}
+  {{destroy-submission formIsSubmitted=formIsSubmitted}}
 {{/if}}
