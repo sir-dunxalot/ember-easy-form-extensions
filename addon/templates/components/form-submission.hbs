@@ -1,14 +1,27 @@
 {{#if formIsSubmitted}}
-  {{loading-spinner}}
+  Submitting...
 {{else}}
 
   {{#if cancel}}
     <button
       {{action 'cancel'}}
       class="button-secondary"
+      data-test="button-secondary"
       type="reset"
     >
       {{cancelText}}
+    </button>
+  {{/if}}
+
+  {{#if destroy}}
+    <button
+      {{action 'destroy'}}
+      class="button-secondary"
+      data-test="button-destroy"
+      type="button"
+    >
+      <span class="icon-delete"></span>
+      <span class="text">{{destroyText}}</span>
     </button>
   {{/if}}
 
@@ -16,6 +29,7 @@
     <button
       {{action 'submit'}}
       class="button-primary"
+      data-test="button-primary"
       type="submit"
     >
       <span class="icon-check"></span>

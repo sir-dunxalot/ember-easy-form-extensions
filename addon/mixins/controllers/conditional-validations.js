@@ -15,7 +15,10 @@ export default Ember.Mixin.create({
     }
   },
 
-  // TODO - add observes revalidateFor.[]
+  /* TODO - update to new controller hooks with routable
+  components release. At that time, deprecate the routing-events
+  initializer */
+
   _revalidate: on('routeDidTransition',
     function() {
       Ember.assert('No validate() method detected. You must use the conditional validations mixin with the form mixin.', this.validate);

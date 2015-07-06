@@ -17,8 +17,7 @@ export function initialize(/* container, app */) {
   @submodule routes
   */
 
-  Ember.Route.reopen(
-    Ember.Evented, {
+  Ember.Route.reopen({
 
     /**
     @ISSUE https://github.com/emberjs/ember.js/issues/5394
@@ -47,7 +46,6 @@ export function initialize(/* container, app */) {
 
       didTransition: function() {
         this.get('controller').trigger('routeDidTransition');
-        this.trigger('didTransition');
 
         return true; // So action bubbles
       },
@@ -63,7 +61,6 @@ export function initialize(/* container, app */) {
 
       willTransition: function() {
         this.get('controller').trigger('routeWillTransition');
-        this.trigger('willTransition');
 
         return true; // So action bubbles
       }

@@ -9,10 +9,16 @@ export default Ember.Component.extend(
 
   /* Options */
 
+  className: 'form-submission',
+
   cancel: true,
   cancelAction: 'cancel',
   cancelText: 'Cancel',
-  className: 'form-submission',
+
+  destroy: false,
+  destroyAction: 'destroy',
+  destroyText: 'Delete',
+
   submit: true,
   submitAction: 'submit',
   submitText: 'Save',
@@ -32,13 +38,20 @@ export default Ember.Component.extend(
   /* Actions */
 
   actions: {
+
     cancel() {
       this.sendAction('cancelAction');
+    },
+
+    destroy() {
+      this.sendAction('destroy');
     },
 
     submit() {
       this.sendAction('submitAction');
     },
+
   },
+
 
 });
