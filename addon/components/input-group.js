@@ -11,7 +11,6 @@ export default Ember.Component.extend({
   classNameBindings: ['className', 'validityClass'],
   formControls: null,
   hint: null,
-  isInputWrapper: true, // Static
   isInvalid: computed.not('isValid'),
   isNewlyValid: false,
   isValid: true,
@@ -36,7 +35,7 @@ export default Ember.Component.extend({
   prompt: null,
   disabled: null,
 
-  cleanProperty: computed('property', 'modelPath', function() {
+  propertyWithoutModel: computed('property', 'modelPath', function() {
     const modelPath = this.get('modelPath');
 
     if (modelPath) {
@@ -46,10 +45,11 @@ export default Ember.Component.extend({
     }
   }),
 
-  dataTest: computed('cleanProperty', function() {
-    const cleanProperty = Ember.String.dasherize(this.get('cleanProperty'));
+  dataTest: computed('propertyWithoutModel', function() {
+    const propertyWithoutModel = this.get('propertyWithoutModel');
+    const dasherizedProperty = Ember.String.dasherize(propertyWithoutModel);
 
-    return `input-wrapper-for-${cleanProperty}`;
+    return `input-wrapper-for-${dasherizedProperty}`;
   }),
 
   formController: computed(function() {
@@ -74,18 +74,18 @@ export default Ember.Component.extend({
     }
   }),
 
-  setFormControls: Ember.on('init', function() {
-    this.set('formControls', this.nearestWithProperty('isFormControls'));
-  }),
+  isInputWrapper: computed(function() {
+    return true;
+  }).readOnly(),
 
   label: computed('property', function() {
-    const property = defaultFor(this.get('cleanProperty'), '');
+    const property = defaultFor(this.get('propertyWithoutModel'), '');
 
     return toWords(property);
   }),
 
   type: computed(function() {
-    const property = this.get('cleanProperty');
+    const property = this.get('propertyWithoutModel');
 
     let type;
 
@@ -144,7 +144,21 @@ export default Ember.Component.extend({
     },
   },
 
-  /* Methods - avoid xBinding syntax */
+  /* Public methods - avoid xBinding syntax */
+
+  listenForNewlyValid: observer('isValid', function() {
+    if (this.get('isValid')) {
+      this.set('isNewlyValid', true);
+    }
+
+    run.later(this, function() {
+      this.set('isNewlyValid', false);
+    }, 3000);
+  }),
+
+  removeBindingForValue: Ember.on('willDestroyElement', function() {
+    this.get('bindingForValue').disconnect(this);
+  }),
 
   setBindingForValue: Ember.on('didInitAttrs', function() {
     const property = this.get('property');
@@ -156,19 +170,11 @@ export default Ember.Component.extend({
     this.set('bindingForValue', binding);
   }),
 
-  removeBindingForValue: Ember.on('willDestroyElement', function() {
-    this.get('bindingForValue').disconnect(this);
+  setFormControls: Ember.on('init', function() {
+    this.set('formControls', this.nearestWithProperty('isFormControls'));
   }),
 
-  listenForNewlyValid: observer('isValid', function() {
-    if (this.get('isValid')) {
-      this.set('isNewlyValid', true);
-    }
-
-    run.later(this, function() {
-      this.set('isNewlyValid', false);
-    }, 3000);
-  }),
+  /* Private methods */
 
   _registerWithFormController: Ember.on('init', function() {
     this.sendAction('registerAction', this);

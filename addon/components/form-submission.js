@@ -4,14 +4,22 @@ import layout from '../templates/components/form-submission';
 const { computed } = Ember;
 
 export default Ember.Component.extend({
+
+  /* Options */
+
   cancel: true,
+  cancelAction: 'cancel',
   cancelText: 'Cancel',
   className: 'form-submission',
+  submit: true,
+  submitAction: 'submit',
+  submitText: 'Save',
+
+  /* Properties */
+
   classNameBindings: ['className'],
   formIsSubmitted: computed.oneWay('formController.formIsSubmitted'),
   layout: layout,
-  submit: true,
-  submitText: 'Save',
 
   formController: computed(function() {
     const hasFormController = this.nearestWithProperty('formController');
@@ -19,13 +27,15 @@ export default Ember.Component.extend({
     return hasFormController.get('formController');
   }),
 
+  /* Actions */
+
   actions: {
     cancel() {
-      this.sendAction();
+      this.sendAction('cancelAction');
     },
 
     submit() {
-      this.sendAction();
+      this.sendAction('submitAction');
     },
   },
 

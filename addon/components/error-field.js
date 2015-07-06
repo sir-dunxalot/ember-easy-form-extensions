@@ -26,9 +26,9 @@ export default Ember.Component.extend({
     const { error, property } = this.getProperties(
       [ 'error', 'property' ]
     );
-    const cleanProperty = toWords(property);
+    const humanizedProperty = toWords(property);
 
-    return `${cleanProperty} ${error}`;
+    return `${humanizedProperty} ${error}`;
   }),
 
   addBindingForErrors: on('didInitAttrs', function() {
@@ -37,8 +37,10 @@ export default Ember.Component.extend({
     Ember.assert('You must set a property attribute on the {{error-field}} component', property);
 
     const formController = this.get('formController');
+    const validations = formController.get('validations');
+    const validationsForProperty = !!validations[property];
 
-    if (!!formController.get('validations')[property]) {
+    if (validationsForProperty && !this.get('bindingForErrors')) {
       const errorPath = `formController.errors.${property}`;
       const binding = Ember.bind(this, 'errors', errorPath);
 
@@ -47,6 +49,10 @@ export default Ember.Component.extend({
   }),
 
   removeBindingForErrors: Ember.on('willDestroyElement', function() {
-    this.get('bindingForErrors').disconnect(this);
+    const bindingForErrors = this.get('bindingForErrors');
+
+    if (bindingForErrors) {
+      bindingForErrors.disconnect(this);
+    }
   }),
 });

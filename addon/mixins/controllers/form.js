@@ -61,6 +61,7 @@ export default Ember.Mixin.create(
     /* Show validation errors on submit click */
 
     submit() {
+      console.log('here');
       this.set('formIsSubmitted', true);
       this.trigger('submission');
 

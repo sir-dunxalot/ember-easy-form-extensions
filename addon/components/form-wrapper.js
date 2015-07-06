@@ -31,7 +31,7 @@ export default Ember.Component.extend({
   moving forward */
 
   formController: Ember.computed(function() {
-    const routeController = this.get('_controller');
+    const routeController = this.get('targetObject');
 
     if (this.get('isFormController')) {
       return this;
