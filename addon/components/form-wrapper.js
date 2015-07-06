@@ -1,14 +1,23 @@
 import Ember from 'ember';
+import FormSubmissionClassNameMixin from 'ember-easy-form-extensions/mixins/components/form-submission-class-name';
 import layout from '../templates/components/form-wrapper';
 
 const { computed } = Ember;
 
-export default Ember.Component.extend({
-  attributeBindings: ['novalidate'],
+export default Ember.Component.extend(
+  FormSubmissionClassNameMixin, {
+
+  /* Options */
+
   className: 'form',
-  classNameBindings: ['className'],
-  layout: layout,
   novalidate: true,
+
+  /* Properties */
+
+  attributeBindings: ['novalidate'],
+  classNameBindings: ['className'],
+  formIsSubmitted: computed.oneWay('formController.formIsSubmitted'),
+  layout: layout,
   tagName: 'form',
 
   actions: {
@@ -27,6 +36,8 @@ export default Ember.Component.extend({
 
   },
 
+  /* Properties */
+
   /* A shim to enabled use with controller and components
   moving forward */
 
@@ -41,4 +52,5 @@ export default Ember.Component.extend({
       return null;
     }
   }),
+
 });

@@ -3,24 +3,15 @@ import Ember from 'ember';
 import layout from '../templates/components/input-group';
 import toWords from '../utils/to-words';
 
-const { computed, observer, run, typeOf } = Ember;
+const { computed, observer, on, run, typeOf } = Ember;
 
 export default Ember.Component.extend({
-  bindingForValue: null, // Avoid xBinding naming convention
+
+  /* Options */
+
   className: 'input-wrapper',
-  classNameBindings: ['className', 'validityClass'],
-  formControls: null,
   hint: null,
-  isInvalid: computed.not('isValid'),
-  isNewlyValid: false,
-  isValid: true,
-  layout: layout,
-  modelPath: computed.oneWay('formControls.modelPath'),
   property: null,
-  registerAction: 'registerInputGroup',
-  shouldShowError: false,
-  unregisterAction: 'unregisterInputGroup',
-  value: null,
 
   /* Input attributes */
 
@@ -33,7 +24,22 @@ export default Ember.Component.extend({
   name: computed.oneWay('property'),
   placeholder: null,
   prompt: null,
-  disabled: null,
+  disabled: false,
+
+  /* Properties */
+
+  bindingForValue: null, // Avoid xBinding naming convention
+  classNameBindings: ['className', 'validityClass'],
+  formControls: null,
+  isInvalid: computed.not('isValid'),
+  isNewlyValid: false,
+  isValid: true,
+  layout: layout,
+  modelPath: computed.oneWay('formControls.modelPath'),
+  registerAction: 'registerInputGroup',
+  shouldShowError: false,
+  unregisterAction: 'unregisterInputGroup',
+  value: null,
 
   propertyWithoutModel: computed('property', 'modelPath', function() {
     const modelPath = this.get('modelPath');
@@ -156,11 +162,11 @@ export default Ember.Component.extend({
     }, 3000);
   }),
 
-  removeBindingForValue: Ember.on('willDestroyElement', function() {
+  removeBindingForValue: on('willDestroyElement', function() {
     this.get('bindingForValue').disconnect(this);
   }),
 
-  setBindingForValue: Ember.on('didInitAttrs', function() {
+  setBindingForValue: on('didInitAttrs', function() {
     const property = this.get('property');
 
     Ember.assert('You must set a property attribute on the {{input-group}} component', property);
@@ -170,17 +176,17 @@ export default Ember.Component.extend({
     this.set('bindingForValue', binding);
   }),
 
-  setFormControls: Ember.on('init', function() {
+  setFormControls: on('init', function() {
     this.set('formControls', this.nearestWithProperty('isFormControls'));
   }),
 
   /* Private methods */
 
-  _registerWithFormController: Ember.on('init', function() {
+  _registerWithFormController: on('init', function() {
     this.sendAction('registerAction', this);
   }),
 
-  _unregisterWithFormController: Ember.on('willDestroyElement', function() {
+  _unregisterWithFormController: on('willDestroyElement', function() {
     this.sendAction('unregisterAction', this);
   }),
 

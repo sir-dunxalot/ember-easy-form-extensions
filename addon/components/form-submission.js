@@ -1,9 +1,11 @@
 import Ember from 'ember';
+import FormSubmissionClassNameMixin from 'ember-easy-form-extensions/mixins/components/form-submission-class-name';
 import layout from '../templates/components/form-submission';
 
 const { computed } = Ember;
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(
+  FormSubmissionClassNameMixin, {
 
   /* Options */
 

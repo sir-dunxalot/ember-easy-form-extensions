@@ -1,14 +1,22 @@
 import Ember from 'ember';
+import FormSubmissionClassNameMixin from 'ember-easy-form-extensions/mixins/components/form-submission-class-name';
 import layout from '../templates/components/destroy-submission';
 
 const { computed } = Ember;
 
-export default Ember.Component.extend({
+export default Ember.Component.extend(
+  FormSubmissionClassNameMixin, {
+
+  /* Options */
+
   className: 'destroy-submission',
-  classNameBindings: ['className'],
+  destroyAction: 'destroy',
   destroyText: 'Delete',
+
+  /* Properties*/
+
+  classNameBindings: ['className'],
   formIsSubmitted: computed.oneWay('formController.formIsSubmitted'),
-  iconClass: 'icon-delete',
   layout: layout,
 
   formController: computed(function() {
@@ -17,9 +25,11 @@ export default Ember.Component.extend({
     return hasFormController.get('formController');
   }),
 
+  /* Actions */
+
   actions: {
     destroy() {
-      this.sendAction();
+      this.sendAction('destroy');
     }
   },
 });
