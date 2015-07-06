@@ -13,11 +13,13 @@
   {{partial inputPartial}}
 {{/if}}
 
-{{error-field
-  shouldShowError=shouldShowError
-  label=label
-  property=property
-}}
+{{#if shouldShowError}}
+  {{error-field
+    shouldShowError=shouldShowError
+    label=label
+    property=property
+  }}
+{{/if}}
 
 {{#if hint}}
   {{hint-field hint=hint}}

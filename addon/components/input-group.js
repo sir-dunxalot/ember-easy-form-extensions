@@ -63,10 +63,15 @@ export default Ember.Component.extend({
   }),
 
   inputPartial: computed('type', function() {
+    const container = this.get('container');
+    const dir = 'form-inputs/';
     const type = this.get('type');
-    const partialName = defaultFor(type, 'default');
 
-    return `form-inputs/${partialName}`;
+    if (!!container.lookup(`template:${dir}${type}`)) {
+      return `${dir}${type}`;
+    } else {
+      return `${dir}default`;
+    }
   }),
 
   setFormControls: Ember.on('init', function() {

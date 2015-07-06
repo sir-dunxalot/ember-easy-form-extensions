@@ -5,16 +5,16 @@ import toWords from '../utils/to-words';
 const { computed, on } = Ember;
 
 export default Ember.Component.extend({
-  shouldShowError: true,
+  shouldShowError: false,
   bindingForErrors: null,
   className: 'error',
-  classNameBindings: ['className', 'errorIsVisible:visible'],
+  classNameBindings: ['className', 'visible'],
   errors: null,
-  errorIsVisible: computed.and('shouldShowError', 'error'),
   label: computed.oneWay('property'),
   layout: layout,
   property: null,
   tagName: 'span',
+  visible: computed.and('shouldShowError', 'errors.length'),
 
   formController: computed(function() {
     const hasFormController = this.nearestWithProperty('formController');
