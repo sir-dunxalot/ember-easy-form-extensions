@@ -139,9 +139,9 @@ export default Ember.Component.extend({
     },
   },
 
-  /* Methods */
+  /* Methods - avoid xBinding syntax */
 
-  setValueObserver: Ember.on('didInitAttrs', function() {
+  setBindingForValue: Ember.on('didInitAttrs', function() {
     const property = this.get('property');
 
     Ember.assert('You must set a property attribute on the {{input-group}} component', property);
@@ -151,8 +151,7 @@ export default Ember.Component.extend({
     this.set('bindingForValue', binding);
   }),
 
-  removeValueObserver: Ember.on('willDestroyElement', function() {
-    console.log(this.get('bindingForValue'));
+  removeBindingForValue: Ember.on('willDestroyElement', function() {
     this.get('bindingForValue').disconnect(this);
   }),
 

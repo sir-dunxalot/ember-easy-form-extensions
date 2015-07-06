@@ -6,14 +6,21 @@ const { computed, on } = Ember;
 
 export default Ember.Component.extend({
   shouldShowError: true,
+  bindingForErrors: null,
   className: 'error',
   classNameBindings: ['className', 'errorIsVisible:visible'],
-  error: null,
+  errors: null,
   errorIsVisible: computed.and('shouldShowError', 'error'),
   label: computed.oneWay('property'),
   layout: layout,
   property: null,
   tagName: 'span',
+
+  formController: computed(function() {
+    const hasFormController = this.nearestWithProperty('formController');
+
+    return hasFormController.get('formController');
+  }),
 
   text: computed('error', 'property', function() {
     const { error, property } = this.getProperties(
@@ -24,23 +31,22 @@ export default Ember.Component.extend({
     return `${cleanProperty} ${error}`;
   }),
 
-  // addErrorObserver: on('init', function() {
-  //   const property = this.get('property');
+  addBindingForErrors: on('didInitAttrs', function() {
+    const property = this.get('property');
 
-  //   function setError() {
-  //     const error = controller.get(errorPath);
+    Ember.assert('You must set a property attribute on the {{error-field}} component', property);
 
-  //     parentView.set('isValid', !error);
+    const formController = this.get('formController');
 
-  //     this.set('error', controller.get(errorPath));
-  //   }
+    if (!!formController.get('validations')[property]) {
+      const errorPath = `formController.errors.${property}`;
+      const binding = Ember.bind(this, 'errors', errorPath);
 
-  //   if (property) {
-  //     const controller = this.nearest WithProperty('isFormController');
-  //     const errorPath = `errors.${property}.firstObject`;
+      this.set('bindingForErrors', binding);
+    }
+  }),
 
-  //     // TODO - Remove observer?
-  //     controller.addObserver(errorPath, this, setError);
-  //   }
-  // })
+  removeBindingForErrors: Ember.on('willDestroyElement', function() {
+    this.get('bindingForErrors').disconnect(this);
+  }),
 });
