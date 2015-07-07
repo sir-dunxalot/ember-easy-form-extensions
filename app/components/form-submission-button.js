@@ -1,0 +1,1 @@
+export { default } from 'ember-easy-form-extensions/components/form-submission-button';

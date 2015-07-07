@@ -52,10 +52,10 @@ export default Ember.Mixin.create(
       this._eventHandler('cancel');
     },
 
-    destroy() {
+    delete() {
       this.set('formIsSubmitted', true);
 
-      this._eventHandler('destroy');
+      this._eventHandler('delete');
     },
 
     /* Show validation errors on submit click */

@@ -15,9 +15,9 @@ export default Ember.Component.extend(
   cancelAction: 'cancel',
   cancelText: 'Cancel',
 
-  destroy: false,
-  destroyAction: 'destroy',
-  destroyText: 'Delete',
+  delete: false,
+  deleteAction: 'delete',
+  deleteText: 'Delete',
 
   submit: true,
   submitAction: 'submit',
@@ -43,8 +43,8 @@ export default Ember.Component.extend(
       this.sendAction('cancelAction');
     },
 
-    destroy() {
-      this.sendAction('destroy');
+    delete() {
+      this.sendAction('delete');
     },
 
     submit() {

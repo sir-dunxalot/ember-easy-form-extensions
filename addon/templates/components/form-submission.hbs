@@ -3,38 +3,29 @@
 {{else}}
 
   {{#if cancel}}
-    <button
-      {{action 'cancel'}}
-      class="button-secondary"
-      data-test="button-secondary"
-      type="reset"
-    >
-      {{cancelText}}
-    </button>
+    {{form-submission-button
+      action='cancel'
+      class='button-secondary'
+      text=cancelText
+      type='reset'
+    }}
   {{/if}}
 
-  {{#if destroy}}
-    <button
-      {{action 'destroy'}}
-      class="button-secondary"
-      data-test="button-destroy"
-      type="button"
-    >
-      <span class="icon-delete"></span>
-      <span class="text">{{destroyText}}</span>
-    </button>
+  {{#if delete}}
+    {{form-submission-button
+      action='delete'
+      class='button-secondary'
+      text=deleteText
+    }}
   {{/if}}
 
   {{#if submit}}
-    <button
-      {{action 'submit'}}
-      class="button-primary"
-      data-test="button-primary"
-      type="submit"
-    >
-      <span class="icon-check"></span>
-      <span class="text">{{submitText}}</span>
-    </button>
+    {{form-submission-button
+      action='submit'
+      class='button-primary'
+      text=submitText
+      type='submit'
+    }}
   {{/if}}
 
 {{/if}}
