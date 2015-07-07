@@ -1,5 +1,5 @@
 import { moduleForComponent, test } from 'ember-qunit';
-import setupComponentForUnitTest from '../../helpers/setup-component-for-unit-test';
+import { setupComponent } from '../../helpers/unit/component';
 
 let component;
 
@@ -7,7 +7,7 @@ moduleForComponent('form-wrapper', 'Unit | Component | form wrapper', {
   unit: true,
 
   beforeEach: function() {
-    component = setupComponentForUnitTest(this);
+    component = setupComponent(this);
   },
 });
 

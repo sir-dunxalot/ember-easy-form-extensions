@@ -5,14 +5,20 @@ import toWords from '../utils/to-words';
 const { computed, on } = Ember;
 
 export default Ember.Component.extend({
+
+  /* Options */
+
+  className: 'error',
+  label: computed.oneWay('property'),
+  property: null,
+
+  /* Properties */
+
   shouldShowError: false,
   bindingForErrors: null,
-  className: 'error',
   classNameBindings: ['className', 'visible'],
   errors: null,
-  label: computed.oneWay('property'),
   layout: layout,
-  property: null,
   tagName: 'span',
   visible: computed.and('shouldShowError', 'errors.length'),
 
@@ -22,14 +28,16 @@ export default Ember.Component.extend({
     return hasFormController.get('formController');
   }),
 
-  text: computed('error', 'property', function() {
-    const { error, property } = this.getProperties(
-      [ 'error', 'property' ]
+  text: computed('error', 'label', function() {
+    const { error, label } = this.getProperties(
+      [ 'error', 'label' ]
     );
-    const humanizedProperty = toWords(property);
+    const humanizedProperty = toWords(label);
 
     return `${humanizedProperty} ${error}`;
   }),
+
+  /* Methods */
 
   addBindingForErrors: on('didInitAttrs', function() {
     const property = this.get('property');
@@ -42,17 +50,18 @@ export default Ember.Component.extend({
 
     if (validationsForProperty && !this.get('bindingForErrors')) {
       const errorPath = `formController.errors.${property}`;
-      const binding = Ember.bind(this, 'errors', errorPath);
+      const binding = Ember.oneWay(this, 'errors', errorPath);
 
       this.set('bindingForErrors', binding);
     }
   }),
 
   removeBindingForErrors: Ember.on('willDestroyElement', function() {
-    const bindingForErrors = this.get('bindingForErrors');
+    const property = 'bindingForErrors';
 
-    if (bindingForErrors) {
-      bindingForErrors.disconnect(this);
+    if (this.get(property)) {
+      this.get(property).disconnect(this);
+      this.set(property, null);
     }
   }),
 });
