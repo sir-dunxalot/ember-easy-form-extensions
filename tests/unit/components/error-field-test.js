@@ -3,6 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import {
   destroy,
   initAttrs,
+  renderingTests,
   setOnComponent,
   setOnController,
   setupComponent
@@ -25,13 +26,7 @@ test('Rendering', function(assert) {
 
   assert.expect(2);
 
-  assert.equal(component._state, 'preRender',
-    'The component instance should be created');
-
-  this.render();
-
-  assert.equal(component._state, 'inDOM',
-    'The component should be inserted into the DOM after render');
+  renderingTests(assert, this, component);
 });
 
 test('Properties', function(assert) {
@@ -117,8 +112,6 @@ test('The DOM', function(assert) {
   setOnComponent(component, { property });
 
   initAttrs(component);
-
-  this.render();
 
   const layout = component.$().html().trim().toLowerCase();
 

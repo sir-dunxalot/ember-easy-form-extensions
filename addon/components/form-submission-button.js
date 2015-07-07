@@ -22,6 +22,8 @@ export default Ember.Component.extend({
     event.preventDefault();
     event.stopPropagation();
 
+    console.log('here');
+
     this.sendAction();
   },
 });

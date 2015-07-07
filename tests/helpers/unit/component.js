@@ -21,6 +21,18 @@ export function initAttrs(component) {
   });
 }
 
+export function renderingTests(assert, context, component) {
+
+  assert.equal(component._state, 'preRender',
+    'The component instance should be created');
+
+  context.render();
+
+  assert.equal(component._state, 'inDOM',
+    'The component should be inserted into the DOM after render');
+
+}
+
 export function setOnComponent(component, properties) {
   run(function() {
     component.setProperties(properties);

@@ -1,5 +1,6 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import {
+  renderingTests,
   setOnComponent
 } from '../../helpers/unit/component';
 
@@ -19,14 +20,9 @@ moduleForComponent('form-controls', 'Unit | Component | form controls', {
 
 test('Rendering', function(assert) {
 
-  assert.equal(component._state, 'preRender',
-    'The component instance should be created');
+  assert.expect(2);
 
-  this.render();
-
-  assert.equal(component._state, 'inDOM',
-    'The component should be inserted into the DOM after render');
-
+  renderingTests(assert, this, component);
 });
 
 test('Properties', function(assert) {
