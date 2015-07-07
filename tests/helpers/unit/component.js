@@ -21,6 +21,12 @@ export function initAttrs(component) {
   });
 }
 
+export function setOnComponent(component, properties) {
+  run(function() {
+    component.setProperties(properties);
+  });
+}
+
 export function setupComponent(context) {
   return context.subject({
     formController: Ember.Controller.createWithMixins(FormMixin),

@@ -3,6 +3,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import {
   destroy,
   initAttrs,
+  setOnComponent,
   setOnController,
   setupComponent
 } from '../../helpers/unit/component';
@@ -10,12 +11,6 @@ import {
 const { run, typeOf } = Ember;
 
 let component;
-
-function set(properties) {
-  run(function() {
-    component.setProperties(properties);
-  });
-}
 
 moduleForComponent('error-field', 'Unit | Component | error field', {
   needs: ['helper:capitalize-string'],
@@ -56,7 +51,7 @@ test('Properties', function(assert) {
   assert.notOk(component.get('visible'),
     'Visible should be false by default');
 
-  set({ property });
+  setOnComponent(component, { property });
 
   assert.equal(component.get('property'), property,
     'The component should have a value for property');
@@ -90,7 +85,7 @@ test('Error binding', function(assert) {
     }
   });
 
-  set({ property });
+  setOnComponent(component, { property });
 
   initAttrs(component);
 
@@ -119,7 +114,7 @@ test('The DOM', function(assert) {
     ]),
   });
 
-  set({ property });
+  setOnComponent(component, { property });
 
   initAttrs(component);
 
