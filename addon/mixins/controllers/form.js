@@ -71,17 +71,7 @@ export default Ember.Mixin.create(
 
   /* Methods */
 
-  /* Autofocus on the first input */
-
-  autofocus: on('didInsertElement', function() {
-    var input = this.$().find('input').first();
-
-    if (!Ember.$(input).hasClass('datepicker')) {
-      input.focus();
-    }
-  }),
-
-  resetForm: on('willInsertElement', function() {
+  resetForm: on('routeDidTransition', function() {
     this.set('formIsSubmitted', false);
   }),
 
@@ -89,7 +79,7 @@ export default Ember.Mixin.create(
     this.set('formIsSubmitted', false);
   },
 
-  validateAndSave() {
+  validateThenSave() {
     const _this = this;
 
     function resolve() {
@@ -142,7 +132,9 @@ export default Ember.Mixin.create(
 
     /* If event is submit, method is renamed */
 
-    type = type === 'submit' ? 'validateAndSave' : type;
+    if (type === 'submit') {
+      type = 'validateThenSave';
+    }
 
     const method = this[type];
 

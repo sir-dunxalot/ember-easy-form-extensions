@@ -2,7 +2,7 @@ import Ember from 'ember';
 import FormSubmissionClassNameMixin from 'ember-easy-form-extensions/mixins/components/form-submission-class-name';
 import layout from '../templates/components/form-wrapper';
 
-const { computed } = Ember;
+const { computed, on } = Ember;
 
 export default Ember.Component.extend(
   FormSubmissionClassNameMixin, {
@@ -20,22 +20,6 @@ export default Ember.Component.extend(
   layout: layout,
   tagName: 'form',
 
-  actions: {
-
-    cancel() {
-      this.sendAction();
-    },
-
-    delete() {
-      this.sendAction();
-    },
-
-    submit() {
-      this.sendAction();
-    },
-
-  },
-
   /* Properties */
 
   /* A shim to enabled use with controller and components
@@ -50,6 +34,21 @@ export default Ember.Component.extend(
       return routeController;
     } else {
       return null;
+    }
+  }),
+
+  /* Methods */
+
+  /* Autofocus on the first input.
+
+  TODO - move to form component
+  mixin when routeable components land */
+
+  autofocus: on('didInsertElement', function() {
+    var input = this.$().find('input').first();
+
+    if (!Ember.$(input).hasClass('datepicker')) {
+      input.focus();
     }
   }),
 

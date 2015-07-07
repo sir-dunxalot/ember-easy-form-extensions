@@ -1,5 +1,5 @@
 /**
-Checks whether a property is present on a class and shows a warning to the developer when it is not. In production environments this does nothing.
+Checks whether a property is present on a class and shows a warning to the developer when it is not.
 
 Options can be pased as a second parameter:
 
@@ -22,42 +22,27 @@ Ember.Component.extend({
 @param {Object} options An object containing options for your assertion
 */
 
-import defaultFor from '../default-for';
 import Ember from 'ember';
-// import ENV from '../../config/environment';
+import defaultFor from '../default-for';
 
-var macro;
+export default function softAssert(dependentKey, options = {}) {
+  const eventName = defaultFor(options.eventName, 'init');
 
-// TODO
-// if (ENV.environment === 'development') {
+  return Ember.on(eventName, function() {
+    const value = defaultFor(this.get(dependentKey), '');
 
-  macro = function(dependentKey, options) {
-    var eventName;
+    if (!value) {
+      const constructor = this.get('constructor').toString();
 
-    options = defaultFor(options, {});
-    eventName = defaultFor(options.eventName, 'init');
+      Ember.warn(
+        'You failed to pass a ' + dependentKey +' property to ' + constructor
+      );
 
-    return Ember.on(eventName, Ember.observer(dependentKey, function() {
-      var value = defaultFor(this.get(dependentKey), '');
-      var constructor;
-
-      if (!value) {
-        constructor = this.get('constructor').toString();
-
-        Ember.warn(
-          'You failed to pass a ' + dependentKey +' property to ' + constructor
-        );
-
-        if (options.onTrue) {
-          options.callbacks.onTrue().bind(this);
-        }
-      } else if (options.onFalse) {
-        options.callbacks.onFalse().bind(this);
+      if (options.onTrue) {
+        options.callbacks.onTrue().bind(this);
       }
-    }));
-  };
-// } else {
-//   macro = Ember.K
-// }
-
-export default macro;
+    } else if (options.onFalse) {
+      options.callbacks.onFalse().bind(this);
+    }
+  });
+};

@@ -7,17 +7,21 @@ export default Ember.Component.extend({
 
   action: null,
   className: 'button',
+  disabled: false,
   text: null,
   type: 'button',
 
   /* Properties */
 
-  attributeBindings: ['className:data-test', 'type'],
+  attributeBindings: ['className:data-test', 'disabled', 'type'],
   classNameBindings: ['className'],
   layout: layout,
   tagName: 'button',
 
-  click: function() {
+  click: function(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
     this.sendAction();
   },
 });

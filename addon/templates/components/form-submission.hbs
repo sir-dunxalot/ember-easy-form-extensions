@@ -1,31 +1,32 @@
+{{#if cancel}}
+  {{form-submission-button
+    action='cancel'
+    class='button-secondary'
+    disabled=formIsSubmitted
+    text=cancelText
+    type='reset'
+  }}
+{{/if}}
+
+{{#if delete}}
+  {{form-submission-button
+    action='delete'
+    class='button-secondary'
+    disabled=formIsSubmitted
+    text=deleteText
+  }}
+{{/if}}
+
+{{#if submit}}
+  {{form-submission-button
+    action='submit'
+    class='button-primary'
+    disabled=formIsSubmitted
+    text=submitText
+    type='submit'
+  }}
+{{/if}}
+
 {{#if formIsSubmitted}}
   Submitting...
-{{else}}
-
-  {{#if cancel}}
-    {{form-submission-button
-      action='cancel'
-      class='button-secondary'
-      text=cancelText
-      type='reset'
-    }}
-  {{/if}}
-
-  {{#if delete}}
-    {{form-submission-button
-      action='delete'
-      class='button-secondary'
-      text=deleteText
-    }}
-  {{/if}}
-
-  {{#if submit}}
-    {{form-submission-button
-      action='submit'
-      class='button-primary'
-      text=submitText
-      type='submit'
-    }}
-  {{/if}}
-
 {{/if}}
