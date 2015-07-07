@@ -4,9 +4,17 @@ import Ember from 'ember';
 const { attr } = DS;
 
 const PostModel = DS.Model.extend({
-  category: attr('string'),
+  category: attr('string', {
+    defaultValue() {
+      return 'ember';
+    }
+  }),
   description: attr('string'),
-  published: attr('boolean'),
+  published: attr('boolean', {
+    defaultValue() {
+      return false;
+    }
+  }),
   title: attr('string'),
   views: attr('number'),
   writtenOn: attr('date'),
