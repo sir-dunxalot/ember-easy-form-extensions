@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-export function initialize(container, app) {
+export function initialize() {
 
   Ember.Checkbox.reopen({
     attributeBindings: [

@@ -45,4 +45,4 @@ export default function softAssert(dependentKey, options = {}) {
       options.callbacks.onFalse().bind(this);
     }
   });
-};
+}

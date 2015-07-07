@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import FormSubmissionClassNameMixin from '../../../mixins/form-submission-class-name';
+import FormSubmissionClassNameMixin from 'ember-easy-form-extensions/mixins/components/form-submission-class-name';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | form submission class name');

@@ -4,8 +4,7 @@ import {
 } from 'ember-qunit';
 
 moduleForComponent('label-field', {
-  // Specify the other units that are required for this test
-  // needs: ['component:foo', 'helper:bar']
+  needs: ['helper:capitalize-string'],
 });
 
 test('it renders', function(assert) {

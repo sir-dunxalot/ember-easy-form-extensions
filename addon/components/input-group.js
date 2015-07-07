@@ -171,9 +171,7 @@ export default Ember.Component.extend({
   }),
 
   setBindingForValue: on('didInitAttrs', function() {
-    const { property, type} = this.getProperties(
-      [ 'property', 'type' ]
-    );
+    const property = this.get('property');
 
     Ember.assert('You must set a property attribute on the {{input-group}} component', property);
 
