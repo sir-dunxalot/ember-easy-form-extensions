@@ -3,7 +3,7 @@ import FormMixin from 'ember-easy-form-extensions/mixins/controllers/form';
 
 const { run } = Ember;
 
-export function setOnController(component, properties) {
+export function setPropertiesOnController(component, properties) {
   run(function() {
     component.get('formController').setProperties(properties);
   });
@@ -33,7 +33,13 @@ export function renderingTests(assert, context, component) {
 
 }
 
-export function setOnComponent(component, properties) {
+export function setOnComponent(component, key, value) {
+  run(function() {
+    component.set(key, value);
+  });
+}
+
+export function setPropertiesOnComponent(component, properties) {
   run(function() {
     component.setProperties(properties);
   });

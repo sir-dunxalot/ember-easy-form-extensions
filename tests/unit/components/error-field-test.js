@@ -5,7 +5,8 @@ import {
   initAttrs,
   renderingTests,
   setOnComponent,
-  setOnController,
+  setPropertiesOnComponent,
+  setPropertiesOnController,
   setupComponent
 } from '../../helpers/unit/component';
 
@@ -46,7 +47,7 @@ test('Properties', function(assert) {
   assert.notOk(component.get('visible'),
     'Visible should be false by default');
 
-  setOnComponent(component, { property });
+  setPropertiesOnComponent(component, { property });
 
   assert.equal(component.get('property'), property,
     'The component should have a value for property');
@@ -74,13 +75,13 @@ test('Error binding', function(assert) {
 
   this.render();
 
-  setOnController(component, {
+  setPropertiesOnController(component, {
     'validations.apples': {
       presence: true
     }
   });
 
-  setOnComponent(component, { property });
+  setPropertiesOnComponent(component, { property });
 
   initAttrs(component);
 
@@ -100,7 +101,7 @@ test('The DOM', function(assert) {
 
   assert.expect(1);
 
-  setOnController(component, {
+  setPropertiesOnController(component, {
     'validations.apples': {
       presence: true
     },
@@ -109,9 +110,11 @@ test('The DOM', function(assert) {
     ]),
   });
 
-  setOnComponent(component, { property });
+  setPropertiesOnComponent(component, { property });
 
   initAttrs(component);
+
+  this.render();
 
   const layout = component.$().html().trim().toLowerCase();
 

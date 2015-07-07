@@ -1,7 +1,7 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import {
   renderingTests,
-  setOnComponent
+  setPropertiesOnComponent
 } from '../../helpers/unit/component';
 
 const legend = 'This is a form';
@@ -36,7 +36,7 @@ test('Properties', function(assert) {
   assert.ok(!!component.get('className'),
     'The component should have a default class name');
 
-  setOnComponent(component, {
+  setPropertiesOnComponent(component, {
     legend
   });
 

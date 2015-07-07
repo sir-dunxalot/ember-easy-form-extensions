@@ -21,7 +21,7 @@ export default Ember.Component.extend(
 
   submit: true,
   submitAction: 'submit',
-  submitText: 'Save',
+  submitText: 'Submit',
 
   /* Properties */
 

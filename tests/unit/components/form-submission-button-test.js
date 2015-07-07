@@ -2,8 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 import {
   initAttrs,
   renderingTests,
-  setOnComponent,
-  setOnController
+  setPropertiesOnComponent,
 } from '../../helpers/unit/component';
 
 let component;
@@ -44,7 +43,7 @@ test('Properties', function(assert) {
 
   /* Update the properties to check bindings */
 
-  setOnComponent(component, {
+  setPropertiesOnComponent(component, {
     className,
     disabled: true,
     type
@@ -66,7 +65,7 @@ test('The DOM', function(assert) {
 
   assert.expect(1);
 
-  setOnComponent(component, {
+  setPropertiesOnComponent(component, {
     text,
   });
 
@@ -85,7 +84,7 @@ test('Actions', function(assert) {
 
   expect(1);
 
-  setOnComponent(component, {
+  setPropertiesOnComponent(component, {
     action: 'orderBigMacs',
 
     sendAction() {
@@ -95,8 +94,6 @@ test('Actions', function(assert) {
 
     }
   });
-
-  console.log(component.get('parentView'))
 
   this.render();
 
