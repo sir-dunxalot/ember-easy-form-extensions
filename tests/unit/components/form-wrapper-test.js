@@ -1,13 +1,13 @@
 import { moduleForComponent, test } from 'ember-qunit';
+import setupComponentForUnitTest from '../../helpers/setup-component-for-unit-test';
 
 let component;
 
-moduleForComponent('error-field', 'Unit | Component | error field', {
-  needs: ['helper:capitalize-string'],
+moduleForComponent('form-wrapper', 'Unit | Component | form wrapper', {
   unit: true,
 
   beforeEach: function() {
-    component = this.subject();
+    component = setupComponentForUnitTest(this);
   },
 });
 

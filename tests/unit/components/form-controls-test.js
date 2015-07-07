@@ -2,8 +2,7 @@ import { moduleForComponent, test } from 'ember-qunit';
 
 let component;
 
-moduleForComponent('error-field', 'Unit | Component | error field', {
-  needs: ['helper:capitalize-string'],
+moduleForComponent('form-controls', 'Unit | Component | form controls', {
   unit: true,
 
   beforeEach: function() {

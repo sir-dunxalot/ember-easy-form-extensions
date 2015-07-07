@@ -32,11 +32,9 @@ export default function softAssert(dependentKey, options = {}) {
     const value = defaultFor(this.get(dependentKey), '');
 
     if (!value) {
-      const constructor = this.get('constructor').toString();
+      const name = this.get('className'); // TODO - Find a better way to identify component constructor
 
-      Ember.warn(
-        'You failed to pass a ' + dependentKey +' property to ' + constructor
-      );
+      Ember.warn(`You failed to pass a ${dependentKey} property to ${name}`);
 
       if (options.onTrue) {
         options.callbacks.onTrue().bind(this);

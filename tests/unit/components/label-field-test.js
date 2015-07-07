@@ -1,20 +1,25 @@
-import {
-  moduleForComponent,
-  test
-} from 'ember-qunit';
+import { moduleForComponent, test } from 'ember-qunit';
 
-moduleForComponent('label-field', {
+let component;
+
+moduleForComponent('label-field', 'Unit | Component | label field', {
   needs: ['helper:capitalize-string'],
+  unit: true,
+
+  beforeEach: function() {
+    component = this.subject();
+  },
 });
 
 test('it renders', function(assert) {
-  assert.expect(2);
 
-  // Creates the component instance
-  var component = this.subject();
-  assert.equal(component._state, 'preRender');
+  assert.equal(component._state, 'preRender',
+    'The component instance should be created');
 
-  // Renders the component to the page
   this.render();
+
   assert.equal(component._state, 'inDOM');
+
+  assert.equal(component._state, 'inDOM',
+    'The component should be inserted into the DOM after render');
 });

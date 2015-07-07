@@ -90,7 +90,7 @@ export default Ember.Component.extend({
     return toWords(property);
   }),
 
-  type: computed(function() {
+  type: computed('propertyWithoutModel', function() {
     const property = this.get('propertyWithoutModel');
 
     let type;
