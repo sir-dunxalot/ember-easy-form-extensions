@@ -68,10 +68,16 @@ test('Properties', function(assert) {
 });
 
 test('The DOM', function(assert) {
+  const submittingText = 'Submitting...';
 
-  assert.expect(9);
+  assert.expect(11);
 
   this.render();
+
+  /* Check the template before any submitting */
+
+  assert.ok(this.$().html().indexOf(submittingText) === -1,
+    'The template should reflect that the form has not been submitted');
 
   /* Check in button in turn */
 
@@ -100,5 +106,12 @@ test('The DOM', function(assert) {
       'The ${action} button should no longer exist in the template');
 
   }, this);
+
+  /* Fake submisiosn and check the template */
+
+  setOnComponent(component, 'formIsSubmitted', true);
+
+  assert.ok(this.$().html().indexOf(submittingText) > -1,
+    'The template should reflect that the form is submitting');
 
 });
