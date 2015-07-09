@@ -1,6 +1,9 @@
 import Ember from 'ember';
 import { moduleForComponent, test } from 'ember-qunit';
-import { renderingTests } from '../../helpers/unit/component';
+import {
+  renderingTests,
+  setupComponent
+} from '../../helpers/unit/component';
 
 const { typeOf } = Ember;
 
@@ -25,10 +28,10 @@ test('Properties', function(assert) {
 
   assert.expect(5);
 
-  assert.notOk(component.get('novalidate'),
+  assert.ok(component.get('novalidate'),
     'The novalidate property should be false by default because Ember Validation provides client-side validations');
 
-  assert.ok(!!compoennt.get('className'),
+  assert.ok(!!component.get('className'),
     'The component should have a default class name');
 
   assert.ok(typeOf(component.get('formIsSubmitted')) === 'boolean',
@@ -44,6 +47,9 @@ test('Properties', function(assert) {
 
 });
 
-test('Methods', function() {
-    /* TODO - use inline template compiler to check autofocus functionality */
-  });
+test('Methods', function(assert) {
+
+  assert.expect(0);
+
+  /* TODO - use inline template compiler to check autofocus functionality */
+});
