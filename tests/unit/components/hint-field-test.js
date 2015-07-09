@@ -1,7 +1,8 @@
 import { moduleForComponent, test } from 'ember-qunit';
 import {
   renderingTests,
-  setOnComponent
+  setOnComponent,
+  testClassNameBinding,
 } from '../../helpers/unit/component';
 
 let component;
@@ -29,8 +30,7 @@ test('Properties', function(assert) {
 
   this.render();
 
-  assert.ok(component.$().hasClass(component.get('className')),
-    'The className property should be bound');
+  testClassNameBinding(assert, component);
 
   setOnComponent(component, 'text', hintText);
 

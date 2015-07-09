@@ -1,3 +1,5 @@
 {{#if errors.length}}
-  {{capitalize-string label}} {{errors.firstObject}}
+  {{#if showError}}
+    {{capitalize-string label}} {{text}}
+  {{/if}}
 {{/if}}

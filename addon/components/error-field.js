@@ -2,7 +2,7 @@ import Ember from 'ember';
 import layout from '../templates/components/error-field';
 import toWords from '../utils/to-words';
 
-const { computed, on } = Ember;
+const { computed, observer, on } = Ember;
 
 export default Ember.Component.extend({
 
@@ -14,13 +14,15 @@ export default Ember.Component.extend({
 
   /* Properties */
 
-  shouldShowError: false,
   bindingForErrors: null,
-  classNameBindings: ['className', 'visible'],
+  classNameBindings: ['className', 'showError'],
   errors: null,
+  invalidAction: 'setGroupAsInvalid',
   layout: layout,
   tagName: 'span',
-  visible: computed.and('shouldShowError', 'errors.length'),
+  validAction: 'setGroupAsValid',
+  showError: false,
+  text: computed.oneWay('errors.firstObject'),
 
   formController: computed(function() {
     const hasFormController = this.nearestWithProperty('formController');
@@ -28,16 +30,15 @@ export default Ember.Component.extend({
     return hasFormController.get('formController');
   }),
 
-  text: computed('error', 'label', function() {
-    const { error, label } = this.getProperties(
-      [ 'error', 'label' ]
-    );
-    const humanizedProperty = toWords(label);
-
-    return `${humanizedProperty} ${error}`;
-  }),
-
   /* Methods */
+
+  // TODO - update from observer to event when possible
+
+  notifyChangeInValidity: observer('showError', function() {
+    const actionProperty = this.get('showError') ? 'invalidAction' : 'validAction';
+
+    this.sendAction(actionProperty);
+  }),
 
   addBindingForErrors: on('didInitAttrs', function() {
     const property = this.get('property');

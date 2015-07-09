@@ -3,6 +3,7 @@
     for=inputId
     label=label
   }}
+  {{!-- TODO - change label to text? --}}
 {{/if}}
 
 {{#if hasBlock}}
@@ -13,14 +14,12 @@
   {{partial inputPartial}}
 {{/if}}
 
-{{#if shouldShowError}}
-  {{error-field
-    shouldShowError=shouldShowError
-    label=label
-    property=property
-  }}
-{{/if}}
+{{error-field
+  label=label
+  property=property
+  showError=showError
+}}
 
 {{#if hint}}
-  {{hint-field hint=hint}}
+  {{hint-field text=hint}}
 {{/if}}

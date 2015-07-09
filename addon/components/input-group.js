@@ -12,6 +12,7 @@ export default Ember.Component.extend({
   className: 'input-wrapper',
   hint: null,
   property: null,
+  newlyValidDuration: 3000,
 
   /* Input attributes */
 
@@ -28,6 +29,7 @@ export default Ember.Component.extend({
 
   /* Properties */
 
+  attributeBindings: ['dataTest:data-test'],
   bindingForValue: null, // Avoid xBinding naming convention
   classNameBindings: ['className', 'validityClass'],
   formControls: null,
@@ -37,7 +39,7 @@ export default Ember.Component.extend({
   layout: layout,
   modelPath: computed.oneWay('formControls.modelPath'),
   registerAction: 'registerInputGroup',
-  shouldShowError: false,
+  showError: false,
   unregisterAction: 'unregisterInputGroup',
   value: null,
 
@@ -90,12 +92,14 @@ export default Ember.Component.extend({
     return toWords(property);
   }),
 
-  type: computed('propertyWithoutModel', function() {
+  type: computed('content', 'propertyWithoutModel', function() {
     const property = this.get('propertyWithoutModel');
 
     let type;
 
-    if (property.match(/password/)) {
+    if (this.get('content')) {
+      type = 'select';
+    else if (property.match(/password/)) {
       type = 'password';
     } else if (property.match(/email/)) {
       type = 'email';
@@ -107,8 +111,6 @@ export default Ember.Component.extend({
       type = 'tel';
     } else if (property.match(/search/)) {
       type = 'search';
-    } else if (this.get('content')) {
-      type = 'select';
     } else {
       const value = this.get('value');
 
@@ -132,22 +134,36 @@ export default Ember.Component.extend({
 
       if (this.get('isNewlyValid')) {
         modifier = 'newly-valid';
-      } else if(this.get('isValid')) {
+      } else if (this.get('isValid')) {
         modifier = 'valid';
       } else {
         modifier = 'error';
       }
 
-      return `${className}-${modifier}`;
+      if (modifier) {
+        return `${className}-${modifier}`;
+      } else {
+        return className;
+      }
     }
   ),
 
   /* Actions */
 
   actions: {
+
     showError() {
-      this.set('shouldShowError', true);
+      this.set('showError', true);
     },
+
+    setGroupAsInvalid() {
+      this.set('isValid', false);
+    },
+
+    setGroupAsValid() {
+      this.set('isValid', true);
+    },
+
   },
 
   /* Public methods - avoid xBinding syntax */
@@ -159,14 +175,15 @@ export default Ember.Component.extend({
 
     run.later(this, function() {
       this.set('isNewlyValid', false);
-    }, 3000);
+    }, this.get('newlyValidDuration'));
   }),
 
   removeBindingForValue: on('willDestroyElement', function() {
-    const bindingForValue = this.get('bindingForValue');
+    const property = 'bindingForValue';
 
-    if (bindingForValue) {
-      bindingForValue.disconnect(this);
+    if (this.get(property)) {
+      this.get(property).disconnect(this);
+      this.set(property, null);
     }
   }),
 
