@@ -118,9 +118,28 @@ test('Class name bindings', function(assert) {
 
 test('Input attribute properties', function(assert) {
 
-  assert.expect(0);
+  const properties = [
+    'collection',
+    'content',
+    'optionValuePath',
+    'optionLabelPath',
+    'selection',
+    'multiple',
+    'name',
+    'placeholder',
+    'prompt',
+    'disabled',
+  ];
 
-  // TODO
+  assert.expect(properties.length);
+
+  properties.forEach(function(property) {
+    const value = component.get(property);
+
+    assert.ok(value !== undefined,
+      `The ipnut group should have a binding for the input attribute ${property}`);
+
+  });
 
 });
 
@@ -163,7 +182,7 @@ test('Type property and partial', function(assert) {
 
   /* Now check for selects */
 
-  setOnComponent(component, 'content', Em.A([1, 2, 3]));
+  setOnComponent(component, 'content', Ember.A([1, 2, 3]));
 
   assert.equal(component.get('type'), 'select',
     'Type should be set to select when the content property is present (regardless of the property name)');
