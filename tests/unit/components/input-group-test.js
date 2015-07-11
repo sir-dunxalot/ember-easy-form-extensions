@@ -81,48 +81,40 @@ test('Basic properties', function(assert) {
 
 });
 
-// TODO - Debug with wifi
+test('Class name bindings', function(assert) {
+  const className = component.get('className');
+  const done = assert.async(); // Enable asyns test
+  const newlyValidDuration = 10;
 
-// test('Class name bindings', function(assert) {
-//   const className = component.get('className');
-//   const newlyValidDuration = 100;
+  assert.expect(4);
 
-//   let shouldContinueTests = false;
+  this.render();
 
-//   assert.expect(4);
+  testClassNameBinding(assert, component);
 
-//   this.render();
+  setPropertiesOnComponent(component, { newlyValidDuration });
 
-//   testClassNameBinding(assert, component);
+  /* Set as invalid then look at class */
 
-//   setPropertiesOnComponent(component, { newlyValidDuration });
+  sendAction(component, 'setGroupAsInvalid');
+  assertClass(assert, component, `${className}-error`);
 
-//   /* Set as invalid then look at class */
+  /* Set as invalid then look at class */
 
-//   sendAction(component, 'setGroupAsInvalid');
-//   assertClass(assert, component, `${className}-error`);
+  sendAction(component, 'setGroupAsValid');
+  assertClass(assert, component, `${className}-newly-valid`);
 
-//   /* Set as invalid then look at class */
+  /* Look at class after validity period is over */
 
-//   sendAction(component, 'setGroupAsValid');
-//   assertClass(assert, component, `${className}-newly-valid`);
+  run.later(component, function() {
 
-//   /* Look at class after validity period is over */
+    sendAction(component, 'setGroupAsValid');
+    assertClass(assert, component, `${className}-valid`);
 
-//   run.later(component, function() {
+    done();
+  }, newlyValidDuration);
 
-//     sendAction(component, 'setGroupAsValid');
-//     assertClass(assert, component, `${className}-valid`);
-
-//     shouldContinueTests = true;
-//   }, newlyValidDuration);
-
-//   // Ember.Test.registerWaiter(this, function() {
-//   //   console.log('checking', shouldContinueTests);
-//   //   return false;
-//   // });
-
-// });
+});
 
 test('Input attribute properties', function(assert) {
 
@@ -135,7 +127,7 @@ test('Input attribute properties', function(assert) {
 test('Type property and partial', function(assert) {
   const inputId = component.get('inputId');
 
-  assert.expect(24);
+  assert.expect(33);
 
   /* Render early so we can check the <input> type attribute */
 
@@ -181,30 +173,26 @@ test('Type property and partial', function(assert) {
 
   /* Reset the component for the next set of tests */
 
-  /* Finally, check setting the type manually using textarea */
+  setPropertiesOnComponent(component, {
+    content: null,
+    property: 'bananas',
+  });
 
-  setOnComponent(component, 'type', 'textarea');
+  /* Now, for fallbacks, check the type of the value */
 
-  assert.equal(this.$(`#${inputId}`).prop('tagName').toLowerCase(), 'textarea',
-    "The type attribute, 'select', should be bound to the input element");
+  const expectedValueDetects = {
+    number: 123,
+    date: new Date(),
+    checkbox: true,
+  };
 
-});
-
-/* Now, for fallbacks, check the type of the value */
-
-const expectedValueDetects = {
-  number: 123,
-  date: new Date(),
-  checkbox: true,
-};
-
-for (let type in expectedValueDetects) {
-  test(`typeof value detection fallback for ${type} property`, function(assert) {
-    const inputId = component.get('inputId');
+  for (let type in expectedValueDetects) {
+    // test(`typeof value detection fallback for ${type} property`, function(assert) {
+      // const inputId = component.get('inputId');
     const partialName = type === 'checkbox' ? type : 'default';
     const value = expectedValueDetects[type];
 
-    assert.expect(3);
+    // assert.expect(3);
 
     setPropertiesOnComponent(component, {
       value,
@@ -221,8 +209,17 @@ for (let type in expectedValueDetects) {
     assert.equal(component.$(`#${inputId}`).attr('type'), type,
       'The type attribute should be bound to the input element');
 
-  });
-}
+    // });
+  }
+
+  /* Finally, check setting the type manually using textarea */
+
+  setOnComponent(component, 'type', 'textarea');
+
+  assert.equal(this.$(`#${inputId}`).prop('tagName').toLowerCase(), 'textarea',
+    "The type attribute, 'select', should be bound to the input element and setabble manually");
+
+});
 
 test('Value and property binding', function(assert) {
   const property = 'fruit';
@@ -260,10 +257,31 @@ test('Value and property binding', function(assert) {
 
 });
 
-test('Action routing', function(assert) {
+test('Validity action routing', function(assert) {
 
-  assert.expect(0);
+  assert.expect(3);
 
-  // TODO
+  /* Ensure properties begin as we want */
+
+  setPropertiesOnComponent(component, {
+    isValid: false,
+    newlyValidDuration: 0,
+    showError: false,
+  });
+
+  sendAction(component, 'showError');
+
+  assert.ok(component.get('showError'),
+    'Calling the showError() action should set showError to true');
+
+  sendAction(component, 'setGroupAsValid');
+
+  assert.ok(component.get('isValid'),
+    'Calling the setGroupAsValid() action should set isValid to true');
+
+  sendAction(component, 'setGroupAsInvalid');
+
+  assert.notOk(component.get('isValid'),
+    'Calling the setGroupAsInvalid() action should set isValid to false');
 
 });

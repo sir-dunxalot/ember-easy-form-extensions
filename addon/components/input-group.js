@@ -179,7 +179,9 @@ export default Ember.Component.extend({
     }
 
     run.later(this, function() {
-      this.set('isNewlyValid', false);
+      if (!this.get('isDestroying')) {
+        this.set('isNewlyValid', false);
+      }
     }, this.get('newlyValidDuration'));
   }),
 
