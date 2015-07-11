@@ -6,7 +6,7 @@ export default Ember.Component.extend({
   className: 'label',
   classNameBindings: ['className'],
   for: null,
-  label: null,
+  text: null,
   layout: layout,
   tagName: 'label',
 });
