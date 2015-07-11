@@ -82,7 +82,7 @@ test('The DOM', function(assert) {
 
 test('Actions', function(assert) {
 
-  expect(1);
+  assert.expect(1);
 
   setPropertiesOnComponent(component, {
     action: 'orderBigMacs',

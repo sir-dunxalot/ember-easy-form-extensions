@@ -11,6 +11,7 @@ export default Ember.Component.extend({
 
   className: 'input-wrapper',
   hint: null,
+  pathToInputPartials: 'form-inputs',
   property: null,
   newlyValidDuration: 3000,
 
@@ -71,14 +72,18 @@ export default Ember.Component.extend({
   }),
 
   inputPartial: computed('type', function() {
-    const container = this.get('container');
-    const dir = 'form-inputs/';
-    const type = this.get('type');
+    const { container, pathToInputPartials, type } = this.getProperties(
+      [ 'container', 'pathToInputPartials', 'type' ]
+    );
 
-    if (!!container.lookup(`template:${dir}${type}`)) {
-      return `${dir}${type}`;
+    /* Remove leading and trailing slashes for consistency */
+
+    const dir = pathToInputPartials.replace(/^\/|\/$/g, '');
+
+    if (!!container.lookup(`template:${dir}/${type}`)) {
+      return `${dir}/${type}`;
     } else {
-      return `${dir}default`;
+      return `${dir}/default`;
     }
   }),
 
@@ -92,7 +97,7 @@ export default Ember.Component.extend({
     return toWords(property);
   }),
 
-  type: computed('content', 'propertyWithoutModel', function() {
+  type: computed('content', 'propertyWithoutModel', 'value', function() {
     const property = this.get('propertyWithoutModel');
 
     let type;
