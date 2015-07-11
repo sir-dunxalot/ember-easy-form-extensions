@@ -14,10 +14,23 @@ module('Unit | Initializer | easy form extensions', {
   }
 });
 
-// Replace this with your real tests.
-test('it works', function(assert) {
+test('Input element basic accessibility', function(assert) {
   initialize(container, application);
 
-  // you would normally confirm the results of the initializer here
-  assert.ok(true);
+  assert.expect(7);
+
+  assert.ok(Ember.Checkbox.create().get('attributeBindings').toString().indexOf('aria-checked') > -1,
+    'Ember.Checkbox should have an aria-checked binding');
+
+  ['TextArea', 'TextField', 'Select'].forEach(function(className) {
+    const instance = Ember[className].create();
+    const attributeBindings = instance.get('attributeBindings').toString();
+
+    assert.ok(attributeBindings.indexOf('aria-invalid') > -1,
+      `Ember.${className} should have an aria-invalid binding`);
+
+    assert.ok(attributeBindings.indexOf('aria-required') > -1,
+      `Ember.${className} should have an aria-required binding`);
+
+  });
 });
