@@ -99,7 +99,7 @@ export default Ember.Component.extend({
 
     if (this.get('content')) {
       type = 'select';
-    else if (property.match(/password/)) {
+    } else if (property.match(/password/)) {
       type = 'password';
     } else if (property.match(/email/)) {
       type = 'email';

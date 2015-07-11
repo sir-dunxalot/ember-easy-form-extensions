@@ -58,7 +58,9 @@ test('Properties', function(assert) {
   assert.ok(component.get('text').indexOf(property) > -1,
     'The error text should contain the new property name');
 
-  const element = this.$(); // Calls render
+  this.render();
+
+  const element = this.$();
 
   assert.ok(element.hasClass(component.get('className')),
     'The class name should be bound to the element');
@@ -110,7 +112,10 @@ test('The DOM', function(assert) {
     ]),
   });
 
-  setPropertiesOnComponent(component, { property });
+  setPropertiesOnComponent(component, {
+    property,
+    showError: true,
+  });
 
   initAttrs(component);
 

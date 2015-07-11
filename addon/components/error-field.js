@@ -1,6 +1,5 @@
 import Ember from 'ember';
 import layout from '../templates/components/error-field';
-import toWords from '../utils/to-words';
 
 const { computed, observer, on } = Ember;
 
@@ -22,7 +21,13 @@ export default Ember.Component.extend({
   tagName: 'span',
   validAction: 'setGroupAsValid',
   showError: false,
-  text: computed.oneWay('errors.firstObject'),
+
+  text: computed('errors.firstObject', 'label', function() {
+    const error = this.get('errors.firstObject');
+    const label = this.get('label');
+
+    return `${label} ${error}`;
+  }),
 
   formController: computed(function() {
     const hasFormController = this.nearestWithProperty('formController');
