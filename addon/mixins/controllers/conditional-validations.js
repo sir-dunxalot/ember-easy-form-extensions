@@ -1,6 +1,6 @@
 import Ember from 'ember';
 
-const { on } = Ember;
+const { on, typeOf } = Ember;
 
 export default Ember.Mixin.create({
   revalidateFor: [],
@@ -21,7 +21,9 @@ export default Ember.Mixin.create({
 
   _revalidate: on('routeDidTransition',
     function() {
-      Ember.assert('No validate() method detected. You must use the conditional validations mixin with the form mixin.', this.validate);
+      const validateExists = typeOf(this.validate) === 'function';
+
+      Ember.assert('No validate() method detected. You must use the conditional validations mixin with the form mixin.', validateExists);
 
       this.forEachRevalidator(function(property) {
         this.addObserver(property, this.validate);
