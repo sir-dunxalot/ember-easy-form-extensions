@@ -4,6 +4,8 @@ import { module, test } from 'qunit';
 
 var container, application;
 
+/* ROUTE INITIALIZER TO BE DEPRECATED */
+
 module('Unit | Initializer | routing events', {
   beforeEach: function() {
     Ember.run(function() {
@@ -20,4 +22,5 @@ test('it works', function(assert) {
 
   // you would normally confirm the results of the initializer here
   assert.ok(true);
+
 });
