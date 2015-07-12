@@ -4,5 +4,7 @@ export default function(string) {
   const underscored = Ember.String.underscore(string);
   const spaced = underscored.split('_').join(' ');
 
-  return spaced.replace('.', ' ');
+  /* Replace dots then remove double spaces */
+
+  return spaced.replace(/\./g, ' ').replace(/ +(?= )/g,'');
 }

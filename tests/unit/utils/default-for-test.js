@@ -23,7 +23,7 @@ test('Correct values are returned', function(assert) {
     {},
     [],
     function() {},
-    new Date,
+    new Date(),
     false,
     true,
     0
