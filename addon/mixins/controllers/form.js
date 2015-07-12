@@ -8,14 +8,13 @@ export default Ember.Mixin.create(
 
   /* Properties */
 
-  cancelClicked: false,
   formIsSubmitted: false,
 
   editing: computed(function() {
     return this.toString().indexOf('/edit:') > -1;
   }),
 
-  isFormController: computed(function() {
+  hasFormMixin: computed(function() {
     return true;
   }).readOnly(),
 
@@ -41,20 +40,15 @@ export default Ember.Mixin.create(
       });
     },
 
-    /* Form submisison actions */
+    /* Form submission actions */
 
     cancel() {
-      this.setProperties({
-        cancelClicked: true,
-        formIsSubmitted: true
-      });
-
+      this.set('formIsSubmitted', true);
       this._eventHandler('cancel');
     },
 
     delete() {
       this.set('formIsSubmitted', true);
-
       this._eventHandler('delete');
     },
 
@@ -63,7 +57,6 @@ export default Ember.Mixin.create(
     submit() {
       this.set('formIsSubmitted', true);
       this.trigger('submission');
-
       this._eventHandler('submit');
     },
 
@@ -72,11 +65,18 @@ export default Ember.Mixin.create(
   /* Methods */
 
   resetForm: on('routeDidTransition', function() {
-    this.set('formIsSubmitted', false);
+    this.resetSubmission();
+
+    /* Add logic for resetting anything to do with
+    input here */
   }),
 
-  showServerError(/* xhr */) {
+  resetSubmission() {
     this.set('formIsSubmitted', false);
+  },
+
+  showServerError(/* xhr */) {
+    this.resetSubmission();
   },
 
   validateThenSave() {
@@ -100,7 +100,7 @@ export default Ember.Mixin.create(
     if (this.runCustomValidations) {
       const customValidationsPromise = this.runCustomValidations();
 
-      if (!customValidationsPromise.then) {
+      if (!customValidationsPromise || !customValidationsPromise.then) {
         Ember.assert(
           'runCustomValidations() must return a promise (e.g. return new Ember.RSVP.Promise(...)).'
         );
@@ -111,7 +111,7 @@ export default Ember.Mixin.create(
 
       /* Else save with normal ember-validations checks */
 
-      if (!_this.get('isValid')) {
+      if (!this.get('isValid')) {
         reject();
       } else {
         resolve();

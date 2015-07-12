@@ -19,7 +19,6 @@ function trigger(event) {
 }
 
 module('Unit | Mixin | controllers/conditional validations', {
-  unit: true,
 
   beforeEach: function() {
     const ControllersConditionalValidationsObject = Ember.Controller.extend(

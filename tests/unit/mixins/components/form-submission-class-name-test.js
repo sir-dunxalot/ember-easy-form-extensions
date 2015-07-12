@@ -13,7 +13,6 @@ function setProperties(properties) {
 }
 
 module('Unit | Mixin | form submission class name', {
-  unit: true,
 
   beforeEach: function() {
     const FormSubmissionClassNameObject = Ember.Component.extend(FormSubmissionClassNameMixin);

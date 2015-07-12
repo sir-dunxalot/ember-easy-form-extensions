@@ -28,9 +28,9 @@ export default Ember.Component.extend(
   formController: Ember.computed(function() {
     const routeController = this.get('targetObject');
 
-    if (this.get('isFormController')) {
+    if (this.get('hasFormMixin')) {
       return this;
-    } else if (routeController.get('isFormController')) {
+    } else if (routeController.get('hasFormMixin')) {
       return routeController;
     } else {
       return null;
