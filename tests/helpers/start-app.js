@@ -3,6 +3,8 @@ import Application from '../../app';
 import Router from '../../router';
 import config from '../../config/environment';
 
+import fillInInput from './sync/fill-in-input';
+
 export default function startApp(attrs) {
   var application;
 

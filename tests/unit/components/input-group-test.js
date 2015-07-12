@@ -84,7 +84,7 @@ test('Basic properties', function(assert) {
 test('Class name bindings', function(assert) {
   const className = component.get('className');
   const done = assert.async(); // Enable asyns test
-  const newlyValidDuration = 10;
+  const newlyValidDuration = 100;
 
   assert.expect(4);
 
@@ -112,7 +112,7 @@ test('Class name bindings', function(assert) {
     assertClass(assert, component, `${className}-valid`);
 
     done();
-  }, newlyValidDuration);
+  }, newlyValidDuration + 100);
 
 });
 
