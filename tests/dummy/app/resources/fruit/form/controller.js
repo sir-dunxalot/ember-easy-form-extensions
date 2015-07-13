@@ -4,22 +4,22 @@ import FormMixin from 'ember-easy-form-extensions/mixins/controllers/form';
 export default Ember.Controller.extend(
   FormMixin, {
 
-  categories: Ember.A(['ember', 'rails', 'css']),
+  colors: Ember.A(['orange', 'yellow', 'green']),
 
   validations: {
-    'model.title': {
+    'model.name': {
       presence: true
     },
     'model.description': {
       presence: true
     },
-    'model.category': {
+    'model.color': {
       presence: true
     }
   },
 
   save: function() {
-    console.log('Saving');
+    Ember.debug('Saving');
   },
 
   cancel: function() {
@@ -28,7 +28,7 @@ export default Ember.Controller.extend(
 
   submitHandler: function() {
     return new Ember.RSVP.Promise(function(resolve, reject) {
-      console.log('submit handler running');
+      Ember.debug('Submit handler running');
 
       resolve();
     });

@@ -5,7 +5,7 @@ export default Ember.Route.extend(
   DirtyRecordHandler, {
 
   model: function() {
-    return this.store.createRecord('post');
+    return this.store.createRecord('fruit');
   }
 
 });

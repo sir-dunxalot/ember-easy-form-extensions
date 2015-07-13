@@ -23,7 +23,9 @@
     "currentPath",
     "currentRouteName",
     "moment",
-    "fillInInput"
+    "asyncClick",
+    "fillInInputFor",
+    "inspect"
   ],
   "node": false,
   "browser": false,
