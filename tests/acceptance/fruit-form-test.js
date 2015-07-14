@@ -8,8 +8,10 @@ let application;
 const {
   color,
   description,
+  isTropical,
   name,
   numberOfSeeds,
+  pickedOn,
 } = Fruit;
 
 module('Acceptance | fruit/form', {
@@ -60,10 +62,25 @@ test('Binding text values to inputs and the model', function(assert) {
 });
 
 test('Binding select values and options', function(assert) {
+  const defaultValue = 'orange';
 
   visit('/fruit/form');
 
+  /* Check the default value */
+
+  andThen(function() {
+
+    assert.equal(inspectInputFor('color', 'select').val(), defaultValue,
+      `The default value of the selected option should be set by default on the model`);
+
+    assert.equal(inspectModelValueFor('color'), defaultValue,
+      `Default select values should be bound to the model`);
+
+  });
+
   fillInInputFor('color', color, 'select');
+
+  /* Then check changing the select works */
 
   andThen(function() {
 
@@ -71,9 +88,41 @@ test('Binding select values and options', function(assert) {
       `The value of the selected option should be updated on the select`);
 
     assert.equal(inspectModelValueFor('color'), color,
-      `color should be bound to the model`);
-
+      `Select values should be bound to the model`);
 
   });
 
 });
+
+test('Binding checkbox values', function(assert) {
+
+  visit('/fruit/form');
+
+  clickInputFor('isTropical');
+
+  andThen(function() {
+
+    assert.equal(inspectInputFor('isTropical').prop('checked'), isTropical,
+      `The value of isTropical should be updated on the checkbox`);
+
+    assert.equal(inspectModelValueFor('isTropical'), isTropical.toString(),
+      `Checkbox values should be bound to the model`);
+
+  });
+
+});
+
+// TODO - Dates - coming soon
+
+// test('Binding dates', function(assert) {
+
+//   visit('/fruit/form');
+
+//   fillInInputFor('pickedOn', pickedOn);
+
+//   andThen(function() {
+
+
+//   });
+
+// });

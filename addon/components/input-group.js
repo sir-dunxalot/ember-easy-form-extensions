@@ -44,19 +44,9 @@ export default Ember.Component.extend({
   unregisterAction: 'unregisterInputGroup',
   value: null,
 
-  propertyWithoutModel: computed('property', 'modelPath', function() {
-    const modelPath = this.get('modelPath');
-
-    if (modelPath) {
-      return this.get('property').replace(`${modelPath}.`, '');
-    } else {
-      return this.get('property');
-    }
-  }),
-
-  dataTest: computed('propertyWithoutModel', function() {
-    const propertyWithoutModel = this.get('propertyWithoutModel');
-    const dasherizedProperty = Ember.String.dasherize(propertyWithoutModel);
+  dataTest: computed('property', function() {
+    const property = this.get('property');
+    const dasherizedProperty = Ember.String.dasherize(property);
 
     return `input-wrapper-for-${dasherizedProperty}`;
   }),
@@ -92,13 +82,35 @@ export default Ember.Component.extend({
   }).readOnly(),
 
   label: computed('property', function() {
-    const property = defaultFor(this.get('propertyWithoutModel'), '');
+    const property = defaultFor(this.get('property'), '');
 
     return toWords(property);
   }),
 
-  type: computed('content', 'propertyWithoutModel', 'value', function() {
-    const property = this.get('propertyWithoutModel');
+  propertyWithModel: computed('property', 'modelPath', function() {
+    const { modelPath, property } = this.getProperties(
+      [ 'modelPath', 'property' ]
+    );
+
+    if (modelPath) {
+      return `${modelPath}.${property}`;
+    } else {
+      return property;
+    }
+  }),
+
+  // propertyWithoutModel: computed('property', 'modelPath', function() {
+  //   const modelPath = this.get('modelPath');
+
+  //   if (modelPath) {
+  //     return this.get('property').replace(`${modelPath}.`, '');
+  //   } else {
+  //     return this.get('property');
+  //   }
+  // }),
+
+  type: computed('content', 'property', 'value', function() {
+    const property = this.get('property');
 
     let type;
 
@@ -195,11 +207,10 @@ export default Ember.Component.extend({
   }),
 
   setBindingForValue: on('didInitAttrs', function() {
-    const property = this.get('property');
+    Ember.assert('You must set a property attribute on the {{input-group}} component', this.get('property'));
 
-    Ember.assert('You must set a property attribute on the {{input-group}} component', property);
-
-    const binding = Ember.bind(this, 'value', `formController.${property}`);
+    const propertyWithModel = this.get('propertyWithModel');
+    const binding = Ember.bind(this, 'value', `formController.${propertyWithModel}`);
 
     this.set('bindingForValue', binding);
   }),

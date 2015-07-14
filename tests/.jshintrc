@@ -24,8 +24,11 @@
     "currentRouteName",
     "moment",
     "asyncClick",
+    "clickInputFor",
     "fillInInputFor",
-    "inspect"
+    "inspect",
+    "inspectInputFor",
+    "inspectModelValueFor"
   ],
   "node": false,
   "browser": false,

@@ -9,6 +9,7 @@ Router.map(function() {
 
   this.route('fruit', function() {
     this.route('form');
+    this.route('model-path');
   });
 
 });

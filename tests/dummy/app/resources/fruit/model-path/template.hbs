@@ -1,0 +1,16 @@
+{{#form-wrapper}}
+
+  {{#form-controls legend='Write a new post' modelPath='model.fruit'}}
+
+    {{input-group property='name'}}
+
+  {{/form-controls}}
+
+  {{form-submission}}
+
+{{/form-wrapper}}
+
+<dl>
+  <dt>Fruit Name</dt>
+  <dd data-test="model-fruit-name">{{model.fruit.name}}</dd>
+</dl>

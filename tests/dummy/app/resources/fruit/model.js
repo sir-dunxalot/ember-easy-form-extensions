@@ -10,7 +10,7 @@ export default DS.Model.extend({
   }), // Select
   numberOfSeeds: attr('number', {
     defaultValue() {
-      return 0;
+      return 10;
     }
   }),
   description: attr('string'), // Textarea
@@ -22,7 +22,7 @@ export default DS.Model.extend({
   name: attr('string'),
   pickedOn: attr('date', {
     defaultValue() {
-      return moment('2008-06-24');
+      return moment('2008-06-24').toDate();
     }
   }),
 });
