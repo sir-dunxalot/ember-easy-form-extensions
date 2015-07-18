@@ -59,7 +59,7 @@ test('Properties and actions', function(assert) {
   assert.ok(component.get('hasFormMixin'),
     'The mixin should have a helper property for detection by components');
 
-  ['cancel', 'delete', 'save'].forEach(function(action) {
+  supportedButtons.forEach(function(action) {
 
     assert.ok(component.get(`_actions.${action}`),
       `The ${action} action should exist`);
@@ -163,7 +163,8 @@ test('Private methods', function(assert) {
   /* ... Then test event handlers */
 
   events.forEach(function(event) {
-    const eventHandler = `${event}Handler`;
+    const capitalizedEvent = Ember.String.capitalize(event);
+    const eventHandler = `before${capitalizedEvent}`;
 
     let method = event;
 

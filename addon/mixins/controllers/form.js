@@ -123,7 +123,8 @@ export default Ember.Mixin.create(
   /* Private methods */
 
   _eventHandler(type) {
-    const handlerMethodName = `${type}Handler`;
+    const capitalizedType = Ember.String.capitalize(type);
+    const handlerMethodName = `before${capitalizedType}`;
     const handler = this[handlerMethodName];
 
     function isFunction(key) {
