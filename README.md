@@ -3,7 +3,9 @@ Ember Easy Form Extensions [![Build Status](https://travis-ci.org/sir-dunxalot/e
 
 This addon enhances Ember EasyForm by providing easy event and action handling for your forms.
 
-**To support Ember 1.10+ Easy Form has been temporarily rewritten for Ember CLI. When EasyForm is updated by Dockyard this addon will support that instead of our own form components.**
+**To support Ember 1.13 Easy Form has been temporarily rewritten for Ember CLI. When EasyForm is updated by Dockyard this addon will support that instead of our own form components.**
+
+Ember apps running 1.12 or below may behave unexpectedly.
 
 ## Installation
 
