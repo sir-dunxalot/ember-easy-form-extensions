@@ -2,6 +2,8 @@ import Ember from 'ember';
 
 export function initialize(/* container, app */) {
 
+  /* TODO - Deprecate with routable components */
+
   /**
   @class Ember.Controller
   @submodule controllers

@@ -54,10 +54,10 @@ export default Ember.Mixin.create(
 
     /* Show validation errors on submit click */
 
-    submit() {
+    save() {
       this.set('formIsSubmitted', true);
       this.trigger('submission');
-      this._eventHandler('submit');
+      this._eventHandler('save');
     },
 
   },
@@ -130,9 +130,9 @@ export default Ember.Mixin.create(
       return Ember.typeOf(key) === 'function';
     }
 
-    /* If event is submit, method is renamed */
+    /* If event is save, method is renamed */
 
-    if (type === 'submit') {
+    if (type === 'save') {
       type = 'validateThenSave';
     }
 

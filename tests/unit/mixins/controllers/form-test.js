@@ -2,6 +2,7 @@ import Ember from 'ember';
 import ControllersFormMixin from 'ember-easy-form-extensions/mixins/controllers/form';
 import { module, test } from 'qunit';
 
+const supportedButtons = ['cancel', 'delete', 'save'];
 const { run, typeOf } = Ember;
 
 let component;
@@ -58,7 +59,7 @@ test('Properties and actions', function(assert) {
   assert.ok(component.get('hasFormMixin'),
     'The mixin should have a helper property for detection by components');
 
-  ['cancel', 'delete', 'submit'].forEach(function(action) {
+  ['cancel', 'delete', 'save'].forEach(function(action) {
 
     assert.ok(component.get(`_actions.${action}`),
       `The ${action} action should exist`);
@@ -125,7 +126,7 @@ test('Private methods', function(assert) {
 
   /* _eventHandler */
 
-  const events = ['cancel', 'delete', 'submit'];
+  const events = supportedButtons;
 
   /* Use an array and index to save and call assert.async()
   methods so we can wait for the promises to resolve before
@@ -144,7 +145,7 @@ test('Private methods', function(assert) {
 
     let method = event;
 
-    if (event === 'submit') {
+    if (event === 'save') {
       method = 'validateThenSave';
     }
 
@@ -166,7 +167,7 @@ test('Private methods', function(assert) {
 
     let method = event;
 
-    if (event === 'submit') {
+    if (event === 'save') {
       method = 'validateThenSave';
     }
 

@@ -19,9 +19,9 @@ export default Ember.Component.extend(
   deleteAction: 'delete',
   deleteText: 'Delete',
 
-  submit: true,
-  submitAction: 'submit',
-  submitText: 'Submit',
+  save: true,
+  saveAction: 'save',
+  saveText: 'Save',
 
   /* Properties */
 
@@ -47,8 +47,8 @@ export default Ember.Component.extend(
       this.sendAction('delete');
     },
 
-    submit() {
-      this.sendAction('submitAction');
+    save() {
+      this.sendAction('saveAction');
     },
 
   },

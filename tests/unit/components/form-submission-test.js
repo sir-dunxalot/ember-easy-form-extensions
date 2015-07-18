@@ -7,6 +7,7 @@ import {
 } from '../../helpers/unit/component';
 import selectorFor from '../../helpers/selector-for';
 
+const supportedButtons = ['cancel', 'delete', 'save'];
 const { run, typeOf } = Ember;
 
 let component;
@@ -44,7 +45,7 @@ test('Properties', function(assert) {
 
   /* Check cancel, cancelAction, and cancelText, etc */
 
-  ['cancel', 'delete', 'submit'].forEach(function(buttonType) {
+  supportedButtons.forEach(function(buttonType) {
     const actionProperty = `${buttonType}Action`;
     const existsByDefault = buttonType !== 'delete';
     const expectedButtonText = Ember.String.capitalize(buttonType);
@@ -85,7 +86,7 @@ test('The DOM', function(assert) {
 
   /* Check in button in turn */
 
-  ['cancel', 'delete', 'submit'].forEach(function(action, i) {
+  supportedButtons.forEach(function(action, i) {
     const selector = selectorFor(`button-for-${action}`);
 
     setOnComponent(component, action, true);

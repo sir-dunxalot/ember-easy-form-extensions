@@ -1,6 +1,6 @@
 {{#if cancel}}
   {{form-submission-button
-    action='cancel'
+    action=cancelAction
     disabled=formIsSubmitted
     text=cancelText
     type='reset'
@@ -9,17 +9,17 @@
 
 {{#if delete}}
   {{form-submission-button
-    action='delete'
+    action=deleteAction
     disabled=formIsSubmitted
     text=deleteText
   }}
 {{/if}}
 
-{{#if submit}}
+{{#if save}}
   {{form-submission-button
-    action='submit'
+    action=saveAction
     disabled=formIsSubmitted
-    text=submitText
+    text=saveText
     type='submit'
   }}
 {{/if}}
