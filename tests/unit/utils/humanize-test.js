@@ -1,4 +1,4 @@
-import toWords from 'ember-easy-form-extensions/utils/to-words';
+import humanize from 'ember-easy-form-extensions/utils/humanize';
 import { module, test } from 'qunit';
 
 module('Unit | Utility | to words');
@@ -21,7 +21,7 @@ test('it works', function(assert) {
 
   versions.forEach(function(version) {
 
-    assert.equal(toWords(version), expectedResult,
+    assert.equal(humanize(version), expectedResult,
       `"${version}" should be turned into "${expectedResult}"`);
 
   });

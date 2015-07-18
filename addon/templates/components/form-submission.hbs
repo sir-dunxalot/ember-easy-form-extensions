@@ -1,7 +1,6 @@
 {{#if cancel}}
   {{form-submission-button
     action='cancel'
-    class='button-secondary'
     disabled=formIsSubmitted
     text=cancelText
     type='reset'
@@ -11,7 +10,6 @@
 {{#if delete}}
   {{form-submission-button
     action='delete'
-    class='button-secondary'
     disabled=formIsSubmitted
     text=deleteText
   }}
@@ -20,7 +18,6 @@
 {{#if submit}}
   {{form-submission-button
     action='submit'
-    class='button-primary'
     disabled=formIsSubmitted
     text=submitText
     type='submit'
@@ -28,5 +25,5 @@
 {{/if}}
 
 {{#if formIsSubmitted}}
-  Submitting...
+  {{partial 'form-is-submitted'}}
 {{/if}}

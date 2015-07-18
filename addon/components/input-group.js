@@ -1,7 +1,7 @@
 import defaultFor from '../utils/default-for';
 import Ember from 'ember';
+import humanize from '../utils/humanize';
 import layout from '../templates/components/input-group';
-import toWords from '../utils/to-words';
 
 const { computed, observer, on, run, typeOf } = Ember;
 
@@ -84,7 +84,7 @@ export default Ember.Component.extend({
   label: computed('property', function() {
     const property = defaultFor(this.get('property'), '');
 
-    return toWords(property);
+    return humanize(property);
   }),
 
   propertyWithModel: computed('property', 'modelPath', function() {
@@ -98,16 +98,6 @@ export default Ember.Component.extend({
       return property;
     }
   }),
-
-  // propertyWithoutModel: computed('property', 'modelPath', function() {
-  //   const modelPath = this.get('modelPath');
-
-  //   if (modelPath) {
-  //     return this.get('property').replace(`${modelPath}.`, '');
-  //   } else {
-  //     return this.get('property');
-  //   }
-  // }),
 
   type: computed('content', 'property', 'value', function() {
     const property = this.get('property');

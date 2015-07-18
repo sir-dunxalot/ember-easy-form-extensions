@@ -12,7 +12,10 @@ const { run, typeOf } = Ember;
 let component;
 
 moduleForComponent('form-submission', 'Unit | Component | form submission', {
-  needs: ['component:form-submission-button'],
+  needs: [
+    'component:form-submission-button',
+    'template:form-is-submitted',
+  ],
   unit: true,
 
   beforeEach: function() {

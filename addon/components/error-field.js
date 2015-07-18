@@ -62,7 +62,7 @@ export default Ember.Component.extend({
     }
   }),
 
-  removeBindingForErrors: Ember.on('willDestroyElement', function() {
+  removeBindingForErrors: on('willDestroyElement', function() {
     const property = 'bindingForErrors';
 
     if (this.get(property)) {
