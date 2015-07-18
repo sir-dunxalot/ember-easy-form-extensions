@@ -1,0 +1,1 @@
+export { default } from 'ember-easy-form-extensions/test-helpers/sync/fill-in-input';

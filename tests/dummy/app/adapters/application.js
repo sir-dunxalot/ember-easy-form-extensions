@@ -1,6 +1,7 @@
 import DS from 'ember-data';
+import FixtureAdapter from 'ember-data-fixture-adapter';
 
-export default DS.FixtureAdapter.extend({
+export default FixtureAdapter.extend({
   simulateRemoteResponse: false,
 
   /**

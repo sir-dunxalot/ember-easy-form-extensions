@@ -1,0 +1,29 @@
+{{#if cancel}}
+  {{form-submission-button
+    action=cancelAction
+    disabled=formIsSubmitted
+    text=cancelText
+    type='reset'
+  }}
+{{/if}}
+
+{{#if delete}}
+  {{form-submission-button
+    action=deleteAction
+    disabled=formIsSubmitted
+    text=deleteText
+  }}
+{{/if}}
+
+{{#if save}}
+  {{form-submission-button
+    action=saveAction
+    disabled=formIsSubmitted
+    text=saveText
+    type='submit'
+  }}
+{{/if}}
+
+{{#if formIsSubmitted}}
+  {{partial 'form-is-submitted'}}
+{{/if}}
