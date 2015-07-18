@@ -1,7 +1,7 @@
 {
   "name": "ember-easy-form-extensions",
-  "version": "0.4.0",
-  "description": "Extends Ember EasyForm into the view and controller layers of your Ember CLI app to provide easy event and action handling using mixins and components.",
+  "version": "1.0.0",
+  "description": "Enhances Ember EasyForm by providing easy action handling, validations, and Ember 1.13 support for your forms",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -11,7 +11,7 @@
     "build": "ember build",
     "test": "ember try:testall"
   },
-  "repository": "https://://github.com/sir-dunxalot/ember-easy-form-extensions",
+  "repository": "https://github.com/sir-dunxalot/ember-easy-form-extensions",
   "engines": {
     "node": ">= 0.10.0"
   },
