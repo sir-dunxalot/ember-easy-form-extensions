@@ -25,17 +25,21 @@ module('Acceptance | model path', {
 });
 
 test('Binding text values to inputs and the model', function(assert) {
+  const name = 'Banana';
 
-  assert.expect(6);
+  assert.expect(2);
 
   visit('/fruit/model-path');
 
-  // fillInInputFor('numberOfSeeds', numberOfSeeds);
+  fillInInputFor('name', name);
 
   andThen(function() {
 
-    // assert.equal(inspectInputFor('name').val(), name,
-    //   `The title value should be updated on the input element`);
+    assert.equal(inspectInputFor('name').val(), name,
+      `The name value should be updated on the input element`);
+
+    assert.equal(inspectModelValueFor('fruit-name'), name,
+      `The name value should be updated on model`);
 
   });
 });

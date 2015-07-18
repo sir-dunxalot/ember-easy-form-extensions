@@ -67,7 +67,7 @@ test('Basic properties', function(assert) {
     property,
   });
 
-  assert.equal(component.get('propertyWithoutModel'), propertyName,
+  assert.equal(component.get('property'), property,
     "The 'cleaned' property should be a relative reference from the model path");
 
   this.render();
