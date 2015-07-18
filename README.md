@@ -1,4 +1,5 @@
-# Ember Easy Form Extensions
+Ember Easy Form Extensions [![Build Status](https://travis-ci.org/sir-dunxalot/ember-easy-form-extensions.svg?branch=master)](https://travis-ci.org/sir-dunxalot/ember-easy-form-extensions)
+======
 
 This addon enhances Ember EasyForm by providing easy event and action handling for your forms.
 
