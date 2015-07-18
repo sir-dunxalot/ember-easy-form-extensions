@@ -19,8 +19,8 @@ export default Ember.Component.extend({
 
   collection: null,
   content: null,
-  optionValuePath: null,
-  optionLabelPath: null,
+  optionValuePath: 'content',
+  optionLabelPath: 'content',
   selection: null,
   multiple: null,
   name: computed.oneWay('property'),
