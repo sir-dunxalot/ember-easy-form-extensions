@@ -1,20 +1,8 @@
 # Ember Easy Form Extensions
 
-This addon extends Ember EasyForm into the view and controller layers of your Ember CLI app to provide easy event and action handling using mixins and components. The newly accessible developer-friendly layer includes form submission handlers, components, and integration with ember-validations.
+This addon enhances Ember EasyForm by providing easy event and action handling for your forms.
 
-**This is also the easiest known way to use Easy Form with Ember 1.10 and HTMLBars.**
-
-## Ember 1.11+ Users
-
-Whilst this addon's master branch currently supports Ember 1.10, there are even more known issues with Ember Easy Forms and Ember 1.11. As such, work has begun on a completely Ember CLIified branch [here](https://github.com/sir-dunxalot/ember-easy-form-extensions/tree/ember-1.11)
-
-The `ember-1.11` branch is an evolved easy form API. It is very early stage and undocumented but no longer requires vendor files either. A release will come soon but feel free to dig into the addon tree's source in the meantime.
-
-```json
-devDepencencies: {
-  "ember-easy-form-extensions": "sir-dunxalot/ember-easy-form-extensions#ember-1.11",
-}
-```
+**To support Ember 1.10+ Easy Form has been temporarily rewritten for Ember CLI. When EasyForm is updated by Dockyard this addon will support that instead of our own form components.**
 
 ## Installation
 
