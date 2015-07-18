@@ -145,6 +145,7 @@ test('Input attribute properties', function(assert) {
 
 test('Type property and partial', function(assert) {
   const inputId = component.get('inputId');
+  const done = assert.async();
 
   assert.expect(33);
 
@@ -176,7 +177,7 @@ test('Type property and partial', function(assert) {
     assert.equal(component.get('inputPartial'), 'form-inputs/default',
       'The form input partial should still be the default');
 
-    assert.equal(this.$(`#${inputId}`).attr('type'), expectedType,
+    assert.equal(component.$(`#${inputId}`).attr('type'), expectedType,
       'The type attribute should be bound to the input element');
   }
 
@@ -187,7 +188,7 @@ test('Type property and partial', function(assert) {
   assert.equal(component.get('type'), 'select',
     'Type should be set to select when the content property is present (regardless of the property name)');
 
-  assert.equal(this.$(`#${inputId}`).prop('tagName').toLowerCase(), 'select',
+  assert.equal(component.$(`#${inputId}`).prop('tagName').toLowerCase(), 'select',
     "The type attribute, 'select', should be bound to the input element");
 
   /* Reset the component for the next set of tests */
@@ -205,19 +206,15 @@ test('Type property and partial', function(assert) {
     checkbox: true,
   };
 
+  this.render();
+
   for (let type in expectedValueDetects) {
-    // test(`typeof value detection fallback for ${type} property`, function(assert) {
-      // const inputId = component.get('inputId');
     const partialName = type === 'checkbox' ? type : 'default';
     const value = expectedValueDetects[type];
-
-    // assert.expect(3);
 
     setPropertiesOnComponent(component, {
       value,
     });
-
-    this.render();
 
     assert.equal(component.get('type'), type,
       'Type should be autodetected by matching the type of value when no type is set');
@@ -227,16 +224,16 @@ test('Type property and partial', function(assert) {
 
     assert.equal(component.$(`#${inputId}`).attr('type'), type,
       'The type attribute should be bound to the input element');
-
-    // });
   }
 
   /* Finally, check setting the type manually using textarea */
 
   setOnComponent(component, 'type', 'textarea');
 
-  assert.equal(this.$(`#${inputId}`).prop('tagName').toLowerCase(), 'textarea',
+  assert.equal(component.$(`#${inputId}`).prop('tagName').toLowerCase(), 'textarea',
     "The type attribute, 'select', should be bound to the input element and setabble manually");
+
+  done();
 
 });
 

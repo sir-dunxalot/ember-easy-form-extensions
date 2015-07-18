@@ -7,7 +7,7 @@ import {
 } from '../../helpers/unit/component';
 import selectorFor from '../../helpers/selector-for';
 
-const { typeOf } = Ember;
+const { run, typeOf } = Ember;
 
 let component;
 
@@ -63,7 +63,7 @@ test('Properties', function(assert) {
 
   this.render();
 
-  assert.ok(this.$().hasClass(component.get('className')),
+  assert.ok(component.$().hasClass(component.get('className')),
     'The class name should be bound to the element');
 
 });
@@ -77,13 +77,15 @@ test('The DOM', function(assert) {
 
   /* Check the template before any submitting */
 
-  assert.ok(this.$().html().indexOf(submittingText) === -1,
+  assert.ok(component.$().html().indexOf(submittingText) === -1,
     'The template should reflect that the form has not been submitted');
 
   /* Check in button in turn */
 
-  ['cancel', 'delete', 'submit'].forEach(function(action) {
+  ['cancel', 'delete', 'submit'].forEach(function(action, i) {
     const selector = selectorFor(`button-for-${action}`);
+
+    doneArray.push(assert.async());
 
     setOnComponent(component, action, true);
 
@@ -94,7 +96,7 @@ test('The DOM', function(assert) {
 
     });
 
-    const $button = this.$(selector);
+    const $button = component.$(selector);
 
     assert.ok(!!$button,
       'The ${action} button should exist in the template');
@@ -103,16 +105,16 @@ test('The DOM', function(assert) {
 
     setOnComponent(component, action, false);
 
-    assert.notOk(this.$(selector).length,
+    assert.notOk(component.$(selector).length,
       'The ${action} button should no longer exist in the template');
 
   }, this);
 
-  /* Fake submisiosn and check the template */
+  /* Fake submission and check the template */
 
   setOnComponent(component, 'formIsSubmitted', true);
 
-  assert.ok(this.$().html().indexOf(submittingText) > -1,
+  assert.ok(component.$().html().indexOf(submittingText) > -1,
     'The template should reflect that the form is submitting');
 
 });
