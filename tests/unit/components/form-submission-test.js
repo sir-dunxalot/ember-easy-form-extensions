@@ -85,8 +85,6 @@ test('The DOM', function(assert) {
   ['cancel', 'delete', 'submit'].forEach(function(action, i) {
     const selector = selectorFor(`button-for-${action}`);
 
-    doneArray.push(assert.async());
-
     setOnComponent(component, action, true);
 
     setOnComponent(component, `_actions.${action}`, function() {
