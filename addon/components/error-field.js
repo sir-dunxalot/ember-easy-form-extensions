@@ -43,8 +43,6 @@ export default Ember.Component.extend({
   notifyChangeInValidity: observer('canAndShouldShowError', function() {
     const actionProperty = this.get('canAndShouldShowError') ? 'invalidAction' : 'validAction';
 
-    console.log('sending');
-
     this.sendAction(actionProperty);
   }),
 

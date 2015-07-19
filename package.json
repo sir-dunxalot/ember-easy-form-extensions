@@ -1,6 +1,6 @@
 {
   "name": "ember-easy-form-extensions",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Enhances Ember EasyForm by providing easy action handling, validations, and Ember 1.13 support for your forms",
   "directories": {
     "doc": "doc",

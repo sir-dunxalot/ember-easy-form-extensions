@@ -8,7 +8,7 @@
   "boss": true,
   "curly": true,
   "debug": false,
-  "devel": true,
+  "devel": false,
   "eqeqeq": true,
   "evil": true,
   "forin": false,
