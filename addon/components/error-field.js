@@ -14,6 +14,7 @@ export default Ember.Component.extend({
   /* Properties */
 
   bindingForErrors: null,
+  canAndShouldShowError: computed.and('showError', 'errors.length'),
   classNameBindings: ['className', 'showError'],
   errors: null,
   invalidAction: 'setGroupAsInvalid',
@@ -39,8 +40,10 @@ export default Ember.Component.extend({
 
   // TODO - update from observer to event when possible
 
-  notifyChangeInValidity: observer('showError', function() {
-    const actionProperty = this.get('showError') ? 'invalidAction' : 'validAction';
+  notifyChangeInValidity: observer('canAndShouldShowError', function() {
+    const actionProperty = this.get('canAndShouldShowError') ? 'invalidAction' : 'validAction';
+
+    console.log('sending');
 
     this.sendAction(actionProperty);
   }),

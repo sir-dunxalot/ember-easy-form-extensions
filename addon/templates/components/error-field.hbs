@@ -1,5 +1,3 @@
-{{#if errors.length}}
-  {{#if showError}}
-    {{capitalize-string text}}
-  {{/if}}
+{{#if canAndShouldShowError}}
+  {{capitalize-string text}}
 {{/if}}

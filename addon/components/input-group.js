@@ -164,10 +164,12 @@ export default Ember.Component.extend({
     },
 
     setGroupAsInvalid() {
+      console.log('invalid');
       this.set('isValid', false);
     },
 
     setGroupAsValid() {
+      console.log('valid');
       this.set('isValid', true);
     },
 
@@ -176,6 +178,7 @@ export default Ember.Component.extend({
   /* Public methods - avoid xBinding syntax */
 
   listenForNewlyValid: observer('isValid', function() {
+    console.log(this.get('isValid'));
     if (this.get('isValid')) {
       this.set('isNewlyValid', true);
     }
