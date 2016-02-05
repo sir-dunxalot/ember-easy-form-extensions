@@ -26,14 +26,8 @@ export default Ember.Component.extend(
   /* Properties */
 
   classNameBindings: ['className'],
-  formIsSubmitted: computed.oneWay('formController.formIsSubmitted'),
+  formIsSubmitted: false,
   layout: layout,
-
-  formController: computed(function() {
-    const hasFormController = this.nearestWithProperty('formController');
-
-    return hasFormController.get('formController');
-  }),
 
   /* Actions */
 

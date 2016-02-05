@@ -13,9 +13,6 @@ export default Ember.Controller.extend(
     'model.description': {
       presence: true
     },
-    'model.color': {
-      presence: true
-    }
   },
 
   save: function() {

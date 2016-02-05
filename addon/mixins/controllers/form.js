@@ -4,41 +4,19 @@ import EmberValidations from 'ember-validations';
 const { computed, on } = Ember;
 
 export default Ember.Mixin.create(
-  EmberValidations.Mixin, {
+  EmberValidations, {
 
   /* Properties */
 
   formIsSubmitted: false,
 
-  editing: computed(function() {
-    return this.toString().indexOf('/edit:') > -1;
-  }),
-
   hasFormMixin: computed(function() {
     return true;
   }).readOnly(),
 
-  new: computed(function() {
-    return this.toString().indexOf('/new:') > -1;
-  }),
-
   /* Actions */
 
   actions: {
-
-    /* Actions for child input groups */
-
-    registerInputGroup(inputGroupComponent) {
-      this.on('submission', function() {
-        inputGroupComponent.send('showError');
-      });
-    },
-
-    unregisterInputGroup(inputGroupComponent) {
-      this.off('submission', function() {
-        inputGroupComponent.send('showError');
-      });
-    },
 
     /* Form submission actions */
 
@@ -56,7 +34,6 @@ export default Ember.Mixin.create(
 
     save() {
       this.set('formIsSubmitted', true);
-      this.trigger('submission');
       this._eventHandler('save');
     },
 
@@ -64,12 +41,12 @@ export default Ember.Mixin.create(
 
   /* Methods */
 
-  resetForm: on('routeDidTransition', function() {
-    this.resetSubmission();
+  // resetForm: on('routeDidTransition', function() {
+  //   this.resetSubmission();
 
-    /* Add logic for resetting anything to do with
-    input here */
-  }),
+  //   /* Add logic for resetting anything to do with
+  //   input here */
+  // }),
 
   resetSubmission() {
     this.set('formIsSubmitted', false);

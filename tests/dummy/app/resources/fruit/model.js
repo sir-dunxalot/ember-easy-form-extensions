@@ -4,20 +4,14 @@ const { attr } = DS;
 
 export default DS.Model.extend({
   color: attr('string', {
-    defaultValue() {
-      return 'orange';
-    }
+    defaultValue: 'orange',
   }), // Select
   numberOfSeeds: attr('number', {
-    defaultValue() {
-      return 10;
-    }
+    defaultValue: 10,
   }),
   description: attr('string'), // Textarea
   isTropical: attr('boolean', {
-    defaultValue() {
-      return false;
-    }
+    defaultValue: false,
   }),
   name: attr('string'),
   pickedOn: attr('date', {
