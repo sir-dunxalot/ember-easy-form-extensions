@@ -29,7 +29,6 @@ export default Ember.Controller.extend(
 
       resolve();
     });
-  }
-
+  },
 
 });
