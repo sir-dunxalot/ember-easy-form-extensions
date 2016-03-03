@@ -1,4 +1,4 @@
-export default function(context, name, useJquery = false) {
+export default function(context, name) {
 
   let type;
 
@@ -8,7 +8,5 @@ export default function(context, name, useJquery = false) {
     case 'delete': type = 'button'; break;
   }
 
-  $button = context.$().find(`.button[type="${type}"]`);
-
-  return useJquery ? $button : $button[0];
+  return context.$().find(`.button[type="${type}"]`)[0];
 }

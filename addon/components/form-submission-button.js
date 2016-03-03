@@ -15,7 +15,7 @@ export default Ember.Component.extend({
 
   /* Properties */
 
-  attributeBindings: ['dataTest:data-test', 'disabled', 'type'],
+  attributeBindings: ['disabled', 'type'],
   classNameBindings: ['className'],
   layout: layout,
   tagName: 'button',
@@ -33,7 +33,9 @@ export default Ember.Component.extend({
     event.preventDefault();
     event.stopPropagation();
 
-    this.sendAction();
+    if (!this.get('disabled')) {
+      this.sendAction();
+    }
   },
 
 });

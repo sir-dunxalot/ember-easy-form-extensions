@@ -43,7 +43,7 @@ test('it renders', function(assert) {
     assert.ok(true, 'Delete should be called when the delete button is clicked');
   });
 
-  getButton(this, 'save', false).click();
-  getButton(this, 'cancel', false).click();
-  getButton(this, 'delete', false).click();
+  getButton(this, 'save').click();
+  getButton(this, 'cancel').click();
+  getButton(this, 'delete').click();
 });
