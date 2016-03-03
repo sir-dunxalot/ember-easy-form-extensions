@@ -1,202 +1,202 @@
-import Ember from 'ember';
-import ControllersFormMixin from 'ember-easy-form-extensions/mixins/controllers/form';
-import { module, test } from 'qunit';
+// import Ember from 'ember';
+// import ControllersFormMixin from 'ember-easy-form-extensions/mixins/controllers/form';
+// import { module, test } from 'qunit';
 
-const supportedButtons = ['cancel', 'delete', 'save'];
-const { run, typeOf } = Ember;
+// const supportedButtons = ['cancel', 'delete', 'save'];
+// const { run, typeOf } = Ember;
 
-let component;
+// let component;
 
-function set(key, value) {
-  run(function() {
-    component.set(key, value);
-  });
-}
+// function set(key, value) {
+//   run(function() {
+//     component.set(key, value);
+//   });
+// }
 
-function setProperties(properties) {
-  run(function() {
-    component.setProperties(properties);
-  });
-}
+// function setProperties(properties) {
+//   run(function() {
+//     component.setProperties(properties);
+//   });
+// }
 
-function trigger(event) {
-  run(function() {
-    component.trigger(event);
-  });
-}
+// function trigger(event) {
+//   run(function() {
+//     component.trigger(event);
+//   });
+// }
 
-module('Unit | Mixin | controllers/form', {
+// module('Unit | Mixin | controllers/form', {
 
-  beforeEach: function() {
+//   beforeEach: function() {
 
-    const ControllersFormMixinObject = Ember.Component.extend(
-      ControllersFormMixin,
-      Ember.Evented, {
+//     const ControllersFormMixinObject = Ember.Component.extend(
+//       ControllersFormMixin,
+//       Ember.Evented, {
 
-      cancel: function() {
-        Ember.warn("It looks like you forgot to set cancel() with an assertion in your test. For example controller.set('cancel', function() { assert.ok(...) });");
-      },
+//       cancel: function() {
+//         Ember.warn("It looks like you forgot to set cancel() with an assertion in your test. For example controller.set('cancel', function() { assert.ok(...) });");
+//       },
 
-      delete: function() {
-        Ember.warn("It looks like you forgot to set delete() with an assertion in your test. For example controller.set('delete', function() { assert.ok(...) });");
-      },
+//       delete: function() {
+//         Ember.warn("It looks like you forgot to set delete() with an assertion in your test. For example controller.set('delete', function() { assert.ok(...) });");
+//       },
 
-      save: function() {
-        Ember.warn("It looks like you forgot to set save() with an assertion in your test. For example controller.set('save', function() { assert.ok(...) });");
-      },
+//       save: function() {
+//         Ember.warn("It looks like you forgot to set save() with an assertion in your test. For example controller.set('save', function() { assert.ok(...) });");
+//       },
 
-    });
+//     });
 
-    component = ControllersFormMixinObject.create();
-  },
-});
+//     component = ControllersFormMixinObject.create();
+//   },
+// });
 
-test('Properties and actions', function(assert) {
+// test('Properties and actions', function(assert) {
 
-  assert.strictEqual(component.get('formIsSubmitted'), false,
-    'Form is submitted should default to false');
+//   assert.strictEqual(component.get('formIsSubmitted'), false,
+//     'Form is submitted should default to false');
 
-  assert.ok(component.get('hasFormMixin'),
-    'The mixin should have a helper property for detection by components');
+//   assert.ok(component.get('hasFormMixin'),
+//     'The mixin should have a helper property for detection by components');
 
-  supportedButtons.forEach(function(action) {
+//   supportedButtons.forEach(function(action) {
 
-    assert.ok(component.get(`_actions.${action}`),
-      `The ${action} action should exist`);
+//     assert.ok(component.get(`_actions.${action}`),
+//       `The ${action} action should exist`);
 
-  });
+//   });
 
-});
+// });
 
-test('Public methods', function(assert) {
-  const done = assert.async();
+// test('Public methods', function(assert) {
+//   const done = assert.async();
 
-  assert.expect(7);
+//   assert.expect(7);
 
-  /* Check public methods exist */
+//   /* Check public methods exist */
 
-  [
-    'resetForm',
-    'resetSubmission',
-    'showServerError',
-    'validateThenSave'
-  ].forEach(function(publicMethod) {
+//   [
+//     'resetForm',
+//     'resetSubmission',
+//     'showServerError',
+//     'validateThenSave'
+//   ].forEach(function(publicMethod) {
 
-    assert.ok(typeOf(component.get(publicMethod)) === 'function',
-      `${publicMethod} should be a public method`);
+//     assert.ok(typeOf(component.get(publicMethod)) === 'function',
+//       `${publicMethod} should be a public method`);
 
-  });
+//   });
 
-  /* resetForm() */
+//   /* resetForm() */
 
-  set('formIsSubmitted', true);
+//   set('formIsSubmitted', true);
 
-  component.resetForm();
+//   component.resetForm();
 
-  assert.strictEqual(component.get('formIsSubmitted'), false,
-    'Form is submitted should be set to false after calling resetForm');
+//   assert.strictEqual(component.get('formIsSubmitted'), false,
+//     'Form is submitted should be set to false after calling resetForm');
 
-  /* validateThenSave() */
+//   /* validateThenSave() */
 
-  set('runCustomValidations', function() {
-    return new Ember.RSVP.Promise(function(resolve) {
+//   set('runCustomValidations', function() {
+//     return new Ember.RSVP.Promise(function(resolve) {
 
-      assert.ok(true,
-        'runCustomValidations should be called by validateThenSave');
+//       assert.ok(true,
+//         'runCustomValidations should be called by validateThenSave');
 
-      resolve();
+//       resolve();
 
-    });
-  });
+//     });
+//   });
 
-  set('save', function() {
+//   set('save', function() {
 
-    assert.ok(true,
-      'save() should be called by validateThenSave()');
+//     assert.ok(true,
+//       'save() should be called by validateThenSave()');
 
-    done();
+//     done();
 
-  });
+//   });
 
-  component.validateThenSave();
+//   component.validateThenSave();
 
-});
+// });
 
-test('Private methods', function(assert) {
+// test('Private methods', function(assert) {
 
-  /* _eventHandler */
+//   /* _eventHandler */
 
-  const events = supportedButtons;
+//   const events = supportedButtons;
 
-  /* Use an array and index to save and call assert.async()
-  methods so we can wait for the promises to resolve before
-  ending the test */
+//   /* Use an array and index to save and call assert.async()
+//   methods so we can wait for the promises to resolve before
+//   ending the test */
 
-  const waiters = [];
+//   const waiters = [];
 
-  let doneCount = 0;
+//   let doneCount = 0;
 
-  assert.expect(9);
+//   assert.expect(9);
 
-  /* Test without event handlers... */
+//   /* Test without event handlers... */
 
-  events.forEach(function(event) {
-    const eventHandler = `${event}Handler`;
+//   events.forEach(function(event) {
+//     const eventHandler = `${event}Handler`;
 
-    let method = event;
+//     let method = event;
 
-    if (event === 'save') {
-      method = 'validateThenSave';
-    }
+//     if (event === 'save') {
+//       method = 'validateThenSave';
+//     }
 
-    set(method, function() {
+//     set(method, function() {
 
-      assert.ok(true,
-        `${method}() should be called by _eventHandler()`);
+//       assert.ok(true,
+//         `${method}() should be called by _eventHandler()`);
 
-    });
+//     });
 
-    component._eventHandler(event);
+//     component._eventHandler(event);
 
-  });
+//   });
 
-  /* ... Then test event handlers */
+//   /* ... Then test event handlers */
 
-  events.forEach(function(event) {
-    const capitalizedEvent = Ember.String.capitalize(event);
-    const eventHandler = `before${capitalizedEvent}`;
+//   events.forEach(function(event) {
+//     const capitalizedEvent = Ember.String.capitalize(event);
+//     const eventHandler = `before${capitalizedEvent}`;
 
-    let method = event;
+//     let method = event;
 
-    if (event === 'save') {
-      method = 'validateThenSave';
-    }
+//     if (event === 'save') {
+//       method = 'validateThenSave';
+//     }
 
-    waiters.push(assert.async());
+//     waiters.push(assert.async());
 
-    set(eventHandler, function() {
-      return new Ember.RSVP.Promise(function(resolve) {
+//     set(eventHandler, function() {
+//       return new Ember.RSVP.Promise(function(resolve) {
 
-        assert.ok(true,
-          '${eventHandler}() should be called by _eventHandler()');
+//         assert.ok(true,
+//           '${eventHandler}() should be called by _eventHandler()');
 
-        resolve();
+//         resolve();
 
-      });
-    });
+//       });
+//     });
 
-    set(method, function() {
+//     set(method, function() {
 
-      assert.ok(true,
-        `${method}() should be called by _eventHandler()`);
+//       assert.ok(true,
+//         `${method}() should be called by _eventHandler()`);
 
-      waiters[doneCount]();
+//       waiters[doneCount]();
 
-      doneCount++;
-    });
+//       doneCount++;
+//     });
 
-    component._eventHandler(event);
+//     component._eventHandler(event);
 
-  });
+//   });
 
-});
+// });
