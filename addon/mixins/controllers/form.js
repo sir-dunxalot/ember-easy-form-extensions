@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import EmberValidations from 'ember-validations';
 
-const { computed } = Ember;
+const { assert, computed } = Ember;
 
 export default Ember.Mixin.create(
   EmberValidations, {
@@ -21,32 +21,22 @@ export default Ember.Mixin.create(
     /* Form submission actions */
 
     cancel() {
-      this.set('formIsSubmitted', true);
       this._eventHandler('cancel');
     },
 
     delete() {
-      this.set('formIsSubmitted', true);
       this._eventHandler('delete');
     },
 
     /* Show validation errors on submit click */
 
     save() {
-      this.set('formIsSubmitted', true);
       this._eventHandler('save');
     },
 
   },
 
   /* Methods */
-
-  // resetForm: on('routeDidTransition', function() {
-  //   this.resetSubmission();
-
-  //   /* Add logic for resetting anything to do with
-  //   input here */
-  // }),
 
   resetSubmission() {
     this.set('formIsSubmitted', false);
@@ -56,7 +46,7 @@ export default Ember.Mixin.create(
     const _this = this;
 
     function resolve() {
-      Ember.assert(
+      assert(
         'You need to specify a save method on this controller',
         typeof _this.save === 'function'
       );
@@ -65,7 +55,7 @@ export default Ember.Mixin.create(
     }
 
     function reject() {
-      _this.set('formIsSubmitted', false);
+      _this.resetSubmission();
     }
 
     /* If there is a custom validations method, resolve it */
@@ -74,7 +64,7 @@ export default Ember.Mixin.create(
       const customValidationsPromise = this.runCustomValidations();
 
       if (!customValidationsPromise || !customValidationsPromise.then) {
-        Ember.assert(
+        assert(
           'runCustomValidations() must return a promise (e.g. return new Ember.RSVP.Promise(...)).'
         );
       }
@@ -104,6 +94,10 @@ export default Ember.Mixin.create(
       return Ember.typeOf(key) === 'function';
     }
 
+    /* Set the form to be submitted */
+
+    this.set('formIsSubmitted', true);
+
     /* If event is save, method is renamed */
 
     if (type === 'save') {
@@ -112,23 +106,23 @@ export default Ember.Mixin.create(
 
     const method = this[type];
 
-    Ember.assert(`You need to specify a ${type} method on this controller`, method && isFunction(method));
+    assert(`You need to specify a ${type} method on this controller`, method && isFunction(method));
 
     /* If handler exists, resolve the promise then call
     the method... */
 
     if (handler) {
-      Ember.assert(`${handlerMethodName}() must be a function`, isFunction(handler));
+      assert(`${handlerMethodName}() must be a function`, isFunction(handler));
 
       const handlerPromise = handler();
 
       if (!handlerPromise.then) {
-        Ember.assert('handler() must return a promise (e.g. return new Ember.RSVP.Promise(...))');
+        assert('handler() must return a promise (e.g. return new Ember.RSVP.Promise(...))');
       }
 
-      handlerPromise.then(function() {
+      handlerPromise.then(() => {
         this[type]();
-      }.bind(this));
+      });
 
     /* ...Else, just call the method */
 
