@@ -1,7 +1,7 @@
 import Ember from 'ember';
 import EmberValidations from 'ember-validations';
 
-const { computed, on } = Ember;
+const { computed } = Ember;
 
 export default Ember.Mixin.create(
   EmberValidations, {
@@ -50,10 +50,6 @@ export default Ember.Mixin.create(
 
   resetSubmission() {
     this.set('formIsSubmitted', false);
-  },
-
-  showServerError(/* xhr */) {
-    this.resetSubmission();
   },
 
   validateThenSave() {

@@ -21,14 +21,7 @@
     "andThen",
     "currentURL",
     "currentPath",
-    "currentRouteName",
-    "asyncClick",
-    "clickInputFor",
-    "fillInInputFor",
-    "inspect",
-    "inspectInputFor",
-    "inspectModelValueFor",
-    "moment"
+    "currentRouteName"
   ],
   "node": false,
   "browser": false,
