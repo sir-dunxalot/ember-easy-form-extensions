@@ -21,13 +21,6 @@ export function initialize() {
       'required:aria-required',
     ],
   });
-
-  Ember.Select.reopen({
-    attributeBindings: [
-      'invalid:aria-invalid',
-      'required:aria-required',
-    ],
-  });
 }
 
 export default {

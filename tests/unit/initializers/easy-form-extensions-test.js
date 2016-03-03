@@ -17,12 +17,12 @@ module('Unit | Initializer | easy form extensions', {
 test('Input element basic accessibility', function(assert) {
   initialize(container, application);
 
-  assert.expect(7);
+  assert.expect(5);
 
   assert.ok(Ember.Checkbox.create().get('attributeBindings').toString().indexOf('aria-checked') > -1,
     'Ember.Checkbox should have an aria-checked binding');
 
-  ['TextArea', 'TextField', 'Select'].forEach(function(className) {
+  ['TextArea', 'TextField'].forEach(function(className) {
     const instance = Ember[className].create();
     const attributeBindings = instance.get('attributeBindings').toString();
 
