@@ -1,50 +1,44 @@
 Ember Easy Form Extensions [![Build Status](https://travis-ci.org/sir-dunxalot/ember-easy-form-extensions.svg?branch=master)](https://travis-ci.org/sir-dunxalot/ember-easy-form-extensions)
 ======
 
-This Ember addon enhances Ember EasyForm by providing easy action handling, validations, and Ember 1.13 support for your forms
+This Ember addon manages form submission in the controller/component and route layers of Ember apps.
 
-**To support Ember 1.13 Easy Form has been temporarily rewritten for Ember CLI. When EasyForm is updated by Dockyard this addon will support that instead of our own form components.**
+It works alongside most form component addons including but not limited to [Ember EasyForm](https://github.com/DockYard/ember-easy-form) and [Ember Paper](https://github.com/miguelcobain/ember-paper).
 
-Ember apps running 1.12 or below may behave unexpectedly.
+**Ember EasyForm is not longer a required dependency for this addon.**
 
 ## Installation
 
-Uninstall any references to `ember-easy-form` and `ember-validations`and then:
-
 ```sh
+npm uninstall --save-dev ember-validations
 ember install ember-easy-form-extensions
 ```
 
 ## Overview and Example
 
-`ember-easy-form-extensions` comes prepackaged with `ember-easy-form` and `ember-validations` so you can now build awesome forms and handle the subsequent submission events just as easily as Easy Form makes writing your templates.
-
-Here's an example:
+Designed to handle formsubmission events, ember-easy-form-extensions reduces boilerplate code and standardizes form submission whilst providing a broad API for you to interact with.
 
 ```hbs
-{{!--app-name/templates/posts/new.hbs--}}
+{{!--app-name/templates/users/new.hbs--}}
 
-{{#form-wrapper}}
-  {{#form-controls legend='Write a new post'}}
+<form>
 
-    {{!--model.title--}}
-    {{input-group property='title'}}
-
-    {{!--model.description--}}
-    {{input-group property='description' type='textarea'}}
-
-  {{/form-controls}}
+  <controls>
+    {{input value=firstName}}
+    {{input value=lastName}}
+  </controls>
 
   {{!--Submit and cancel buttons--}}
-  {{form-submission}}
-{{/form-wrapper}}
+  {{form-submission formIsSubmitted=formIsSubmitted}}
+
+</form>
 ```
 
 ```js
-// app-name/controllers/posts/new.js
+// app-name/controllers/users/new.js
 
 import Ember from 'ember';
-import FormMixin from 'ember-easy-form-extensions/mixins/controllers/form';
+import FormMixin from 'ember-easy-form-extensions/mixins/components/form';
 
 export default Ember.Controller.extend(
   FormMixin, {
@@ -74,4 +68,9 @@ export default Ember.Controller.extend(
 
 ## Documentation
 
-A walkthrough and documentation can be found in the [wiki](https://github.com/sir-dunxalot/ember-easy-form-extensions/wiki).
+A walkthrough and documentation can be found in [the wiki](https://github.com/sir-dunxalot/ember-easy-form-extensions/wiki).
+
+1. [Form templates](https://github.com/sir-dunxalot/ember-easy-form-extensions/wiki/1.-Form-Template)
+2. [Validating models(https://github.com/sir-dunxalot/ember-easy-form-extensions/wiki/2.-Validating-Models)]
+3. [Saving Models](https://github.com/sir-dunxalot/ember-easy-form-extensions/wiki/3.-Saving-Models)
+4. [Deleting Models](https://github.com/sir-dunxalot/ember-easy-form-extensions/wiki/4.-Deleting-Models)

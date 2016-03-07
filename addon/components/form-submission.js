@@ -1,11 +1,9 @@
 import Ember from 'ember';
-import FormSubmissionClassNameMixin from 'ember-easy-form-extensions/mixins/components/form-submission-class-name';
 import layout from '../templates/components/form-submission';
 
 const { computed } = Ember;
 
-export default Ember.Component.extend(
-  FormSubmissionClassNameMixin, {
+export default Ember.Component.extend({
 
   /* Options */
 
@@ -25,15 +23,9 @@ export default Ember.Component.extend(
 
   /* Properties */
 
-  classNameBindings: ['className'],
-  formIsSubmitted: computed.oneWay('formController.formIsSubmitted'),
+  classNameBindings: ['className', 'submissionClassName'],
+  formIsSubmitted: false,
   layout: layout,
-
-  formController: computed(function() {
-    const hasFormController = this.nearestWithProperty('formController');
-
-    return hasFormController.get('formController');
-  }),
 
   /* Actions */
 
@@ -44,7 +36,7 @@ export default Ember.Component.extend(
     },
 
     delete() {
-      this.sendAction('delete');
+      this.sendAction('deleteAction');
     },
 
     save() {
@@ -52,6 +44,21 @@ export default Ember.Component.extend(
     },
 
   },
+
+  /* CPs */
+
+  submissionClassName: computed('className', 'formIsSubmitted',
+    function() {
+      const className = this.get('className');
+      const formIsSubmitted = this.get('formIsSubmitted');
+
+      if (formIsSubmitted) {
+        return `${className}-submitted`;
+      } else {
+        return null;
+      }
+    }
+  ),
 
 
 });
