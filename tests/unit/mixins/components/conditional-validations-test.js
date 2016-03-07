@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import ControllersConditionalValidationsMixin from 'ember-easy-form-extensions/mixins/controllers/conditional-validations';
+import ControllersConditionalValidationsMixin from 'ember-easy-form-extensions/mixins/components/conditional-validations';
 import { module, test } from 'qunit';
 
 module('Unit | Mixin | controllers/conditional validations');
