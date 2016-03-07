@@ -1,4 +1,4 @@
-Ember Easy Form Extensions [![Build Status](https://travis-ci.org/sir-dunxalot/ember-easy-form-extensions.svg?branch=master)](https://travis-ci.org/sir-dunxalot/ember-easy-form-extensions)
+Ember Easy Form Extensions [![Build Status](https://travis-ci.org/sir-dunxalot/ember-easy-form-extensions.svg?branch=master)](https://travis-ci.org/sir-dunxalot/ember-easy-form-extensions) [![npm](https://img.shields.io/npm/v/ember-easy-form-extensions.svg)](https://www.npmjs.com/package/ember-easy-form-extensions)
 ======
 
 This Ember addon manages form submission in the controller/component and route layers of Ember apps.
