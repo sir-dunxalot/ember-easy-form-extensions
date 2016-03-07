@@ -3,6 +3,8 @@ import ComponentsConditionalValidationsMixin from 'ember-easy-form-extensions/mi
 import ComponentsFormMixin from 'ember-easy-form-extensions/mixins/components/form';
 import { module, test } from 'qunit';
 
+const { run } = Ember;
+
 let subject;
 
 module('Unit | Mixin | components/conditional validations', {
@@ -28,17 +30,17 @@ test('Calls to validate', function(assert) {
 
   subject.validate = function() {
     assert.ok(true, 'Validate should be called when bananas changes');
-  }
+  };
 
   assert.ok(subject.hasObserverFor('bananas'), 'Should add observers on init');
 
   subject.set('bananas', true);
 
-  Ember.run(this, function() {
+  run(this, function() {
     subject.destroy();
 
 
-    Ember.run.next(this, function() {
+    run.next(this, function() {
       assert.notOk(subject.hasObserverFor('bananas'), 'Should remove observers on destroy');
       done();
     });
