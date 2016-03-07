@@ -1,7 +1,7 @@
 {
   "name": "ember-easy-form-extensions",
   "version": "2.0.0",
-  "description": "Enhances Ember form addons and components, like Easy Form, with Boilerplate action handling, validations, and more",
+  "description": "Manages form submission in the component/controller and route layers of Ember apps",
   "directories": {
     "doc": "doc",
     "test": "tests"
