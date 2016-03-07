@@ -13,12 +13,12 @@ export default Ember.Mixin.create({
     }
   },
 
-  willDestroyElement() {
+  willDestroy() {
     this._super(...arguments);
     this._removeRevalidationObservers();
   },
 
-  willInsertElement() {
+  init() {
     this._super(...arguments);
     this._revalidate();
   },
@@ -29,13 +29,17 @@ export default Ember.Mixin.create({
     Ember.assert('No validate() method detected. You must use the conditional validations mixin with the form mixin.', validateExists);
 
     this.forEachRevalidator((property) => {
-      this.addObserver(property, this.validate);
+      this.addObserver(property, () => {
+        this.validate();
+      });
     });
   },
 
   _removeRevalidationObservers() {
     this.forEachRevalidator((property) => {
-      this.removeObserver(property, this.validate);
+      this.removeObserver(property, () => {
+        this.validate();
+      });
     });
   },
 });
