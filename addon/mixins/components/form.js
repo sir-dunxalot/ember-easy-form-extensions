@@ -62,6 +62,14 @@ export default Ember.Mixin.create(
       }
     }
 
+    function checkIsValid() {
+      if (!_this.get('isValid')) {
+        reject();
+      } else {
+        resolve();
+      }
+    }
+
     /* If there is a custom validations method, resolve it */
 
     if (this.runCustomValidations) {
@@ -73,17 +81,12 @@ export default Ember.Mixin.create(
         );
       }
 
-      customValidationsPromise.then(resolve, reject);
+      customValidationsPromise.then(checkIsValid, reject);
     } else {
 
       /* Else save with normal ember-validations checks */
 
-      if (!this.get('isValid')) {
-        reject();
-      } else {
-        resolve();
-      }
-
+      checkIsValid();
     }
   },
 

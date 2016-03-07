@@ -58,7 +58,7 @@ test('Action handling', function(assert) {
 
 });
 
-test('Validations', function(assert) {
+test('Ember Validations', function(assert) {
   const App = startApp();
   const ComponentsFormObject = Ember.Component.extend(
     ComponentsFormMixin, {
@@ -74,23 +74,13 @@ test('Validations', function(assert) {
 
   });
 
-  assert.expect(5);
+  assert.expect(2);
 
   subject = ComponentsFormObject.create();
 
-  subject.runCustomValidations = function() {
-    return new RSVP.Promise((resolve) => {
-      reject();
-    });
-  };
-
-  subject.onInvalidSubmission = function() {
-    assert.ok(true, 'onInvalidSubmission should be called when runCustomValidations rejects');
-  };
+  /* Check form is rejected when Ember Validations rejects */
 
   subject.runCustomValidations = null;
-
-  subject.send('save');
 
   subject.onInvalidSubmission = function() {
     assert.ok(true, 'onInvalidSubmission should be called when the object is invalid');
@@ -110,14 +100,50 @@ test('Validations', function(assert) {
 
   subject.send('save');
 
+  destroyApp(App);
+});
+
+test('Custom Validations', function(assert) {
+
+  assert.expect(3);
+
   subject.runCustomValidations = function() {
-    return new RSVP.Promise((resolve) => {
+    return new RSVP.Promise((resolve, reject) => {
       assert.ok(true, 'runCustomValidations should be called when it exists');
-      resolve();
+      reject();
     });
   };
 
   subject.send('save');
 
-  destroyApp(App);
+  /* Check the form is rejected when runCustomValidations fails */
+
+  subject.runCustomValidations = function() {
+    return new RSVP.Promise((resolve, reject) => {
+      reject();
+    });
+  };
+
+  subject.onInvalidSubmission = function() {
+    assert.ok(true, 'onInvalidSubmission should be called when runCustomValidations rejects');
+
+    subject.onInvalidSubmission = null; // Remove
+  };
+
+  subject.send('save');
+
+  /* Check the form is saved when runCustomValidations passed */
+
+  subject.runCustomValidations = function() {
+    return new RSVP.Promise((resolve) => {
+      resolve();
+    });
+  };
+
+  subject.save = function() {
+    assert.ok(true, 'save should be called when the runCustomValidations passes');
+  };
+
+  subject.send('save');
+
 });
