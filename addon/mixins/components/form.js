@@ -3,6 +3,10 @@ import EmberValidations from 'ember-validations';
 
 const { assert, computed } = Ember;
 
+function isFunction(key) {
+  return Ember.typeOf(key) === 'function';
+}
+
 export default Ember.Mixin.create(
   EmberValidations, {
 
@@ -57,7 +61,7 @@ export default Ember.Mixin.create(
     function reject() {
       _this.resetSubmission();
 
-      if (_this.onInvalidSubmission) {
+      if (isFunction(_this.onInvalidSubmission)) {
         _this.onInvalidSubmission();
       }
     }
@@ -96,10 +100,6 @@ export default Ember.Mixin.create(
     const capitalizedType = Ember.String.capitalize(type);
     const handlerMethodName = `before${capitalizedType}`;
     const handler = this[handlerMethodName];
-
-    function isFunction(key) {
-      return Ember.typeOf(key) === 'function';
-    }
 
     /* Set the form to be submitted */
 
