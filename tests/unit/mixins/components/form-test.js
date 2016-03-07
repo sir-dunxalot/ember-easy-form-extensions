@@ -74,9 +74,23 @@ test('Validations', function(assert) {
 
   });
 
-  assert.expect(2);
+  assert.expect(5);
 
   subject = ComponentsFormObject.create();
+
+  subject.runCustomValidations = function() {
+    return new RSVP.Promise((resolve) => {
+      reject();
+    });
+  };
+
+  subject.onInvalidSubmission = function() {
+    assert.ok(true, 'onInvalidSubmission should be called when runCustomValidations rejects');
+  };
+
+  subject.runCustomValidations = null;
+
+  subject.send('save');
 
   subject.onInvalidSubmission = function() {
     assert.ok(true, 'onInvalidSubmission should be called when the object is invalid');
@@ -92,6 +106,15 @@ test('Validations', function(assert) {
 
   subject.save = function() {
     assert.ok(true, 'save should be called when the object is valid');
+  };
+
+  subject.send('save');
+
+  subject.runCustomValidations = function() {
+    return new RSVP.Promise((resolve) => {
+      assert.ok(true, 'runCustomValidations should be called when it exists');
+      resolve();
+    });
   };
 
   subject.send('save');
