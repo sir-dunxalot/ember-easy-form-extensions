@@ -71,6 +71,6 @@ export default Ember.Controller.extend(
 A walkthrough and documentation can be found in [the wiki](https://github.com/sir-dunxalot/ember-easy-form-extensions/wiki).
 
 1. [Form templates](https://github.com/sir-dunxalot/ember-easy-form-extensions/wiki/1.-Form-Template)
-2. [Validating models(https://github.com/sir-dunxalot/ember-easy-form-extensions/wiki/2.-Validating-Models)]
+2. [Validating models](https://github.com/sir-dunxalot/ember-easy-form-extensions/wiki/2.-Validating-Models)]
 3. [Saving Models](https://github.com/sir-dunxalot/ember-easy-form-extensions/wiki/3.-Saving-Models)
 4. [Deleting Models](https://github.com/sir-dunxalot/ember-easy-form-extensions/wiki/4.-Deleting-Models)
