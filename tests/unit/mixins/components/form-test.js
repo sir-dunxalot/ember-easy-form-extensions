@@ -18,9 +18,23 @@ module('Unit | Mixin | components/form', {
 
 });
 
-test('Ember Validations', function(assert) {
+test('Public properties and methods', function(assert) {
+
   assert.ok(subject.validate, 'Should have Ember Validations mixed in');
-  assert.ok(subject.hasFormMixin, 'Should have Form mixed in');
+
+  assert.ok(subject.get('hasFormMixin'), 'Should have Form mixed in');
+
+  /* Check formIsSubmitted and resetSubmission() */
+
+  assert.strictEqual(subject.get('formIsSubmitted'), false);
+
+  subject.set('formIsSubmitted', true);
+
+  subject.resetSubmission();
+
+  assert.strictEqual(subject.formIsSubmitted, false,
+    'resetSubmission should reset formIsSubmitted to false');
+
 });
 
 test('Action handling', function(assert) {
